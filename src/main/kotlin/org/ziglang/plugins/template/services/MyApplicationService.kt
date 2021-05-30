@@ -1,6 +1,6 @@
-package org.jetbrains.plugins.template.services
+package org.ziglang.plugins.template.services
 
-import org.jetbrains.plugins.template.MyBundle
+import org.ziglang.plugins.template.MyBundle
 
 class MyApplicationService {
 
