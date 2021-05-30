@@ -1,7 +1,7 @@
-package com.github.sudison.ziglangide.services
+package org.jetbrains.plugins.template.services
 
-import com.github.sudison.ziglangide.MyBundle
 import com.intellij.openapi.project.Project
+import org.jetbrains.plugins.template.MyBundle
 
 class MyProjectService(project: Project) {
 

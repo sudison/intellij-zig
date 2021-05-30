@@ -1,6 +1,6 @@
-package com.github.sudison.ziglangide.services
+package org.jetbrains.plugins.template.services
 
-import com.github.sudison.ziglangide.MyBundle
+import org.jetbrains.plugins.template.MyBundle
 
 class MyApplicationService {
 

@@ -1,4 +1,4 @@
-package com.github.sudison.ziglangide
+package org.jetbrains.plugins.template
 
 import com.intellij.AbstractBundle
 import org.jetbrains.annotations.NonNls

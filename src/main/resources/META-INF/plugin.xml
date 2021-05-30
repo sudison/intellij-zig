@@ -1,19 +1,19 @@
 <idea-plugin>
-    <id>com.github.sudison.ziglangide</id>
-    <name>ziglangide</name>
-    <vendor>sudison</vendor>
+    <id>org.jetbrains.plugins.template</id>
+    <name>Template</name>
+    <vendor>JetBrains</vendor>
 
     <!-- Product and plugin compatibility requirements -->
     <!-- https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.github.sudison.ziglangide.services.MyApplicationService"/>
-        <projectService serviceImplementation="com.github.sudison.ziglangide.services.MyProjectService"/>
+        <applicationService serviceImplementation="org.jetbrains.plugins.template.services.MyApplicationService"/>
+        <projectService serviceImplementation="org.jetbrains.plugins.template.services.MyProjectService"/>
     </extensions>
 
     <applicationListeners>
-        <listener class="com.github.sudison.ziglangide.listeners.MyProjectManagerListener"
+        <listener class="org.jetbrains.plugins.template.listeners.MyProjectManagerListener"
                   topic="com.intellij.openapi.project.ProjectManagerListener"/>
     </applicationListeners>
 </idea-plugin>

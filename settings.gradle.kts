@@ -1,1 +1,1 @@
-rootProject.name = "ziglangide"
+rootProject.name = "IntelliJ Platform Plugin Template"

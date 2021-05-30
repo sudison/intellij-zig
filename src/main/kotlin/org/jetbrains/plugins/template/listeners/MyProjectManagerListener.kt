@@ -1,9 +1,9 @@
-package com.github.sudison.ziglangide.listeners
+package org.jetbrains.plugins.template.listeners
 
-import com.github.sudison.ziglangide.services.MyProjectService
 import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.project.ProjectManagerListener
+import org.jetbrains.plugins.template.services.MyProjectService
 
 internal class MyProjectManagerListener : ProjectManagerListener {
 
