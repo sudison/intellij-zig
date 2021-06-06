@@ -10,7 +10,7 @@
     <extensions defaultExtensionNs="com.intellij">
         <applicationService serviceImplementation="org.ziglang.plugins.template.services.MyApplicationService"/>
         <projectService serviceImplementation="org.ziglang.plugins.template.services.MyProjectService"/>
-        <fileType name="ZigLang File" implementationClass="org.ziglang.plugins.lang.ZigFileType"
+        <fileType name="ZigLang" implementationClass="org.ziglang.plugins.lang.ZigFileType"
                   fieldName="INSTANCE" language="ZigLang" extensions="ziglang"/>
     </extensions>
 
