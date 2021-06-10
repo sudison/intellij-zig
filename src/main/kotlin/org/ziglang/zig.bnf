@@ -1,0 +1,159 @@
+{
+  parserClass="org.ziglang.psi.parser.ZigLangParser"
+
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiClassPrefix="Zig"
+  psiImplClassSuffix="Impl"
+  psiPackage="org.ziglang.psi"
+  psiImplPackage="org.ziglang.psi.impl"
+
+  elementTypeHolderClass="org.ziglang.psi.ZigLangTypes"
+  elementTypeClass="org.ziglang.psi.ZigLangElementType"
+  tokenTypeClass="org.ziglang.psi.ZigLangTokenType"
+tokens = [
+WHITESPACE='regexp:[\s]+'
+COMMENT='regexp://.*'
+PUB='pub'
+FN='fn'
+CONST='const'
+VAR='var'
+EQUAL='='
+OR='or'
+AND='and'
+EQUALEQUAL='=='
+LARROW='<'
+RARROW='>'
+EXCLAMATIONMARK='!'
+EXCLAMATIONMARKEQUAL='!='
+LARROWEQUAL='<='
+RARROWEQUAL='>='
+AMPERSAND='&'
+CARET='^'
+PIPE='|'
+ORELSE='orelse'
+catch='catch'
+LARROW2='<<'
+RARROW2='>>'
+PLUS='+'
+MINUS='-'
+PLUS2='++'
+PLUSPERCENT='+%'
+MINUSPERCENT='-%'
+PIPE2='||'
+ASTERISK='*'
+SLASH='/'
+PERCENT='%'
+ASTERISK2='**'
+ASTERISKPERCENT='*%'
+IF='if'
+RETURN='return'
+ELSE='else'
+LBRACE='{'
+RBRACE='}'
+ASTERISKEQUAL='*='
+SLASHEQUAL='/='
+PERCENTEQUAL='%='
+PLUSEQUAL='+='
+MINUSEQUAL='-='
+LARROW2EQUAL='<<='
+RARROW2EQUAL='>>='
+AMPERSANDEQUAL='&='
+CARETEQUAL='^='
+PIPEEQUAL='|='
+ASTERISKPERCENTEQUAL='*%='
+PLUSPERCENTEQUAL='+%='
+MINUSPERCENTEQUAL='-%='
+TILDE='~'
+DOT='.'
+TRY='try'
+LBRACKET='['
+RBRACKET=']'
+DOTASTERISK='.*'
+DOTQUESTIONMARK='.?'
+INTEGER="regexp:\d+"
+STRINGLITERALSINGLE='regexp:\"[^\\"]*\"'
+ID='regexp:[A-Za-z_][A-Za-z0-9_]*'
+SEMICOLON=';'
+LPAREN='('
+RPAREN=')'
+COMMA=','
+COLON=':'
+]
+}
+
+
+root ::= container_doc_comment? ContainerMembers
+container_doc_comment ::= COMMENT+
+ContainerMembers ::= ContainerDeclarations
+ContainerDeclarations ::= (PUB? TopLevelDecl)*
+TopLevelDecl ::= FnProto (SEMICOLON | Block) | VarDecl
+FnProto ::= FN ID? LPAREN ParamDeclList RPAREN  TypeExpr
+ParamDeclList ::= (ParamDecl COMMA)* ParamDecl?
+ParamDecl ::= (ID COLON)? ParamType
+ParamType ::= TypeExpr
+TypeExpr ::= ErrorUnionExpr
+ErrorUnionExpr ::= SuffixExpr | (EXCLAMATIONMARK TypeExpr)?
+SuffixExpr ::= PrimaryTypeExpr (SuffixOp | FnCallArguments)*
+SuffixOp ::= LBRACKET Expr (DOT2 (Expr? (COLON Expr)?)?)? RBRACKET
+                  | DOT ID
+                  | DOTASTERISK
+                  | DOTQUESTIONMARK
+PrimaryTypeExpr ::= BUILTINIDENTIFIER FnCallArguments | DOT ID | ID | INTEGER | STRINGLITERAL
+STRINGLITERAL ::= STRINGLITERALSINGLE
+BUILTINIDENTIFIER ::='@' ID
+FnCallArguments ::= LPAREN ExprList RPAREN
+ExprList ::= (Expr COMMA)* Expr?
+
+VarDecl ::= (CONST |VAR) ID (COLON TypeExpr)? (EQUAL Expr)? SEMICOLON
+Expr ::= BoolOrExpr
+BoolOrExpr ::= BoolAndExpr (OR BoolAndExpr)*
+BoolAndExpr ::= CompareExpr (AND CompareExpr)*
+CompareExpr ::= BitwiseExpr (CompareOp BitwiseExpr)?
+CompareOp ::= EQUALEQUAL | EXCLAMATIONMARKEQUAL |LARROW |RARROW|LARROWEQUAL|RARROWEQUAL
+BitwiseExpr ::= BitShiftExpr (BitwiseOp BitShiftExpr)*
+
+BitwiseOp ::= AMPERSAND | CARET | PIPE | orelse | catch Payload?
+Payload ::= PIPE ID PIPE
+
+BitShiftExpr ::= AdditionExpr (BitShiftOp AdditionExpr)*
+BitShiftOp ::=  LARROW2 | RARROW2
+AdditionExpr ::= MultiplyExpr (AdditionOp MultiplyExpr)*
+AdditionOp ::= PLUS | MINUS | PLUS2 | PLUSPERCENT | MINUSPERCENT
+MultiplyExpr ::= PrefixExpr (MultiplyOp PrefixExpr)*
+MultiplyOp ::= PIPE2 | ASTERISK | SLASH | PERCENT | ASTERISK2 | ASTERISKPERCENT
+PrefixExpr ::= PrefixOp* PrimaryExpr
+PrimaryExpr::= IfExpr | RETURN Expr?| Block | CurlySuffixExpr
+
+
+CurlySuffixExpr ::= TypeExpr
+IfExpr ::= IfPrefix Expr (ELSE Payload? Expr)?
+IfPrefix ::= IF LPAREN Expr RPAREN PtrPayload?
+PtrPayload ::= PIPE ASTERISK? ID PIPE
+Block ::= LBRACE Statement* RBRACE
+Statement ::= VarDecl | AssignExpr SEMICOLON
+AssignExpr ::= Expr (AssignOp Expr)?
+AssignOp
+    ::= ASTERISKEQUAL
+     | SLASHEQUAL
+     | PERCENTEQUAL
+     | PLUSEQUAL
+     | MINUSEQUAL
+     | LARROW2EQUAL
+     | RARROW2EQUAL
+     | AMPERSANDEQUAL
+     | CARETEQUAL
+     | PIPEEQUAL
+     | ASTERISKPERCENTEQUAL
+     | PLUSPERCENTEQUAL
+     | MINUSPERCENTEQUAL
+     | EQUAL
+
+PrefixOp
+    ::= EXCLAMATIONMARK
+     | MINUS
+     | TILDE
+     | MINUSPERCENT
+     | AMPERSAND
+     | TRY
+     | AWAIT

@@ -30,6 +30,16 @@ repositories {
 }
 dependencies {
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.17.1")
+    testImplementation(kotlin("test"))
+}
+
+sourceSets {
+
+
+    test {
+
+        resources.srcDir("src/testdata")
+    }
 }
 
 // Configure gradle-intellij-plugin plugin.

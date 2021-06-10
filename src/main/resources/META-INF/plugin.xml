@@ -8,14 +8,16 @@
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="org.ziglang.plugins.template.services.MyApplicationService"/>
-        <projectService serviceImplementation="org.ziglang.plugins.template.services.MyProjectService"/>
-        <fileType name="ZigLang" implementationClass="org.ziglang.plugins.lang.ZigFileType"
+        <applicationService serviceImplementation="org.ziglang.template.services.MyApplicationService"/>
+        <projectService serviceImplementation="org.ziglang.template.services.MyProjectService"/>
+        <fileType name="ZigLang" implementationClass="org.ziglang.ZigFileType"
                   fieldName="INSTANCE" language="ZigLang" extensions="ziglang"/>
+        <lang.parserDefinition language="ZigLang"
+                               implementationClass="org.ziglang.ZigParserDefinition"/>
     </extensions>
 
     <applicationListeners>
-        <listener class="org.ziglang.plugins.template.listeners.MyProjectManagerListener"
+        <listener class="org.ziglang.template.listeners.MyProjectManagerListener"
                   topic="com.intellij.openapi.project.ProjectManagerListener"/>
     </applicationListeners>
 </idea-plugin>
