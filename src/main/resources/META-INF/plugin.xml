@@ -14,6 +14,9 @@
                   fieldName="INSTANCE" language="ZigLang" extensions="ziglang"/>
         <lang.parserDefinition language="ZigLang"
                                implementationClass="org.ziglang.ZigParserDefinition"/>
+        <lang.syntaxHighlighterFactory
+                language="ZigLang"
+                implementationClass="org.ziglang.ZigLangSyntaxHighlighterFactory"/>
     </extensions>
 
     <applicationListeners>
