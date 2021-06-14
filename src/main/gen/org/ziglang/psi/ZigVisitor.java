@@ -63,14 +63,6 @@ public class ZigVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitContainerDeclarations(@NotNull ZigContainerDeclarations o) {
-    visitPsiElement(o);
-  }
-
-  public void visitContainerMembers(@NotNull ZigContainerMembers o) {
-    visitPsiElement(o);
-  }
-
   public void visitCurlySuffixExpr(@NotNull ZigCurlySuffixExpr o) {
     visitPsiElement(o);
   }
@@ -88,10 +80,6 @@ public class ZigVisitor extends PsiElementVisitor {
   }
 
   public void visitFnCallArguments(@NotNull ZigFnCallArguments o) {
-    visitPsiElement(o);
-  }
-
-  public void visitFnProto(@NotNull ZigFnProto o) {
     visitPsiElement(o);
   }
 
@@ -163,19 +151,11 @@ public class ZigVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitTopLevelDecl(@NotNull ZigTopLevelDecl o) {
-    visitPsiElement(o);
-  }
-
   public void visitTypeExpr(@NotNull ZigTypeExpr o) {
     visitPsiElement(o);
   }
 
   public void visitVarDecl(@NotNull ZigVarDecl o) {
-    visitPsiElement(o);
-  }
-
-  public void visitContainerDocComment(@NotNull ZigContainerDocComment o) {
     visitPsiElement(o);
   }
 

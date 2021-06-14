@@ -84,11 +84,11 @@ COLON=':'
 
 
 root ::= container_doc_comment? ContainerMembers
-container_doc_comment ::= COMMENT+
-ContainerMembers ::= ContainerDeclarations
-ContainerDeclarations ::= (PUB? TopLevelDecl)*
-TopLevelDecl ::= FnProto (SEMICOLON | Block) | VarDecl
-FnProto ::= FN ID? LPAREN ParamDeclList RPAREN  TypeExpr
+private container_doc_comment ::= COMMENT+
+private ContainerMembers ::= ContainerDeclarations
+private ContainerDeclarations ::= (PUB? TopLevelDecl)*
+private TopLevelDecl ::= FnProto (SEMICOLON | Block) | VarDecl
+private FnProto ::= FN ID? LPAREN ParamDeclList RPAREN  TypeExpr
 ParamDeclList ::= (ParamDecl COMMA)* ParamDecl?
 ParamDecl ::= (ID COLON)? ParamType
 ParamType ::= TypeExpr

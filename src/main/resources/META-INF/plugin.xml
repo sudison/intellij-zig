@@ -17,6 +17,8 @@
         <lang.syntaxHighlighterFactory
                 language="ZigLang"
                 implementationClass="org.ziglang.ZigLangSyntaxHighlighterFactory"/>
+        <completion.contributor language="ZigLang"
+                                implementationClass="org.ziglang.ZigLangCompletionContributor"/>
     </extensions>
 
     <applicationListeners>

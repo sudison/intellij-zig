@@ -418,15 +418,13 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // (PUB? TopLevelDecl)*
-  public static boolean ContainerDeclarations(PsiBuilder b, int l) {
+  static boolean ContainerDeclarations(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ContainerDeclarations")) return false;
-    Marker m = enter_section_(b, l, _NONE_, CONTAINER_DECLARATIONS, "<container declarations>");
     while (true) {
       int c = current_position_(b);
       if (!ContainerDeclarations_0(b, l + 1)) break;
       if (!empty_element_parsed_guard_(b, "ContainerDeclarations", c)) break;
     }
-    exit_section_(b, l, m, true, false, null);
     return true;
   }
 
@@ -450,13 +448,8 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // ContainerDeclarations
-  public static boolean ContainerMembers(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "ContainerMembers")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, CONTAINER_MEMBERS, "<container members>");
-    r = ContainerDeclarations(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
+  static boolean ContainerMembers(PsiBuilder b, int l) {
+    return ContainerDeclarations(b, l + 1);
   }
 
   /* ********************************************************** */
@@ -568,7 +561,7 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // FN ID? LPAREN ParamDeclList RPAREN  TypeExpr
-  public static boolean FnProto(PsiBuilder b, int l) {
+  static boolean FnProto(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "FnProto")) return false;
     if (!nextTokenIs(b, FN)) return false;
     boolean r;
@@ -579,7 +572,7 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
     r = r && ParamDeclList(b, l + 1);
     r = r && consumeToken(b, RPAREN);
     r = r && TypeExpr(b, l + 1);
-    exit_section_(b, m, FN_PROTO, r);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -1080,13 +1073,13 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // FnProto (SEMICOLON | Block) | VarDecl
-  public static boolean TopLevelDecl(PsiBuilder b, int l) {
+  static boolean TopLevelDecl(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "TopLevelDecl")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, TOP_LEVEL_DECL, "<top level decl>");
+    Marker m = enter_section_(b);
     r = TopLevelDecl_0(b, l + 1);
     if (!r) r = VarDecl(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -1184,7 +1177,7 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // COMMENT+
-  public static boolean container_doc_comment(PsiBuilder b, int l) {
+  static boolean container_doc_comment(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "container_doc_comment")) return false;
     if (!nextTokenIs(b, COMMENT)) return false;
     boolean r;
@@ -1195,7 +1188,7 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
       if (!consumeToken(b, COMMENT)) break;
       if (!empty_element_parsed_guard_(b, "container_doc_comment", c)) break;
     }
-    exit_section_(b, m, CONTAINER_DOC_COMMENT, r);
+    exit_section_(b, m, null, r);
     return r;
   }
 

@@ -22,15 +22,11 @@ public interface ZigLangTypes {
   IElementType BUILTINIDENTIFIER = new ZigLangElementType("BUILTINIDENTIFIER");
   IElementType COMPARE_EXPR = new ZigLangElementType("COMPARE_EXPR");
   IElementType COMPARE_OP = new ZigLangElementType("COMPARE_OP");
-  IElementType CONTAINER_DECLARATIONS = new ZigLangElementType("CONTAINER_DECLARATIONS");
-  IElementType CONTAINER_DOC_COMMENT = new ZigLangElementType("CONTAINER_DOC_COMMENT");
-  IElementType CONTAINER_MEMBERS = new ZigLangElementType("CONTAINER_MEMBERS");
   IElementType CURLY_SUFFIX_EXPR = new ZigLangElementType("CURLY_SUFFIX_EXPR");
   IElementType ERROR_UNION_EXPR = new ZigLangElementType("ERROR_UNION_EXPR");
   IElementType EXPR = new ZigLangElementType("EXPR");
   IElementType EXPR_LIST = new ZigLangElementType("EXPR_LIST");
   IElementType FN_CALL_ARGUMENTS = new ZigLangElementType("FN_CALL_ARGUMENTS");
-  IElementType FN_PROTO = new ZigLangElementType("FN_PROTO");
   IElementType IF_EXPR = new ZigLangElementType("IF_EXPR");
   IElementType IF_PREFIX = new ZigLangElementType("IF_PREFIX");
   IElementType MULTIPLY_EXPR = new ZigLangElementType("MULTIPLY_EXPR");
@@ -48,7 +44,6 @@ public interface ZigLangTypes {
   IElementType STRINGLITERAL = new ZigLangElementType("STRINGLITERAL");
   IElementType SUFFIX_EXPR = new ZigLangElementType("SUFFIX_EXPR");
   IElementType SUFFIX_OP = new ZigLangElementType("SUFFIX_OP");
-  IElementType TOP_LEVEL_DECL = new ZigLangElementType("TOP_LEVEL_DECL");
   IElementType TYPE_EXPR = new ZigLangElementType("TYPE_EXPR");
   IElementType VAR_DECL = new ZigLangElementType("VAR_DECL");
 
@@ -166,15 +161,6 @@ public interface ZigLangTypes {
       else if (type == COMPARE_OP) {
         return new ZigCompareOpImpl(node);
       }
-      else if (type == CONTAINER_DECLARATIONS) {
-        return new ZigContainerDeclarationsImpl(node);
-      }
-      else if (type == CONTAINER_DOC_COMMENT) {
-        return new ZigContainerDocCommentImpl(node);
-      }
-      else if (type == CONTAINER_MEMBERS) {
-        return new ZigContainerMembersImpl(node);
-      }
       else if (type == CURLY_SUFFIX_EXPR) {
         return new ZigCurlySuffixExprImpl(node);
       }
@@ -189,9 +175,6 @@ public interface ZigLangTypes {
       }
       else if (type == FN_CALL_ARGUMENTS) {
         return new ZigFnCallArgumentsImpl(node);
-      }
-      else if (type == FN_PROTO) {
-        return new ZigFnProtoImpl(node);
       }
       else if (type == IF_EXPR) {
         return new ZigIfExprImpl(node);
@@ -243,9 +226,6 @@ public interface ZigLangTypes {
       }
       else if (type == SUFFIX_OP) {
         return new ZigSuffixOpImpl(node);
-      }
-      else if (type == TOP_LEVEL_DECL) {
-        return new ZigTopLevelDeclImpl(node);
       }
       else if (type == TYPE_EXPR) {
         return new ZigTypeExprImpl(node);
