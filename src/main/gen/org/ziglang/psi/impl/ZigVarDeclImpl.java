@@ -29,8 +29,20 @@ public class ZigVarDeclImpl extends ASTWrapperPsiElement implements ZigVarDecl {
 
   @Override
   @Nullable
+  public ZigByteAlign getByteAlign() {
+    return findChildByClass(ZigByteAlign.class);
+  }
+
+  @Override
+  @Nullable
   public ZigExpr getExpr() {
     return findChildByClass(ZigExpr.class);
+  }
+
+  @Override
+  @Nullable
+  public ZigLinkSection getLinkSection() {
+    return findChildByClass(ZigLinkSection.class);
   }
 
   @Override

@@ -1,2 +1,3 @@
-fn main() i32 {
-}
+pub export fn fkd() {}
+pub export const v = {};
+test "df" {}

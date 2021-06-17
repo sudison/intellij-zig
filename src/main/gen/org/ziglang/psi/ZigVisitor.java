@@ -47,6 +47,14 @@ public class ZigVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitBlockExpr(@NotNull ZigBlockExpr o) {
+    visitPsiElement(o);
+  }
+
+  public void visitBlockLabel(@NotNull ZigBlockLabel o) {
+    visitPsiElement(o);
+  }
+
   public void visitBoolAndExpr(@NotNull ZigBoolAndExpr o) {
     visitPsiElement(o);
   }
@@ -55,11 +63,23 @@ public class ZigVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitByteAlign(@NotNull ZigByteAlign o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCallConv(@NotNull ZigCallConv o) {
+    visitPsiElement(o);
+  }
+
   public void visitCompareExpr(@NotNull ZigCompareExpr o) {
     visitPsiElement(o);
   }
 
   public void visitCompareOp(@NotNull ZigCompareOp o) {
+    visitPsiElement(o);
+  }
+
+  public void visitContainerField(@NotNull ZigContainerField o) {
     visitPsiElement(o);
   }
 
@@ -88,6 +108,10 @@ public class ZigVisitor extends PsiElementVisitor {
   }
 
   public void visitIfPrefix(@NotNull ZigIfPrefix o) {
+    visitPsiElement(o);
+  }
+
+  public void visitLinkSection(@NotNull ZigLinkSection o) {
     visitPsiElement(o);
   }
 
@@ -148,6 +172,14 @@ public class ZigVisitor extends PsiElementVisitor {
   }
 
   public void visitSuffixOp(@NotNull ZigSuffixOp o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTestDecl(@NotNull ZigTestDecl o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTopLevelComptime(@NotNull ZigTopLevelComptime o) {
     visitPsiElement(o);
   }
 

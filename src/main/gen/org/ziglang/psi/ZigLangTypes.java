@@ -17,11 +17,16 @@ public interface ZigLangTypes {
   IElementType BIT_SHIFT_EXPR = new ZigLangElementType("BIT_SHIFT_EXPR");
   IElementType BIT_SHIFT_OP = new ZigLangElementType("BIT_SHIFT_OP");
   IElementType BLOCK = new ZigLangElementType("BLOCK");
+  IElementType BLOCK_EXPR = new ZigLangElementType("BLOCK_EXPR");
+  IElementType BLOCK_LABEL = new ZigLangElementType("BLOCK_LABEL");
   IElementType BOOL_AND_EXPR = new ZigLangElementType("BOOL_AND_EXPR");
   IElementType BOOL_OR_EXPR = new ZigLangElementType("BOOL_OR_EXPR");
   IElementType BUILTINIDENTIFIER = new ZigLangElementType("BUILTINIDENTIFIER");
+  IElementType BYTE_ALIGN = new ZigLangElementType("BYTE_ALIGN");
+  IElementType CALL_CONV = new ZigLangElementType("CALL_CONV");
   IElementType COMPARE_EXPR = new ZigLangElementType("COMPARE_EXPR");
   IElementType COMPARE_OP = new ZigLangElementType("COMPARE_OP");
+  IElementType CONTAINER_FIELD = new ZigLangElementType("CONTAINER_FIELD");
   IElementType CURLY_SUFFIX_EXPR = new ZigLangElementType("CURLY_SUFFIX_EXPR");
   IElementType ERROR_UNION_EXPR = new ZigLangElementType("ERROR_UNION_EXPR");
   IElementType EXPR = new ZigLangElementType("EXPR");
@@ -29,6 +34,7 @@ public interface ZigLangTypes {
   IElementType FN_CALL_ARGUMENTS = new ZigLangElementType("FN_CALL_ARGUMENTS");
   IElementType IF_EXPR = new ZigLangElementType("IF_EXPR");
   IElementType IF_PREFIX = new ZigLangElementType("IF_PREFIX");
+  IElementType LINK_SECTION = new ZigLangElementType("LINK_SECTION");
   IElementType MULTIPLY_EXPR = new ZigLangElementType("MULTIPLY_EXPR");
   IElementType MULTIPLY_OP = new ZigLangElementType("MULTIPLY_OP");
   IElementType PARAM_DECL = new ZigLangElementType("PARAM_DECL");
@@ -44,25 +50,33 @@ public interface ZigLangTypes {
   IElementType STRINGLITERAL = new ZigLangElementType("STRINGLITERAL");
   IElementType SUFFIX_EXPR = new ZigLangElementType("SUFFIX_EXPR");
   IElementType SUFFIX_OP = new ZigLangElementType("SUFFIX_OP");
+  IElementType TEST_DECL = new ZigLangElementType("TEST_DECL");
+  IElementType TOP_LEVEL_COMPTIME = new ZigLangElementType("TOP_LEVEL_COMPTIME");
   IElementType TYPE_EXPR = new ZigLangElementType("TYPE_EXPR");
   IElementType VAR_DECL = new ZigLangElementType("VAR_DECL");
 
+  IElementType ALIGN = new ZigLangTokenType("align");
   IElementType AMPERSAND = new ZigLangTokenType("&");
   IElementType AMPERSANDEQUAL = new ZigLangTokenType("&=");
   IElementType AND = new ZigLangTokenType("and");
+  IElementType ANY_TYPE = new ZigLangTokenType("anytype");
   IElementType ASTERISK = new ZigLangTokenType("*");
   IElementType ASTERISK2 = new ZigLangTokenType("**");
   IElementType ASTERISKEQUAL = new ZigLangTokenType("*=");
   IElementType ASTERISKPERCENT = new ZigLangTokenType("*%");
   IElementType ASTERISKPERCENTEQUAL = new ZigLangTokenType("*%=");
   IElementType AWAIT = new ZigLangTokenType("AWAIT");
+  IElementType CALLCONV = new ZigLangTokenType("callconv");
   IElementType CARET = new ZigLangTokenType("^");
   IElementType CARETEQUAL = new ZigLangTokenType("^=");
   IElementType CATCH = new ZigLangTokenType("catch");
+  IElementType CHAR_ESCAPE = new ZigLangTokenType("CHAR_ESCAPE");
   IElementType COLON = new ZigLangTokenType(":");
   IElementType COMMA = new ZigLangTokenType(",");
   IElementType COMMENT = new ZigLangTokenType("COMMENT");
+  IElementType COMPTIME = new ZigLangTokenType("comptime");
   IElementType CONST = new ZigLangTokenType("const");
+  IElementType CONTAINER_DOC = new ZigLangTokenType("CONTAINER_DOC");
   IElementType DOT = new ZigLangTokenType(".");
   IElementType DOT2 = new ZigLangTokenType("DOT2");
   IElementType DOTASTERISK = new ZigLangTokenType(".*");
@@ -72,9 +86,13 @@ public interface ZigLangTypes {
   IElementType EQUALEQUAL = new ZigLangTokenType("==");
   IElementType EXCLAMATIONMARK = new ZigLangTokenType("!");
   IElementType EXCLAMATIONMARKEQUAL = new ZigLangTokenType("!=");
+  IElementType EXPORT = new ZigLangTokenType("export");
+  IElementType EXTERN = new ZigLangTokenType("extern");
   IElementType FN = new ZigLangTokenType("fn");
+  IElementType HEX = new ZigLangTokenType("HEX");
   IElementType ID = new ZigLangTokenType("ID");
   IElementType IF = new ZigLangTokenType("if");
+  IElementType INLINE = new ZigLangTokenType("inline");
   IElementType INTEGER = new ZigLangTokenType("INTEGER");
   IElementType LARROW = new ZigLangTokenType("<");
   IElementType LARROW2 = new ZigLangTokenType("<<");
@@ -82,11 +100,13 @@ public interface ZigLangTypes {
   IElementType LARROWEQUAL = new ZigLangTokenType("<=");
   IElementType LBRACE = new ZigLangTokenType("{");
   IElementType LBRACKET = new ZigLangTokenType("[");
+  IElementType LINKSECTION = new ZigLangTokenType("linksection");
   IElementType LPAREN = new ZigLangTokenType("(");
   IElementType MINUS = new ZigLangTokenType("-");
   IElementType MINUSEQUAL = new ZigLangTokenType("-=");
   IElementType MINUSPERCENT = new ZigLangTokenType("-%");
   IElementType MINUSPERCENTEQUAL = new ZigLangTokenType("-%=");
+  IElementType NOINLINE = new ZigLangTokenType("noinline");
   IElementType OR = new ZigLangTokenType("or");
   IElementType ORELSE = new ZigLangTokenType("orelse");
   IElementType PERCENT = new ZigLangTokenType("%");
@@ -112,8 +132,12 @@ public interface ZigLangTypes {
   IElementType SLASH = new ZigLangTokenType("/");
   IElementType SLASHEQUAL = new ZigLangTokenType("/=");
   IElementType STRINGLITERALSINGLE = new ZigLangTokenType("STRINGLITERALSINGLE");
+  IElementType STRING_CHAR = new ZigLangTokenType("STRING_CHAR");
+  IElementType TEST = new ZigLangTokenType("test");
+  IElementType THREAD_LOCAL = new ZigLangTokenType("threadlocal");
   IElementType TILDE = new ZigLangTokenType("~");
   IElementType TRY = new ZigLangTokenType("try");
+  IElementType USING_NAME_SPACE = new ZigLangTokenType("usingnamespace");
   IElementType VAR = new ZigLangTokenType("var");
 
   class Factory {
@@ -146,6 +170,12 @@ public interface ZigLangTypes {
       else if (type == BLOCK) {
         return new ZigBlockImpl(node);
       }
+      else if (type == BLOCK_EXPR) {
+        return new ZigBlockExprImpl(node);
+      }
+      else if (type == BLOCK_LABEL) {
+        return new ZigBlockLabelImpl(node);
+      }
       else if (type == BOOL_AND_EXPR) {
         return new ZigBoolAndExprImpl(node);
       }
@@ -155,11 +185,20 @@ public interface ZigLangTypes {
       else if (type == BUILTINIDENTIFIER) {
         return new ZigBuiltinidentifierImpl(node);
       }
+      else if (type == BYTE_ALIGN) {
+        return new ZigByteAlignImpl(node);
+      }
+      else if (type == CALL_CONV) {
+        return new ZigCallConvImpl(node);
+      }
       else if (type == COMPARE_EXPR) {
         return new ZigCompareExprImpl(node);
       }
       else if (type == COMPARE_OP) {
         return new ZigCompareOpImpl(node);
+      }
+      else if (type == CONTAINER_FIELD) {
+        return new ZigContainerFieldImpl(node);
       }
       else if (type == CURLY_SUFFIX_EXPR) {
         return new ZigCurlySuffixExprImpl(node);
@@ -181,6 +220,9 @@ public interface ZigLangTypes {
       }
       else if (type == IF_PREFIX) {
         return new ZigIfPrefixImpl(node);
+      }
+      else if (type == LINK_SECTION) {
+        return new ZigLinkSectionImpl(node);
       }
       else if (type == MULTIPLY_EXPR) {
         return new ZigMultiplyExprImpl(node);
@@ -226,6 +268,12 @@ public interface ZigLangTypes {
       }
       else if (type == SUFFIX_OP) {
         return new ZigSuffixOpImpl(node);
+      }
+      else if (type == TEST_DECL) {
+        return new ZigTestDeclImpl(node);
+      }
+      else if (type == TOP_LEVEL_COMPTIME) {
+        return new ZigTopLevelComptimeImpl(node);
       }
       else if (type == TYPE_EXPR) {
         return new ZigTypeExprImpl(node);

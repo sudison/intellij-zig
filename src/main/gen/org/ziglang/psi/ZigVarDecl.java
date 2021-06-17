@@ -8,7 +8,13 @@ import com.intellij.psi.PsiElement;
 public interface ZigVarDecl extends PsiElement {
 
   @Nullable
+  ZigByteAlign getByteAlign();
+
+  @Nullable
   ZigExpr getExpr();
+
+  @Nullable
+  ZigLinkSection getLinkSection();
 
   @Nullable
   ZigTypeExpr getTypeExpr();

@@ -13,7 +13,9 @@
   tokenTypeClass="org.ziglang.psi.ZigLangTokenType"
 tokens = [
 WHITESPACE='regexp:[\s]+'
-COMMENT='regexp://.*'
+CONTAINER_DOC='regexp://!.*'
+COMMENT='regexp:///.*'
+HEX='regexp:[0-9a-fA-F]'
 PUB='pub'
 FN='fn'
 CONST='const'
@@ -21,6 +23,19 @@ VAR='var'
 EQUAL='='
 OR='or'
 AND='and'
+EXPORT='export'
+EXTERN='extern'
+INLINE='inline'
+NOINLINE='noinline'
+THREAD_LOCAL='threadlocal'
+USING_NAME_SPACE='usingnamespace'
+ALIGN='align'
+LINKSECTION='linksection'
+CALLCONV='callconv'
+COMPTIME='comptime'
+ANY_TYPE='anytype'
+TEST='test'
+
 EQUALEQUAL='=='
 LARROW='<'
 RARROW='>'
@@ -72,23 +87,39 @@ RBRACKET=']'
 DOTASTERISK='.*'
 DOTQUESTIONMARK='.?'
 INTEGER="regexp:\d+"
-STRINGLITERALSINGLE='regexp:\"[^\\"]*\"'
 ID='regexp:[A-Za-z_][A-Za-z0-9_]*'
 SEMICOLON=';'
 LPAREN='('
 RPAREN=')'
 COMMA=','
 COLON=':'
+CHAR_ESCAPE='regexp:\\x[0-9a-fA-F][0-9a-fA-F]|\\u\{[0-9a-fA-F]+}|\\[nr\t\"]'
+STRING_CHAR='regexp:\\x[0-9a-fA-F][0-9a-fA-F]|\\u\{[0-9a-fA-F]+}|\\[nr\t\"]|[^\"\n]'
+STRINGLITERALSINGLE='regexp:\"(\\x[0-9a-fA-F][0-9a-fA-F]|\\u\{[0-9a-fA-F]+}|\\[nr\t\"]|[^\"\n])*\"'
 ]
 }
 
 
 root ::= container_doc_comment? ContainerMembers
-private container_doc_comment ::= COMMENT+
-private ContainerMembers ::= ContainerDeclarations
-private ContainerDeclarations ::= (PUB? TopLevelDecl)*
-private TopLevelDecl ::= FnProto (SEMICOLON | Block) | VarDecl
-private FnProto ::= FN ID? LPAREN ParamDeclList RPAREN  TypeExpr
+private container_doc_comment ::= CONTAINER_DOC+
+private ContainerMembers ::= ContainerDeclarations (ContainerField COMMA)* (ContainerField | ContainerDeclarations)
+private ContainerDeclarations ::=
+    TestDecl ContainerDeclarations| TopLevelComptime ContainerDeclarations|(DocComment? PUB? TopLevelDecl)*
+
+TopLevelComptime ::= DocComment? COMPTIME BlockExpr
+
+TestDecl ::= DocComment? TEST STRINGLITERALSINGLE? Block
+private DocComment ::= COMMENT+
+private TopLevelDecl ::=
+    (EXPORT | EXTERN STRINGLITERALSINGLE? | (INLINE | NOINLINE))?  FnProto (SEMICOLON | Block)
+    |(EXPORT | EXTERN STRINGLITERALSINGLE?)? THREAD_LOCAL? VarDecl
+    | USING_NAME_SPACE Expr SEMICOLON
+
+private FnProto ::= FN ID? LPAREN ParamDeclList RPAREN ByteAlign? LinkSection? CallConv? EXCLAMATIONMARK?  TypeExpr
+ByteAlign ::= ALIGN LPAREN Expr RPAREN
+LinkSection ::= LINKSECTION LPAREN Expr RPAREN
+CallConv ::= CALLCONV LPAREN Expr RPAREN
+
 ParamDeclList ::= (ParamDecl COMMA)* ParamDecl?
 ParamDecl ::= (ID COLON)? ParamType
 ParamType ::= TypeExpr
@@ -105,7 +136,10 @@ BUILTINIDENTIFIER ::='@' ID
 FnCallArguments ::= LPAREN ExprList RPAREN
 ExprList ::= (Expr COMMA)* Expr?
 
-VarDecl ::= (CONST |VAR) ID (COLON TypeExpr)? (EQUAL Expr)? SEMICOLON
+VarDecl ::= (CONST |VAR) ID (COLON TypeExpr)? ByteAlign? LinkSection? (EQUAL Expr)? SEMICOLON
+
+ContainerField ::= DocComment? COMPTIME? ID (COLON (ANY_TYPE|TypeExpr) ByteAlign?)? (EQUAL Expr)?
+
 Expr ::= BoolOrExpr
 BoolOrExpr ::= BoolAndExpr (OR BoolAndExpr)*
 BoolAndExpr ::= CompareExpr (AND CompareExpr)*
@@ -131,6 +165,9 @@ IfExpr ::= IfPrefix Expr (ELSE Payload? Expr)?
 IfPrefix ::= IF LPAREN Expr RPAREN PtrPayload?
 PtrPayload ::= PIPE ASTERISK? ID PIPE
 Block ::= LBRACE Statement* RBRACE
+
+BlockExpr ::= BlockLabel? Block
+BlockLabel ::= ID COLON
 Statement ::= VarDecl | AssignExpr SEMICOLON
 AssignExpr ::= Expr (AssignOp Expr)?
 AssignOp

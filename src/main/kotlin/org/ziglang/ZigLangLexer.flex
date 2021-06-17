@@ -26,10 +26,14 @@ EOL=\R
 WHITE_SPACE=\s+
 
 WHITESPACE=[\s]+
-COMMENT="//".*
+CONTAINER_DOC="//"!.*
+COMMENT="///".*
+HEX=[0-9a-fA-F]
 INTEGER=[0-9]+
-STRINGLITERALSINGLE=\\"[^\\\"]*\\"
 ID=[A-Za-z_][A-Za-z0-9_]*
+CHAR_ESCAPE=\\x[0-9a-fA-F][0-9a-fA-F]|\\u\{[0-9a-fA-F]+}|\\[nr\t\"]
+STRING_CHAR=\\x[0-9a-fA-F][0-9a-fA-F]|\\u\{[0-9a-fA-F]+}|\\[nr\t\"]|[^\"\n]
+STRINGLITERALSINGLE=\"(\\x[0-9a-fA-F][0-9a-fA-F]|\\u\{[0-9a-fA-F]+}|\\[nr\t\"]|[^\"\n])*\"
 
 %%
 <YYINITIAL> {
@@ -42,6 +46,18 @@ ID=[A-Za-z_][A-Za-z0-9_]*
   "="                        { return EQUAL; }
   "or"                       { return OR; }
   "and"                      { return AND; }
+  "export"                   { return EXPORT; }
+  "extern"                   { return EXTERN; }
+  "inline"                   { return INLINE; }
+  "noinline"                 { return NOINLINE; }
+  "threadlocal"              { return THREAD_LOCAL; }
+  "usingnamespace"           { return USING_NAME_SPACE; }
+  "align"                    { return ALIGN; }
+  "linksection"              { return LINKSECTION; }
+  "callconv"                 { return CALLCONV; }
+  "comptime"                 { return COMPTIME; }
+  "anytype"                  { return ANY_TYPE; }
+  "test"                     { return TEST; }
   "=="                       { return EQUALEQUAL; }
   "<"                        { return LARROW; }
   ">"                        { return RARROW; }
@@ -101,10 +117,14 @@ ID=[A-Za-z_][A-Za-z0-9_]*
   "AWAIT"                    { return AWAIT; }
 
   {WHITESPACE}               { return WHITESPACE; }
+  {CONTAINER_DOC}            { return CONTAINER_DOC; }
   {COMMENT}                  { return COMMENT; }
+  {HEX}                      { return HEX; }
   {INTEGER}                  { return INTEGER; }
-  {STRINGLITERALSINGLE}      { return STRINGLITERALSINGLE; }
   {ID}                       { return ID; }
+  {CHAR_ESCAPE}              { return CHAR_ESCAPE; }
+  {STRING_CHAR}              { return STRING_CHAR; }
+  {STRINGLITERALSINGLE}      { return STRINGLITERALSINGLE; }
 
 }
 
