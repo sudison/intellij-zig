@@ -5,12 +5,18 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ZigCurlySuffixExpr extends PsiElement {
+public interface ZigForStatement extends PsiElement {
 
   @Nullable
-  ZigInitList getInitList();
+  ZigAssignExpr getAssignExpr();
+
+  @Nullable
+  ZigBlockExpr getBlockExpr();
 
   @NotNull
-  ZigTypeExpr getTypeExpr();
+  ZigForPrefix getForPrefix();
+
+  @Nullable
+  ZigStatement getStatement();
 
 }

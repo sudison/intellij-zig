@@ -15,6 +15,42 @@ public class ZigVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitArrayTypeStart(@NotNull ZigArrayTypeStart o) {
+    visitPsiElement(o);
+  }
+
+  public void visitAsmClobbers(@NotNull ZigAsmClobbers o) {
+    visitPsiElement(o);
+  }
+
+  public void visitAsmExpr(@NotNull ZigAsmExpr o) {
+    visitPsiElement(o);
+  }
+
+  public void visitAsmInput(@NotNull ZigAsmInput o) {
+    visitPsiElement(o);
+  }
+
+  public void visitAsmInputItem(@NotNull ZigAsmInputItem o) {
+    visitPsiElement(o);
+  }
+
+  public void visitAsmInputList(@NotNull ZigAsmInputList o) {
+    visitPsiElement(o);
+  }
+
+  public void visitAsmOutput(@NotNull ZigAsmOutput o) {
+    visitPsiElement(o);
+  }
+
+  public void visitAsmOutputItem(@NotNull ZigAsmOutputItem o) {
+    visitPsiElement(o);
+  }
+
+  public void visitAsmOutputList(@NotNull ZigAsmOutputList o) {
+    visitPsiElement(o);
+  }
+
   public void visitAssignExpr(@NotNull ZigAssignExpr o) {
     visitPsiElement(o);
   }
@@ -51,6 +87,10 @@ public class ZigVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitBlockExprStatement(@NotNull ZigBlockExprStatement o) {
+    visitPsiElement(o);
+  }
+
   public void visitBlockLabel(@NotNull ZigBlockLabel o) {
     visitPsiElement(o);
   }
@@ -60,6 +100,10 @@ public class ZigVisitor extends PsiElementVisitor {
   }
 
   public void visitBoolOrExpr(@NotNull ZigBoolOrExpr o) {
+    visitPsiElement(o);
+  }
+
+  public void visitBreakLabel(@NotNull ZigBreakLabel o) {
     visitPsiElement(o);
   }
 
@@ -99,7 +143,23 @@ public class ZigVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitFieldInit(@NotNull ZigFieldInit o) {
+    visitPsiElement(o);
+  }
+
   public void visitFnCallArguments(@NotNull ZigFnCallArguments o) {
+    visitPsiElement(o);
+  }
+
+  public void visitForExpr(@NotNull ZigForExpr o) {
+    visitPsiElement(o);
+  }
+
+  public void visitForPrefix(@NotNull ZigForPrefix o) {
+    visitPsiElement(o);
+  }
+
+  public void visitForStatement(@NotNull ZigForStatement o) {
     visitPsiElement(o);
   }
 
@@ -111,7 +171,27 @@ public class ZigVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitIfStatement(@NotNull ZigIfStatement o) {
+    visitPsiElement(o);
+  }
+
+  public void visitInitList(@NotNull ZigInitList o) {
+    visitPsiElement(o);
+  }
+
+  public void visitLabeledStatement(@NotNull ZigLabeledStatement o) {
+    visitPsiElement(o);
+  }
+
   public void visitLinkSection(@NotNull ZigLinkSection o) {
+    visitPsiElement(o);
+  }
+
+  public void visitLoopExpr(@NotNull ZigLoopExpr o) {
+    visitPsiElement(o);
+  }
+
+  public void visitLoopStatement(@NotNull ZigLoopStatement o) {
     visitPsiElement(o);
   }
 
@@ -147,6 +227,10 @@ public class ZigVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitPrefixTypeOp(@NotNull ZigPrefixTypeOp o) {
+    visitPsiElement(o);
+  }
+
   public void visitPrimaryExpr(@NotNull ZigPrimaryExpr o) {
     visitPsiElement(o);
   }
@@ -155,7 +239,15 @@ public class ZigVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitPtrIndexPayload(@NotNull ZigPtrIndexPayload o) {
+    visitPsiElement(o);
+  }
+
   public void visitPtrPayload(@NotNull ZigPtrPayload o) {
+    visitPsiElement(o);
+  }
+
+  public void visitPtrTypeStart(@NotNull ZigPtrTypeStart o) {
     visitPsiElement(o);
   }
 
@@ -163,7 +255,15 @@ public class ZigVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitSliceTypeStart(@NotNull ZigSliceTypeStart o) {
+    visitPsiElement(o);
+  }
+
   public void visitStatement(@NotNull ZigStatement o) {
+    visitPsiElement(o);
+  }
+
+  public void visitStringList(@NotNull ZigStringList o) {
     visitPsiElement(o);
   }
 
@@ -172,6 +272,26 @@ public class ZigVisitor extends PsiElementVisitor {
   }
 
   public void visitSuffixOp(@NotNull ZigSuffixOp o) {
+    visitPsiElement(o);
+  }
+
+  public void visitSwitchCase(@NotNull ZigSwitchCase o) {
+    visitPsiElement(o);
+  }
+
+  public void visitSwitchExpr(@NotNull ZigSwitchExpr o) {
+    visitPsiElement(o);
+  }
+
+  public void visitSwitchItem(@NotNull ZigSwitchItem o) {
+    visitPsiElement(o);
+  }
+
+  public void visitSwitchProng(@NotNull ZigSwitchProng o) {
+    visitPsiElement(o);
+  }
+
+  public void visitSwitchProngList(@NotNull ZigSwitchProngList o) {
     visitPsiElement(o);
   }
 
@@ -188,6 +308,22 @@ public class ZigVisitor extends PsiElementVisitor {
   }
 
   public void visitVarDecl(@NotNull ZigVarDecl o) {
+    visitPsiElement(o);
+  }
+
+  public void visitWhileContinueExpr(@NotNull ZigWhileContinueExpr o) {
+    visitPsiElement(o);
+  }
+
+  public void visitWhileExpr(@NotNull ZigWhileExpr o) {
+    visitPsiElement(o);
+  }
+
+  public void visitWhilePrefix(@NotNull ZigWhilePrefix o) {
+    visitPsiElement(o);
+  }
+
+  public void visitWhileStatement(@NotNull ZigWhileStatement o) {
     visitPsiElement(o);
   }
 

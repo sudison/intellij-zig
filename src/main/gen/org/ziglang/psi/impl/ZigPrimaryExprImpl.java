@@ -29,8 +29,26 @@ public class ZigPrimaryExprImpl extends ASTWrapperPsiElement implements ZigPrima
 
   @Override
   @Nullable
+  public ZigAsmExpr getAsmExpr() {
+    return findChildByClass(ZigAsmExpr.class);
+  }
+
+  @Override
+  @Nullable
   public ZigBlock getBlock() {
     return findChildByClass(ZigBlock.class);
+  }
+
+  @Override
+  @Nullable
+  public ZigBlockLabel getBlockLabel() {
+    return findChildByClass(ZigBlockLabel.class);
+  }
+
+  @Override
+  @Nullable
+  public ZigBreakLabel getBreakLabel() {
+    return findChildByClass(ZigBreakLabel.class);
   }
 
   @Override
@@ -49,6 +67,12 @@ public class ZigPrimaryExprImpl extends ASTWrapperPsiElement implements ZigPrima
   @Nullable
   public ZigIfExpr getIfExpr() {
     return findChildByClass(ZigIfExpr.class);
+  }
+
+  @Override
+  @Nullable
+  public ZigLoopExpr getLoopExpr() {
+    return findChildByClass(ZigLoopExpr.class);
   }
 
 }

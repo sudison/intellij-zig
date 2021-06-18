@@ -8,7 +8,16 @@ import com.intellij.psi.PsiElement;
 public interface ZigPrimaryExpr extends PsiElement {
 
   @Nullable
+  ZigAsmExpr getAsmExpr();
+
+  @Nullable
   ZigBlock getBlock();
+
+  @Nullable
+  ZigBlockLabel getBlockLabel();
+
+  @Nullable
+  ZigBreakLabel getBreakLabel();
 
   @Nullable
   ZigCurlySuffixExpr getCurlySuffixExpr();
@@ -18,5 +27,8 @@ public interface ZigPrimaryExpr extends PsiElement {
 
   @Nullable
   ZigIfExpr getIfExpr();
+
+  @Nullable
+  ZigLoopExpr getLoopExpr();
 
 }

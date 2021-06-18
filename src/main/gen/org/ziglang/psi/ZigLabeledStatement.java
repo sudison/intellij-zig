@@ -5,12 +5,15 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ZigCurlySuffixExpr extends PsiElement {
+public interface ZigLabeledStatement extends PsiElement {
 
   @Nullable
-  ZigInitList getInitList();
+  ZigBlock getBlock();
 
-  @NotNull
-  ZigTypeExpr getTypeExpr();
+  @Nullable
+  ZigBlockLabel getBlockLabel();
+
+  @Nullable
+  ZigLoopStatement getLoopStatement();
 
 }

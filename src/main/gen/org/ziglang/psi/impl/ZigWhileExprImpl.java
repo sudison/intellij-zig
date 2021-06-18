@@ -11,14 +11,14 @@ import static org.ziglang.psi.ZigLangTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import org.ziglang.psi.*;
 
-public class ZigTypeExprImpl extends ASTWrapperPsiElement implements ZigTypeExpr {
+public class ZigWhileExprImpl extends ASTWrapperPsiElement implements ZigWhileExpr {
 
-  public ZigTypeExprImpl(@NotNull ASTNode node) {
+  public ZigWhileExprImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ZigVisitor visitor) {
-    visitor.visitTypeExpr(this);
+    visitor.visitWhileExpr(this);
   }
 
   @Override
@@ -29,14 +29,20 @@ public class ZigTypeExprImpl extends ASTWrapperPsiElement implements ZigTypeExpr
 
   @Override
   @NotNull
-  public ZigErrorUnionExpr getErrorUnionExpr() {
-    return findNotNullChildByClass(ZigErrorUnionExpr.class);
+  public List<ZigExpr> getExprList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ZigExpr.class);
+  }
+
+  @Override
+  @Nullable
+  public ZigPayload getPayload() {
+    return findChildByClass(ZigPayload.class);
   }
 
   @Override
   @NotNull
-  public List<ZigPrefixTypeOp> getPrefixTypeOpList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ZigPrefixTypeOp.class);
+  public ZigWhilePrefix getWhilePrefix() {
+    return findNotNullChildByClass(ZigWhilePrefix.class);
   }
 
 }

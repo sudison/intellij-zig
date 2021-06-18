@@ -5,12 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ZigTypeExpr extends PsiElement {
+public interface ZigInitList extends PsiElement {
 
   @NotNull
-  ZigErrorUnionExpr getErrorUnionExpr();
+  List<ZigExpr> getExprList();
 
   @NotNull
-  List<ZigPrefixTypeOp> getPrefixTypeOpList();
+  List<ZigFieldInit> getFieldInitList();
 
 }

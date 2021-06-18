@@ -5,27 +5,21 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ZigStatement extends PsiElement {
+public interface ZigIfStatement extends PsiElement {
 
   @Nullable
   ZigAssignExpr getAssignExpr();
 
   @Nullable
-  ZigBlockExprStatement getBlockExprStatement();
+  ZigBlockExpr getBlockExpr();
 
-  @Nullable
-  ZigIfStatement getIfStatement();
-
-  @Nullable
-  ZigLabeledStatement getLabeledStatement();
+  @NotNull
+  ZigIfPrefix getIfPrefix();
 
   @Nullable
   ZigPayload getPayload();
 
   @Nullable
-  ZigSwitchExpr getSwitchExpr();
-
-  @Nullable
-  ZigVarDecl getVarDecl();
+  ZigStatement getStatement();
 
 }

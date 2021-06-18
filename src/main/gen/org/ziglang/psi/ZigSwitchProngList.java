@@ -5,12 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ZigTypeExpr extends PsiElement {
+public interface ZigSwitchProngList extends PsiElement {
 
   @NotNull
-  ZigErrorUnionExpr getErrorUnionExpr();
-
-  @NotNull
-  List<ZigPrefixTypeOp> getPrefixTypeOpList();
+  List<ZigSwitchProng> getSwitchProngList();
 
 }

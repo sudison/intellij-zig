@@ -11,14 +11,14 @@ import static org.ziglang.psi.ZigLangTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import org.ziglang.psi.*;
 
-public class ZigStatementImpl extends ASTWrapperPsiElement implements ZigStatement {
+public class ZigWhileStatementImpl extends ASTWrapperPsiElement implements ZigWhileStatement {
 
-  public ZigStatementImpl(@NotNull ASTNode node) {
+  public ZigWhileStatementImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ZigVisitor visitor) {
-    visitor.visitStatement(this);
+    visitor.visitWhileStatement(this);
   }
 
   @Override
@@ -35,20 +35,8 @@ public class ZigStatementImpl extends ASTWrapperPsiElement implements ZigStateme
 
   @Override
   @Nullable
-  public ZigBlockExprStatement getBlockExprStatement() {
-    return findChildByClass(ZigBlockExprStatement.class);
-  }
-
-  @Override
-  @Nullable
-  public ZigIfStatement getIfStatement() {
-    return findChildByClass(ZigIfStatement.class);
-  }
-
-  @Override
-  @Nullable
-  public ZigLabeledStatement getLabeledStatement() {
-    return findChildByClass(ZigLabeledStatement.class);
+  public ZigBlockExpr getBlockExpr() {
+    return findChildByClass(ZigBlockExpr.class);
   }
 
   @Override
@@ -59,14 +47,14 @@ public class ZigStatementImpl extends ASTWrapperPsiElement implements ZigStateme
 
   @Override
   @Nullable
-  public ZigSwitchExpr getSwitchExpr() {
-    return findChildByClass(ZigSwitchExpr.class);
+  public ZigStatement getStatement() {
+    return findChildByClass(ZigStatement.class);
   }
 
   @Override
-  @Nullable
-  public ZigVarDecl getVarDecl() {
-    return findChildByClass(ZigVarDecl.class);
+  @NotNull
+  public ZigWhilePrefix getWhilePrefix() {
+    return findNotNullChildByClass(ZigWhilePrefix.class);
   }
 
 }

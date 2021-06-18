@@ -21,6 +21,7 @@ FN='fn'
 CONST='const'
 VAR='var'
 EQUAL='='
+LETTERC='c'
 OR='or'
 AND='and'
 EXPORT='export'
@@ -35,6 +36,21 @@ CALLCONV='callconv'
 COMPTIME='comptime'
 ANY_TYPE='anytype'
 TEST='test'
+NOSUSPEND='nosuspend'
+SUSPEND='suspend'
+DEFER='defer'
+ERRDEFER='errdefer'
+FOR='for'
+WHILE='while'
+SWITCH='switch'
+BREAK='break'
+CONTINUE='continue'
+RESUME='resume'
+ASM='asm'
+VOLATILE='volatile'
+ANYFRAME='anyframe'
+ALLOWZERO='allowzero'
+ASYNC='async'
 
 EQUALEQUAL='=='
 LARROW='<'
@@ -75,16 +91,21 @@ LARROW2EQUAL='<<='
 RARROW2EQUAL='>>='
 AMPERSANDEQUAL='&='
 CARETEQUAL='^='
+EQUALRARROW='=>'
+MINUSRARROW='->'
 PIPEEQUAL='|='
 ASTERISKPERCENTEQUAL='*%='
 PLUSPERCENTEQUAL='+%='
 MINUSPERCENTEQUAL='-%='
 TILDE='~'
 DOT='.'
+DOT2='..'
+DOT3='...'
 TRY='try'
 LBRACKET='['
 RBRACKET=']'
 DOTASTERISK='.*'
+QUESTIONMARK='?'
 DOTQUESTIONMARK='.?'
 INTEGER="regexp:\d+"
 ID='regexp:[A-Za-z_][A-Za-z0-9_]*'
@@ -104,11 +125,14 @@ root ::= container_doc_comment? ContainerMembers
 private container_doc_comment ::= CONTAINER_DOC+
 private ContainerMembers ::= ContainerDeclarations
 private ContainerDeclarations ::=
-    TestDecl ContainerDeclarations| TopLevelComptime ContainerDeclarations|(DocComment? PUB? TopLevelDecl)*
+    TestDecl ContainerDeclarations?
+    | TopLevelComptime ContainerDeclarations?
+    | DocComment? PUB? TopLevelDecl ContainerDeclarations?
 
 TopLevelComptime ::= DocComment? COMPTIME BlockExpr
 
 TestDecl ::= DocComment? TEST STRINGLITERALSINGLE? Block
+
 private DocComment ::= COMMENT+
 private TopLevelDecl ::=
     (EXPORT | EXTERN STRINGLITERALSINGLE? | (INLINE | NOINLINE))?  FnProto (SEMICOLON | Block)
@@ -123,14 +147,36 @@ CallConv ::= CALLCONV LPAREN Expr RPAREN
 ParamDeclList ::= (ParamDecl COMMA)* ParamDecl?
 ParamDecl ::= (ID COLON)? ParamType
 ParamType ::= TypeExpr
-TypeExpr ::= ErrorUnionExpr
+TypeExpr ::= PrefixTypeOp* ErrorUnionExpr
+PrefixTypeOp ::=
+    QUESTIONMARK
+    | ANYFRAME MINUSRARROW
+    | SliceTypeStart (ByteAlign | CONST | VOLATILE | ALLOWZERO)*
+    | PtrTypeStart (ALIGN LPAREN Expr (COLON INTEGER COLON INTEGER)? RPAREN | CONST | VOLATILE| ALLOWZERO)*
+    | ArrayTypeStart
+
+SliceTypeStart ::= LBRACKET (COLON Expr)? RBRACKET
+PtrTypeStart ::=
+    ASTERISK
+    | ASTERISK2
+    | LBRACKET ASTERISK (LETTERC | COLON Expr)? RBRACKET
+
+ArrayTypeStart ::= LBRACKET Expr (COLON Expr)? RBRACKET
+
 ErrorUnionExpr ::= SuffixExpr | (EXCLAMATIONMARK TypeExpr)?
-SuffixExpr ::= PrimaryTypeExpr (SuffixOp | FnCallArguments)*
+SuffixExpr ::=
+    ASYNC PrimaryTypeExpr SuffixOp* FnCallArguments
+    | PrimaryTypeExpr (SuffixOp | FnCallArguments)*
 SuffixOp ::= LBRACKET Expr (DOT2 (Expr? (COLON Expr)?)?)? RBRACKET
                   | DOT ID
                   | DOTASTERISK
                   | DOTQUESTIONMARK
-PrimaryTypeExpr ::= BUILTINIDENTIFIER FnCallArguments | DOT ID | ID | INTEGER | STRINGLITERAL
+PrimaryTypeExpr ::=
+    BUILTINIDENTIFIER FnCallArguments
+    | DOT ID
+    | ID
+    | INTEGER
+    | STRINGLITERAL
 STRINGLITERAL ::= STRINGLITERALSINGLE
 BUILTINIDENTIFIER ::='@' ID
 FnCallArguments ::= LPAREN ExprList RPAREN
@@ -157,10 +203,44 @@ AdditionOp ::= PLUS | MINUS | PLUS2 | PLUSPERCENT | MINUSPERCENT
 MultiplyExpr ::= PrefixExpr (MultiplyOp PrefixExpr)*
 MultiplyOp ::= PIPE2 | ASTERISK | SLASH | PERCENT | ASTERISK2 | ASTERISKPERCENT
 PrefixExpr ::= PrefixOp* PrimaryExpr
-PrimaryExpr::= IfExpr | RETURN Expr?| Block | CurlySuffixExpr
+PrimaryExpr::=
+    AsmExpr
+    | IfExpr
+    | BREAK BreakLabel? Expr?
+    | COMPTIME Expr
+    | NOSUSPEND Expr
+    | CONTINUE BreakLabel?
+    | RESUME Expr
+    | RETURN Expr?
+    | BlockLabel? LoopExpr
+    | Block
+    | CurlySuffixExpr
 
+AsmExpr ::= ASM VOLATILE? LPAREN Expr AsmOutput? RPAREN
+AsmOutput ::= COLON AsmOutputList AsmInput?
 
-CurlySuffixExpr ::= TypeExpr
+AsmOutputList ::= (AsmOutputItem COMMA)* AsmOutputItem?
+AsmOutputItem ::= LBRACKET ID RBRACKET STRINGLITERAL LPAREN (MINUSRARROW TypeExpr | ID) RPAREN
+AsmInput ::= COLON AsmInputList AsmClobbers?
+AsmInputList ::= (AsmInputItem COMMA)* AsmInputItem
+AsmInputItem ::= LBRACKET ID RBRACKET STRINGLITERAL LPAREN Expr RPAREN
+AsmClobbers ::= COLON StringList
+StringList ::= (STRINGLITERAL COMMA)* STRINGLITERAL?
+
+BreakLabel ::= COLON ID
+
+LoopExpr ::= INLINE? (ForExpr | WhileExpr)
+ForExpr ::= ForPrefix Expr (ELSE Expr)?
+WhileExpr ::= WhilePrefix Expr (ELSE Payload? Expr)?
+
+CurlySuffixExpr ::= TypeExpr InitList?
+InitList ::=
+    LBRACE FieldInit (COMMA FieldInit)* COMMA? RBRACE
+    | LBRACE Expr (COMMA Expr)* COMMA? RBRACE
+    | LBRACE RBRACE
+
+FieldInit ::= DOT ID EQUAL Expr
+
 IfExpr ::= IfPrefix Expr (ELSE Payload? Expr)?
 IfPrefix ::= IF LPAREN Expr RPAREN PtrPayload?
 PtrPayload ::= PIPE ASTERISK? ID PIPE
@@ -168,7 +248,46 @@ Block ::= LBRACE Statement* RBRACE
 
 BlockExpr ::= BlockLabel? Block
 BlockLabel ::= ID COLON
-Statement ::= VarDecl | AssignExpr SEMICOLON
+Statement ::=
+    VarDecl
+    | COMPTIME BlockExprStatement
+    | NOSUSPEND BlockExprStatement
+    | SUSPEND BlockExprStatement
+    | DEFER BlockExprStatement
+    | ERRDEFER Payload? BlockExprStatement
+    | IfStatement
+    | LabeledStatement
+    | SwitchExpr
+    | AssignExpr SEMICOLON
+
+IfStatement ::=
+    IfPrefix BlockExpr (ELSE Payload? Statement)?
+    | IfPrefix AssignExpr (SEMICOLON | ELSE Payload? Statement)
+
+LabeledStatement ::= BlockLabel? (Block | LoopStatement)
+
+LoopStatement ::= INLINE? (ForStatement | WhileStatement)
+
+ForStatement ::=
+    ForPrefix BlockExpr (ELSE Statement)?
+    | ForPrefix AssignExpr (SEMICOLON | ELSE Statement)
+
+WhileStatement ::=
+    WhilePrefix BlockExpr (ELSE Payload? Statement)?
+    | WhilePrefix AssignExpr (SEMICOLON | ELSE Payload? Statement)
+
+SwitchExpr ::= SWITCH LPAREN Expr RPAREN LBRACE SwitchProngList RBRACE
+SwitchProngList ::= (SwitchProng COMMA)* SwitchProng
+SwitchProng ::= SwitchCase EQUALRARROW PtrPayload? AssignExpr
+SwitchCase ::= SwitchItem (COMMA SwitchItem)* COMMA? | ELSE
+SwitchItem ::= Expr (DOT3 Expr)?
+ForPrefix ::= FOR LPAREN Expr RPAREN PtrIndexPayload
+WhilePrefix ::= WHILE LPAREN Expr RPAREN PtrPayload? WhileContinueExpr?
+WhileContinueExpr ::= COLON LPAREN AssignExpr RPAREN
+
+PtrIndexPayload ::= PIPE ASTERISK? ID (COMMA ID)? PIPE
+
+BlockExprStatement ::= BlockExpr | AssignExpr SEMICOLON
 AssignExpr ::= Expr (AssignOp Expr)?
 AssignOp
     ::= ASTERISKEQUAL

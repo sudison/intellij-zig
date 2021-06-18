@@ -28,6 +28,12 @@ public class ZigCurlySuffixExprImpl extends ASTWrapperPsiElement implements ZigC
   }
 
   @Override
+  @Nullable
+  public ZigInitList getInitList() {
+    return findChildByClass(ZigInitList.class);
+  }
+
+  @Override
   @NotNull
   public ZigTypeExpr getTypeExpr() {
     return findNotNullChildByClass(ZigTypeExpr.class);

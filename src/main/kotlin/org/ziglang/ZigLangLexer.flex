@@ -44,6 +44,7 @@ STRINGLITERALSINGLE=\"(\\x[0-9a-fA-F][0-9a-fA-F]|\\u\{[0-9a-fA-F]+}|\\[nr\t\"]|[
   "const"                    { return CONST; }
   "var"                      { return VAR; }
   "="                        { return EQUAL; }
+  "c"                        { return LETTERC; }
   "or"                       { return OR; }
   "and"                      { return AND; }
   "export"                   { return EXPORT; }
@@ -58,6 +59,21 @@ STRINGLITERALSINGLE=\"(\\x[0-9a-fA-F][0-9a-fA-F]|\\u\{[0-9a-fA-F]+}|\\[nr\t\"]|[
   "comptime"                 { return COMPTIME; }
   "anytype"                  { return ANY_TYPE; }
   "test"                     { return TEST; }
+  "nosuspend"                { return NOSUSPEND; }
+  "suspend"                  { return SUSPEND; }
+  "defer"                    { return DEFER; }
+  "errdefer"                 { return ERRDEFER; }
+  "for"                      { return FOR; }
+  "while"                    { return WHILE; }
+  "switch"                   { return SWITCH; }
+  "break"                    { return BREAK; }
+  "continue"                 { return CONTINUE; }
+  "resume"                   { return RESUME; }
+  "asm"                      { return ASM; }
+  "volatile"                 { return VOLATILE; }
+  "anyframe"                 { return ANYFRAME; }
+  "allowzero"                { return ALLOWZERO; }
+  "async"                    { return ASYNC; }
   "=="                       { return EQUALEQUAL; }
   "<"                        { return LARROW; }
   ">"                        { return RARROW; }
@@ -97,23 +113,27 @@ STRINGLITERALSINGLE=\"(\\x[0-9a-fA-F][0-9a-fA-F]|\\u\{[0-9a-fA-F]+}|\\[nr\t\"]|[
   ">>="                      { return RARROW2EQUAL; }
   "&="                       { return AMPERSANDEQUAL; }
   "^="                       { return CARETEQUAL; }
+  "=>"                       { return EQUALRARROW; }
+  "->"                       { return MINUSRARROW; }
   "|="                       { return PIPEEQUAL; }
   "*%="                      { return ASTERISKPERCENTEQUAL; }
   "+%="                      { return PLUSPERCENTEQUAL; }
   "-%="                      { return MINUSPERCENTEQUAL; }
   "~"                        { return TILDE; }
   "."                        { return DOT; }
+  ".."                       { return DOT2; }
+  "..."                      { return DOT3; }
   "try"                      { return TRY; }
   "["                        { return LBRACKET; }
   "]"                        { return RBRACKET; }
   ".*"                       { return DOTASTERISK; }
+  "?"                        { return QUESTIONMARK; }
   ".?"                       { return DOTQUESTIONMARK; }
   ";"                        { return SEMICOLON; }
   "("                        { return LPAREN; }
   ")"                        { return RPAREN; }
   ","                        { return COMMA; }
   ":"                        { return COLON; }
-  "DOT2"                     { return DOT2; }
   "AWAIT"                    { return AWAIT; }
 
   {WHITESPACE}               { return WHITESPACE; }
