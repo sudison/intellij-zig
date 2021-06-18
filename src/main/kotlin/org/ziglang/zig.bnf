@@ -93,16 +93,16 @@ LPAREN='('
 RPAREN=')'
 COMMA=','
 COLON=':'
-CHAR_ESCAPE='regexp:\\x[0-9a-fA-F][0-9a-fA-F]|\\u\{[0-9a-fA-F]+}|\\[nr\t\"]'
-STRING_CHAR='regexp:\\x[0-9a-fA-F][0-9a-fA-F]|\\u\{[0-9a-fA-F]+}|\\[nr\t\"]|[^\"\n]'
-STRINGLITERALSINGLE='regexp:\"(\\x[0-9a-fA-F][0-9a-fA-F]|\\u\{[0-9a-fA-F]+}|\\[nr\t\"]|[^\"\n])*\"'
+CHAR_ESCAPE='regexp:\\x[0-9a-fA-F][0-9a-fA-F]|\\u\{[0-9a-fA-F]+}|\\[nr\t"]'
+STRING_CHAR='regexp:\\x[0-9a-fA-F][0-9a-fA-F]|\\u\{[0-9a-fA-F]+}|\\[nr\t"]|[^"\n]'
+STRINGLITERALSINGLE='regexp:"(\\x[0-9a-fA-F][0-9a-fA-F]|\\u\{[0-9a-fA-F]+}|\\[nr\t"]|[^"\n])*"'
 ]
 }
 
 
 root ::= container_doc_comment? ContainerMembers
 private container_doc_comment ::= CONTAINER_DOC+
-private ContainerMembers ::= ContainerDeclarations (ContainerField COMMA)* (ContainerField | ContainerDeclarations)
+private ContainerMembers ::= ContainerDeclarations
 private ContainerDeclarations ::=
     TestDecl ContainerDeclarations| TopLevelComptime ContainerDeclarations|(DocComment? PUB? TopLevelDecl)*
 
