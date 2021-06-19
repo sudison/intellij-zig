@@ -11,6 +11,9 @@ public interface ZigPrimaryTypeExpr extends PsiElement {
   ZigBuiltinidentifier getBuiltinidentifier();
 
   @Nullable
+  ZigContainerDecl getContainerDecl();
+
+  @Nullable
   ZigFnCallArguments getFnCallArguments();
 
   @Nullable

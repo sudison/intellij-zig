@@ -823,7 +823,7 @@ public class ZigLangLexer implements FlexLexer {
             // fall through
           case 105: break;
           case 2: 
-            { return WHITESPACE;
+            { return WHITE_SPACE;
             } 
             // fall through
           case 106: break;

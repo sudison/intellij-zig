@@ -123,6 +123,18 @@ public class ZigVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitContainerDecl(@NotNull ZigContainerDecl o) {
+    visitPsiElement(o);
+  }
+
+  public void visitContainerDeclAuto(@NotNull ZigContainerDeclAuto o) {
+    visitPsiElement(o);
+  }
+
+  public void visitContainerDeclType(@NotNull ZigContainerDeclType o) {
+    visitPsiElement(o);
+  }
+
   public void visitContainerField(@NotNull ZigContainerField o) {
     visitPsiElement(o);
   }

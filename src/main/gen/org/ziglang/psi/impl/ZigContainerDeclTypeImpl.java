@@ -11,14 +11,14 @@ import static org.ziglang.psi.ZigLangTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import org.ziglang.psi.*;
 
-public class ZigPrimaryTypeExprImpl extends ASTWrapperPsiElement implements ZigPrimaryTypeExpr {
+public class ZigContainerDeclTypeImpl extends ASTWrapperPsiElement implements ZigContainerDeclType {
 
-  public ZigPrimaryTypeExprImpl(@NotNull ASTNode node) {
+  public ZigContainerDeclTypeImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ZigVisitor visitor) {
-    visitor.visitPrimaryTypeExpr(this);
+    visitor.visitContainerDeclType(this);
   }
 
   @Override
@@ -29,26 +29,8 @@ public class ZigPrimaryTypeExprImpl extends ASTWrapperPsiElement implements ZigP
 
   @Override
   @Nullable
-  public ZigBuiltinidentifier getBuiltinidentifier() {
-    return findChildByClass(ZigBuiltinidentifier.class);
-  }
-
-  @Override
-  @Nullable
-  public ZigContainerDecl getContainerDecl() {
-    return findChildByClass(ZigContainerDecl.class);
-  }
-
-  @Override
-  @Nullable
-  public ZigFnCallArguments getFnCallArguments() {
-    return findChildByClass(ZigFnCallArguments.class);
-  }
-
-  @Override
-  @Nullable
-  public ZigStringliteral getStringliteral() {
-    return findChildByClass(ZigStringliteral.class);
+  public ZigExpr getExpr() {
+    return findChildByClass(ZigExpr.class);
   }
 
 }

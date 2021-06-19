@@ -4,3 +4,4 @@ pub export fn fkd() {
 }
 pub export const v = {};
 test "df" {}
+const a = struct { x:i32,y:i32};

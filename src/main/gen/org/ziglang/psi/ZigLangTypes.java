@@ -37,6 +37,9 @@ public interface ZigLangTypes {
   IElementType CALL_CONV = new ZigLangElementType("CALL_CONV");
   IElementType COMPARE_EXPR = new ZigLangElementType("COMPARE_EXPR");
   IElementType COMPARE_OP = new ZigLangElementType("COMPARE_OP");
+  IElementType CONTAINER_DECL = new ZigLangElementType("CONTAINER_DECL");
+  IElementType CONTAINER_DECL_AUTO = new ZigLangElementType("CONTAINER_DECL_AUTO");
+  IElementType CONTAINER_DECL_TYPE = new ZigLangElementType("CONTAINER_DECL_TYPE");
   IElementType CONTAINER_FIELD = new ZigLangElementType("CONTAINER_FIELD");
   IElementType CURLY_SUFFIX_EXPR = new ZigLangElementType("CURLY_SUFFIX_EXPR");
   IElementType ERROR_UNION_EXPR = new ZigLangElementType("ERROR_UNION_EXPR");
@@ -124,6 +127,7 @@ public interface ZigLangTypes {
   IElementType DOTASTERISK = new ZigLangTokenType(".*");
   IElementType DOTQUESTIONMARK = new ZigLangTokenType(".?");
   IElementType ELSE = new ZigLangTokenType("else");
+  IElementType ENUM = new ZigLangTokenType("ENUM");
   IElementType EQUAL = new ZigLangTokenType("=");
   IElementType EQUALEQUAL = new ZigLangTokenType("==");
   IElementType EQUALRARROW = new ZigLangTokenType("=>");
@@ -154,8 +158,10 @@ public interface ZigLangTypes {
   IElementType MINUSRARROW = new ZigLangTokenType("->");
   IElementType NOINLINE = new ZigLangTokenType("noinline");
   IElementType NOSUSPEND = new ZigLangTokenType("nosuspend");
+  IElementType OPAQUE = new ZigLangTokenType("OPAQUE");
   IElementType OR = new ZigLangTokenType("or");
   IElementType ORELSE = new ZigLangTokenType("orelse");
+  IElementType PACKED = new ZigLangTokenType("PACKED");
   IElementType PERCENT = new ZigLangTokenType("%");
   IElementType PERCENTEQUAL = new ZigLangTokenType("%=");
   IElementType PIPE = new ZigLangTokenType("|");
@@ -181,12 +187,14 @@ public interface ZigLangTypes {
   IElementType SLASH = new ZigLangTokenType("/");
   IElementType SLASHEQUAL = new ZigLangTokenType("/=");
   IElementType STRINGLITERALSINGLE = new ZigLangTokenType("STRINGLITERALSINGLE");
+  IElementType STRUCT = new ZigLangTokenType("STRUCT");
   IElementType SUSPEND = new ZigLangTokenType("suspend");
   IElementType SWITCH = new ZigLangTokenType("switch");
   IElementType TEST = new ZigLangTokenType("test");
   IElementType THREAD_LOCAL = new ZigLangTokenType("threadlocal");
   IElementType TILDE = new ZigLangTokenType("~");
   IElementType TRY = new ZigLangTokenType("try");
+  IElementType UNION = new ZigLangTokenType("UNION");
   IElementType USING_NAME_SPACE = new ZigLangTokenType("usingnamespace");
   IElementType VAR = new ZigLangTokenType("var");
   IElementType VOLATILE = new ZigLangTokenType("volatile");
@@ -281,6 +289,15 @@ public interface ZigLangTypes {
       }
       else if (type == COMPARE_OP) {
         return new ZigCompareOpImpl(node);
+      }
+      else if (type == CONTAINER_DECL) {
+        return new ZigContainerDeclImpl(node);
+      }
+      else if (type == CONTAINER_DECL_AUTO) {
+        return new ZigContainerDeclAutoImpl(node);
+      }
+      else if (type == CONTAINER_DECL_TYPE) {
+        return new ZigContainerDeclTypeImpl(node);
       }
       else if (type == CONTAINER_FIELD) {
         return new ZigContainerFieldImpl(node);

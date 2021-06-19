@@ -115,7 +115,7 @@ COLON=':'
 
 root ::= container_doc_comment? ContainerDeclarations?
 private container_doc_comment ::= CONTAINER_DOC+
-private ContainerMembers ::= ContainerDeclarations
+private ContainerMembers ::= ContainerDeclarations? (ContainerField COMMA)* (ContainerField | ContainerDeclarations?)
 private ContainerDeclarations ::=
     TestDecl ContainerDeclarations?
     | TopLevelComptime ContainerDeclarations?
@@ -166,10 +166,19 @@ SuffixOp ::= LBRACKET Expr (DOT2 (Expr? (COLON Expr)?)?)? RBRACKET
 PrimaryTypeExpr ::=
     BUILTINIDENTIFIER FnCallArguments
     | CHAR_LITERAL
+    | ContainerDecl
     | DOT ID
     | ID
     | INTEGER
     | STRINGLITERAL
+
+ContainerDecl ::= (EXTERN | PACKED)? ContainerDeclAuto
+ContainerDeclAuto ::= ContainerDeclType LBRACE container_doc_comment? ContainerMembers RBRACE
+ContainerDeclType ::=
+    STRUCT
+    | OPAQUE
+    | ENUM (LPAREN Expr RPAREN)?
+    | UNION (LPAREN (ENUM (LPAREN Expr RPAREN)? | Expr) RPAREN)?
 STRINGLITERAL ::= STRINGLITERALSINGLE
 BUILTINIDENTIFIER ::='@' ID
 FnCallArguments ::= LPAREN ExprList RPAREN

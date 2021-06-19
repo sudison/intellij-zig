@@ -64,6 +64,13 @@ STRINGLITERALSINGLE=\"{STRING_CHAR}*\"
 <YYINITIAL> {
   {WHITE_SPACE}               { return WHITE_SPACE; }
 
+  "struct"                   {return STRUCT;}
+  "opaque"                   {return OPAQUE;}
+  "enum"                     {return ENUM;}
+  "union"                    {return UNION;}
+
+
+  "packed"                   {return PACKED;}
   "pub"                      { return PUB; }
   "fn"                       { return FN; }
   "const"                    { return CONST; }
