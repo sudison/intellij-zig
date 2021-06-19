@@ -27,10 +27,4 @@ public class ZigBlockLabelImpl extends ASTWrapperPsiElement implements ZigBlockL
     else super.accept(visitor);
   }
 
-  @Override
-  @NotNull
-  public PsiElement getId() {
-    return findNotNullChildByType(ID);
-  }
-
 }

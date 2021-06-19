@@ -19,7 +19,4 @@ public interface ZigVarDecl extends PsiElement {
   @Nullable
   ZigTypeExpr getTypeExpr();
 
-  @NotNull
-  PsiElement getId();
-
 }

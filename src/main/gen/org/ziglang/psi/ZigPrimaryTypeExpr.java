@@ -16,10 +16,4 @@ public interface ZigPrimaryTypeExpr extends PsiElement {
   @Nullable
   ZigStringliteral getStringliteral();
 
-  @Nullable
-  PsiElement getId();
-
-  @Nullable
-  PsiElement getInteger();
-
 }

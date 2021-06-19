@@ -27,10 +27,4 @@ public class ZigStringliteralImpl extends ASTWrapperPsiElement implements ZigStr
     else super.accept(visitor);
   }
 
-  @Override
-  @NotNull
-  public PsiElement getStringliteralsingle() {
-    return findNotNullChildByType(STRINGLITERALSINGLE);
-  }
-
 }

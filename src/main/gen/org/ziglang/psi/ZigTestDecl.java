@@ -10,7 +10,4 @@ public interface ZigTestDecl extends PsiElement {
   @NotNull
   ZigBlock getBlock();
 
-  @Nullable
-  PsiElement getStringliteralsingle();
-
 }

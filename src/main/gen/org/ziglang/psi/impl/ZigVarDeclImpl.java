@@ -51,10 +51,4 @@ public class ZigVarDeclImpl extends ASTWrapperPsiElement implements ZigVarDecl {
     return findChildByClass(ZigTypeExpr.class);
   }
 
-  @Override
-  @NotNull
-  public PsiElement getId() {
-    return findNotNullChildByType(ID);
-  }
-
 }

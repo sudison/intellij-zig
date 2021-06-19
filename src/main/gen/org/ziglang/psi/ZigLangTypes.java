@@ -109,7 +109,6 @@ public interface ZigLangTypes {
   IElementType CARET = new ZigLangTokenType("^");
   IElementType CARETEQUAL = new ZigLangTokenType("^=");
   IElementType CATCH = new ZigLangTokenType("catch");
-  IElementType CHAR_ESCAPE = new ZigLangTokenType("CHAR_ESCAPE");
   IElementType COLON = new ZigLangTokenType(":");
   IElementType COMMA = new ZigLangTokenType(",");
   IElementType COMMENT = new ZigLangTokenType("COMMENT");
@@ -134,7 +133,6 @@ public interface ZigLangTypes {
   IElementType EXTERN = new ZigLangTokenType("extern");
   IElementType FN = new ZigLangTokenType("fn");
   IElementType FOR = new ZigLangTokenType("for");
-  IElementType HEX = new ZigLangTokenType("HEX");
   IElementType ID = new ZigLangTokenType("ID");
   IElementType IF = new ZigLangTokenType("if");
   IElementType INLINE = new ZigLangTokenType("inline");
@@ -182,7 +180,6 @@ public interface ZigLangTypes {
   IElementType SLASH = new ZigLangTokenType("/");
   IElementType SLASHEQUAL = new ZigLangTokenType("/=");
   IElementType STRINGLITERALSINGLE = new ZigLangTokenType("STRINGLITERALSINGLE");
-  IElementType STRING_CHAR = new ZigLangTokenType("STRING_CHAR");
   IElementType SUSPEND = new ZigLangTokenType("suspend");
   IElementType SWITCH = new ZigLangTokenType("switch");
   IElementType TEST = new ZigLangTokenType("test");

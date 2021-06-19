@@ -13,7 +13,4 @@ public interface ZigAsmInputItem extends PsiElement {
   @NotNull
   ZigStringliteral getStringliteral();
 
-  @NotNull
-  PsiElement getId();
-
 }

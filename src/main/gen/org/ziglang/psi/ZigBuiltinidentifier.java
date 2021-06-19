@@ -7,7 +7,4 @@ import com.intellij.psi.PsiElement;
 
 public interface ZigBuiltinidentifier extends PsiElement {
 
-  @NotNull
-  PsiElement getId();
-
 }

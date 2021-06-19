@@ -45,10 +45,4 @@ public class ZigContainerFieldImpl extends ASTWrapperPsiElement implements ZigCo
     return findChildByClass(ZigTypeExpr.class);
   }
 
-  @Override
-  @NotNull
-  public PsiElement getId() {
-    return findNotNullChildByType(ID);
-  }
-
 }

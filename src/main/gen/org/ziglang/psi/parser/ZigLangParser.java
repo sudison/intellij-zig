@@ -3208,13 +3208,13 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // container_doc_comment? ContainerMembers
+  // container_doc_comment? ContainerDeclarations?
   static boolean root(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "root")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = root_0(b, l + 1);
-    r = r && ContainerMembers(b, l + 1);
+    r = r && root_1(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -3223,6 +3223,13 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
   private static boolean root_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "root_0")) return false;
     container_doc_comment(b, l + 1);
+    return true;
+  }
+
+  // ContainerDeclarations?
+  private static boolean root_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "root_1")) return false;
+    ContainerDeclarations(b, l + 1);
     return true;
   }
 

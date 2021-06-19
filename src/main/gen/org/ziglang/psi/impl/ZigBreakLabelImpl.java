@@ -27,10 +27,4 @@ public class ZigBreakLabelImpl extends ASTWrapperPsiElement implements ZigBreakL
     else super.accept(visitor);
   }
 
-  @Override
-  @NotNull
-  public PsiElement getId() {
-    return findNotNullChildByType(ID);
-  }
-
 }

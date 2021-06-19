@@ -33,10 +33,4 @@ public class ZigTestDeclImpl extends ASTWrapperPsiElement implements ZigTestDecl
     return findNotNullChildByClass(ZigBlock.class);
   }
 
-  @Override
-  @Nullable
-  public PsiElement getStringliteralsingle() {
-    return findChildByType(STRINGLITERALSINGLE);
-  }
-
 }

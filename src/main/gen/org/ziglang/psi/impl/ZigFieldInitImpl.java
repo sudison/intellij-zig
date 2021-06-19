@@ -33,10 +33,4 @@ public class ZigFieldInitImpl extends ASTWrapperPsiElement implements ZigFieldIn
     return findNotNullChildByClass(ZigExpr.class);
   }
 
-  @Override
-  @NotNull
-  public PsiElement getId() {
-    return findNotNullChildByType(ID);
-  }
-
 }

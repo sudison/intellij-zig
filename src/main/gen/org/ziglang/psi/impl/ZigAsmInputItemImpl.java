@@ -39,10 +39,4 @@ public class ZigAsmInputItemImpl extends ASTWrapperPsiElement implements ZigAsmI
     return findNotNullChildByClass(ZigStringliteral.class);
   }
 
-  @Override
-  @NotNull
-  public PsiElement getId() {
-    return findNotNullChildByType(ID);
-  }
-
 }

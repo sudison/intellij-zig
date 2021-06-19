@@ -31,9 +31,9 @@ COMMENT="///".*
 HEX=[0-9a-fA-F]
 INTEGER=[0-9]+
 ID=[A-Za-z_][A-Za-z0-9_]*
-CHAR_ESCAPE=\\x[0-9a-fA-F][0-9a-fA-F]|\\u\{[0-9a-fA-F]+}|\\[nr\t\"]
-STRING_CHAR=\\x[0-9a-fA-F][0-9a-fA-F]|\\u\{[0-9a-fA-F]+}|\\[nr\t\"]|[^\"\n]
-STRINGLITERALSINGLE=\"(\\x[0-9a-fA-F][0-9a-fA-F]|\\u\{[0-9a-fA-F]+}|\\[nr\t\"]|[^\"\n])*\"
+CHAR_ESCAPE=\\x{HEX}{HEX}|\\u\{{HEX}+}|\\[nr\t\'\"]
+STRING_CHAR={CHAR_ESCAPE}|[^\"\n]
+STRINGLITERALSINGLE=\"{STRING_CHAR}*\"
 
 %%
 <YYINITIAL> {
@@ -139,11 +139,8 @@ STRINGLITERALSINGLE=\"(\\x[0-9a-fA-F][0-9a-fA-F]|\\u\{[0-9a-fA-F]+}|\\[nr\t\"]|[
   {WHITESPACE}               { return WHITESPACE; }
   {CONTAINER_DOC}            { return CONTAINER_DOC; }
   {COMMENT}                  { return COMMENT; }
-  {HEX}                      { return HEX; }
   {INTEGER}                  { return INTEGER; }
   {ID}                       { return ID; }
-  {CHAR_ESCAPE}              { return CHAR_ESCAPE; }
-  {STRING_CHAR}              { return STRING_CHAR; }
   {STRINGLITERALSINGLE}      { return STRINGLITERALSINGLE; }
 
 }

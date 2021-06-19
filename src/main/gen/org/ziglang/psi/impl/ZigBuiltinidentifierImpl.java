@@ -27,10 +27,4 @@ public class ZigBuiltinidentifierImpl extends ASTWrapperPsiElement implements Zi
     else super.accept(visitor);
   }
 
-  @Override
-  @NotNull
-  public PsiElement getId() {
-    return findNotNullChildByType(ID);
-  }
-
 }

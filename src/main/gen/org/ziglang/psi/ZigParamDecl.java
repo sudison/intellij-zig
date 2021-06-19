@@ -10,7 +10,4 @@ public interface ZigParamDecl extends PsiElement {
   @NotNull
   ZigParamType getParamType();
 
-  @Nullable
-  PsiElement getId();
-
 }

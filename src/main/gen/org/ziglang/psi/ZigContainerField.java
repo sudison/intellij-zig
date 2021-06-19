@@ -16,7 +16,4 @@ public interface ZigContainerField extends PsiElement {
   @Nullable
   ZigTypeExpr getTypeExpr();
 
-  @NotNull
-  PsiElement getId();
-
 }

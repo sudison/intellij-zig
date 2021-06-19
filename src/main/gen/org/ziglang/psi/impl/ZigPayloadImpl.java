@@ -27,10 +27,4 @@ public class ZigPayloadImpl extends ASTWrapperPsiElement implements ZigPayload {
     else super.accept(visitor);
   }
 
-  @Override
-  @NotNull
-  public PsiElement getId() {
-    return findNotNullChildByType(ID);
-  }
-
 }

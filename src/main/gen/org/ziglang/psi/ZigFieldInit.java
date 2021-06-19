@@ -10,7 +10,4 @@ public interface ZigFieldInit extends PsiElement {
   @NotNull
   ZigExpr getExpr();
 
-  @NotNull
-  PsiElement getId();
-
 }

@@ -7,7 +7,4 @@ import com.intellij.psi.PsiElement;
 
 public interface ZigStringliteral extends PsiElement {
 
-  @NotNull
-  PsiElement getStringliteralsingle();
-
 }

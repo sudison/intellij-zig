@@ -45,16 +45,4 @@ public class ZigPrimaryTypeExprImpl extends ASTWrapperPsiElement implements ZigP
     return findChildByClass(ZigStringliteral.class);
   }
 
-  @Override
-  @Nullable
-  public PsiElement getId() {
-    return findChildByType(ID);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getInteger() {
-    return findChildByType(INTEGER);
-  }
-
 }

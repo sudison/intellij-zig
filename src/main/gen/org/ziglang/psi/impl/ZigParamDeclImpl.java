@@ -33,10 +33,4 @@ public class ZigParamDeclImpl extends ASTWrapperPsiElement implements ZigParamDe
     return findNotNullChildByClass(ZigParamType.class);
   }
 
-  @Override
-  @Nullable
-  public PsiElement getId() {
-    return findChildByType(ID);
-  }
-
 }

@@ -12,10 +12,7 @@
   elementTypeClass="org.ziglang.psi.ZigLangElementType"
   tokenTypeClass="org.ziglang.psi.ZigLangTokenType"
 tokens = [
-WHITESPACE='regexp:[\s]+'
-CONTAINER_DOC='regexp://!.*'
-COMMENT='regexp:///.*'
-HEX='regexp:[0-9a-fA-F]'
+
 PUB='pub'
 FN='fn'
 CONST='const'
@@ -107,21 +104,16 @@ RBRACKET=']'
 DOTASTERISK='.*'
 QUESTIONMARK='?'
 DOTQUESTIONMARK='.?'
-INTEGER="regexp:\d+"
-ID='regexp:[A-Za-z_][A-Za-z0-9_]*'
 SEMICOLON=';'
 LPAREN='('
 RPAREN=')'
 COMMA=','
 COLON=':'
-CHAR_ESCAPE='regexp:\\x[0-9a-fA-F][0-9a-fA-F]|\\u\{[0-9a-fA-F]+}|\\[nr\t"]'
-STRING_CHAR='regexp:\\x[0-9a-fA-F][0-9a-fA-F]|\\u\{[0-9a-fA-F]+}|\\[nr\t"]|[^"\n]'
-STRINGLITERALSINGLE='regexp:"(\\x[0-9a-fA-F][0-9a-fA-F]|\\u\{[0-9a-fA-F]+}|\\[nr\t"]|[^"\n])*"'
 ]
 }
 
 
-root ::= container_doc_comment? ContainerMembers
+root ::= container_doc_comment? ContainerDeclarations?
 private container_doc_comment ::= CONTAINER_DOC+
 private ContainerMembers ::= ContainerDeclarations
 private ContainerDeclarations ::=
