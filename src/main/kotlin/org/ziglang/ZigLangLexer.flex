@@ -51,14 +51,33 @@ ascii_char_not_nl_slash_squote=[\000-\011\013-\046\050-\133\135-\177]
 WHITE_SPACE=[\s]+
 CONTAINER_DOC="//"!.*
 COMMENT="///".*
-HEX=[0-9a-fA-F]
+hex = [0-9a-fA-F]
+
 INTEGER=[0-9]+
 ID=[A-Za-z_][A-Za-z0-9_]*
-CHAR_ESCAPE=\\x{HEX}{HEX}|\\u\{{HEX}+}|\\[nr\t\'\"]
+CHAR_ESCAPE=\\x{hex}{hex}|\\u\{{hex}+}|\\[nr\t\'\"]
 char_char={mb_utf8_literal} | {CHAR_ESCAPE} | {ascii_char_not_nl_slash_squote}
 CHAR_LITERAL=\' {char_char} \'
 STRING_CHAR={CHAR_ESCAPE}|[^\"\n]
 STRINGLITERALSINGLE=\"{STRING_CHAR}*\"
+
+bin= [01]
+bin_= '_'? {bin}
+oct = [0-7]
+oct_ = '_'? {oct}
+hex_ = '_'? {hex}
+dec = [0-9]
+dec_ = '_'? {dec}
+
+bin_int = {bin} {bin_}*
+oct_int = {oct} {oct_}*
+dec_int = {dec} {dec_}*
+hex_int = {hex} {hex_}*
+FLOAT=
+ "0x" {hex_int} "." {hex_int} ([pP] [-+]? {dec_int})?
+ | {dec_int} "." {dec_int} ([eE] [-+]? {dec_int})?
+ | "0x" {hex_int} [pP] [-+]? {dec_int}
+ | {dec_int} [eE] [-+]? {dec_int}
 
 %%
 <YYINITIAL> {
@@ -172,6 +191,7 @@ STRINGLITERALSINGLE=\"{STRING_CHAR}*\"
 
   {CONTAINER_DOC}            { return CONTAINER_DOC; }
   {COMMENT}                  { return COMMENT; }
+  {FLOAT}                    {return FLOAT;}
   {INTEGER}                  { return INTEGER; }
   {ID}                       { return ID; }
   {STRINGLITERALSINGLE}      { return STRINGLITERALSINGLE; }

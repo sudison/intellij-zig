@@ -170,6 +170,7 @@ PrimaryTypeExpr ::=
     | DOT ID
     | DOT InitList
     | ErrorSetDecl
+    | FLOAT
     | ID
     | INTEGER
     | STRINGLITERAL

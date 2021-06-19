@@ -2374,6 +2374,7 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
   //     | DOT ID
   //     | DOT InitList
   //     | ErrorSetDecl
+  //     | FLOAT
   //     | ID
   //     | INTEGER
   //     | STRINGLITERAL
@@ -2387,6 +2388,7 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
     if (!r) r = parseTokens(b, 0, DOT, ID);
     if (!r) r = PrimaryTypeExpr_4(b, l + 1);
     if (!r) r = ErrorSetDecl(b, l + 1);
+    if (!r) r = consumeToken(b, FLOAT);
     if (!r) r = consumeToken(b, ID);
     if (!r) r = consumeToken(b, INTEGER);
     if (!r) r = STRINGLITERAL(b, l + 1);

@@ -139,6 +139,7 @@ public interface ZigLangTypes {
   IElementType EXCLAMATIONMARKEQUAL = new ZigLangTokenType("!=");
   IElementType EXPORT = new ZigLangTokenType("export");
   IElementType EXTERN = new ZigLangTokenType("extern");
+  IElementType FLOAT = new ZigLangTokenType("FLOAT");
   IElementType FN = new ZigLangTokenType("fn");
   IElementType FOR = new ZigLangTokenType("for");
   IElementType ID = new ZigLangTokenType("ID");
