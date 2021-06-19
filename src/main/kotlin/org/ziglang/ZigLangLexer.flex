@@ -68,6 +68,7 @@ STRINGLITERALSINGLE=\"{STRING_CHAR}*\"
   "opaque"                   {return OPAQUE;}
   "enum"                     {return ENUM;}
   "union"                    {return UNION;}
+  "error"                    {return ERROR;}
 
 
   "packed"                   {return PACKED;}

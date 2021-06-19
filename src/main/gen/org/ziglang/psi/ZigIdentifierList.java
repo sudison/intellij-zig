@@ -5,15 +5,6 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ZigFnProto extends PsiElement {
-
-  @NotNull
-  ZigParamDeclList getParamDeclList();
-
-  @NotNull
-  ZigTypeExpr getTypeExpr();
-
-  @Nullable
-  PsiElement getId();
+public interface ZigIdentifierList extends PsiElement {
 
 }

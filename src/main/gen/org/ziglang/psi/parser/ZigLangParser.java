@@ -1192,6 +1192,20 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // ERROR LBRACE IdentifierList RBRACE
+  public static boolean ErrorSetDecl(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ErrorSetDecl")) return false;
+    if (!nextTokenIs(b, ERROR)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, ERROR, LBRACE);
+    r = r && IdentifierList(b, l + 1);
+    r = r && consumeToken(b, RBRACE);
+    exit_section_(b, m, ERROR_SET_DECL, r);
+    return r;
+  }
+
+  /* ********************************************************** */
   // SuffixExpr | (EXCLAMATIONMARK TypeExpr)?
   public static boolean ErrorUnionExpr(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ErrorUnionExpr")) return false;
@@ -1479,6 +1493,72 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
     r = r && Statement(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
+  }
+
+  /* ********************************************************** */
+  // (DocComment? ID COMMA)* (DocComment? ID)?
+  public static boolean IdentifierList(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "IdentifierList")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, IDENTIFIER_LIST, "<identifier list>");
+    r = IdentifierList_0(b, l + 1);
+    r = r && IdentifierList_1(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // (DocComment? ID COMMA)*
+  private static boolean IdentifierList_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "IdentifierList_0")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!IdentifierList_0_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "IdentifierList_0", c)) break;
+    }
+    return true;
+  }
+
+  // DocComment? ID COMMA
+  private static boolean IdentifierList_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "IdentifierList_0_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = IdentifierList_0_0_0(b, l + 1);
+    r = r && consumeTokens(b, 0, ID, COMMA);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // DocComment?
+  private static boolean IdentifierList_0_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "IdentifierList_0_0_0")) return false;
+    DocComment(b, l + 1);
+    return true;
+  }
+
+  // (DocComment? ID)?
+  private static boolean IdentifierList_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "IdentifierList_1")) return false;
+    IdentifierList_1_0(b, l + 1);
+    return true;
+  }
+
+  // DocComment? ID
+  private static boolean IdentifierList_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "IdentifierList_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = IdentifierList_1_0_0(b, l + 1);
+    r = r && consumeToken(b, ID);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // DocComment?
+  private static boolean IdentifierList_1_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "IdentifierList_1_0_0")) return false;
+    DocComment(b, l + 1);
+    return true;
   }
 
   /* ********************************************************** */
@@ -2292,6 +2372,8 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
   //     | CHAR_LITERAL
   //     | ContainerDecl
   //     | DOT ID
+  //     | DOT InitList
+  //     | ErrorSetDecl
   //     | ID
   //     | INTEGER
   //     | STRINGLITERAL
@@ -2303,6 +2385,8 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, CHAR_LITERAL);
     if (!r) r = ContainerDecl(b, l + 1);
     if (!r) r = parseTokens(b, 0, DOT, ID);
+    if (!r) r = PrimaryTypeExpr_4(b, l + 1);
+    if (!r) r = ErrorSetDecl(b, l + 1);
     if (!r) r = consumeToken(b, ID);
     if (!r) r = consumeToken(b, INTEGER);
     if (!r) r = STRINGLITERAL(b, l + 1);
@@ -2317,6 +2401,17 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b);
     r = BUILTINIDENTIFIER(b, l + 1);
     r = r && FnCallArguments(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // DOT InitList
+  private static boolean PrimaryTypeExpr_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "PrimaryTypeExpr_4")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, DOT);
+    r = r && InitList(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }

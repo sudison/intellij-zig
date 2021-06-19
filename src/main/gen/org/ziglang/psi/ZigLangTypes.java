@@ -42,6 +42,7 @@ public interface ZigLangTypes {
   IElementType CONTAINER_DECL_TYPE = new ZigLangElementType("CONTAINER_DECL_TYPE");
   IElementType CONTAINER_FIELD = new ZigLangElementType("CONTAINER_FIELD");
   IElementType CURLY_SUFFIX_EXPR = new ZigLangElementType("CURLY_SUFFIX_EXPR");
+  IElementType ERROR_SET_DECL = new ZigLangElementType("ERROR_SET_DECL");
   IElementType ERROR_UNION_EXPR = new ZigLangElementType("ERROR_UNION_EXPR");
   IElementType EXPR = new ZigLangElementType("EXPR");
   IElementType EXPR_LIST = new ZigLangElementType("EXPR_LIST");
@@ -50,6 +51,7 @@ public interface ZigLangTypes {
   IElementType FOR_EXPR = new ZigLangElementType("FOR_EXPR");
   IElementType FOR_PREFIX = new ZigLangElementType("FOR_PREFIX");
   IElementType FOR_STATEMENT = new ZigLangElementType("FOR_STATEMENT");
+  IElementType IDENTIFIER_LIST = new ZigLangElementType("IDENTIFIER_LIST");
   IElementType IF_EXPR = new ZigLangElementType("IF_EXPR");
   IElementType IF_PREFIX = new ZigLangElementType("IF_PREFIX");
   IElementType IF_STATEMENT = new ZigLangElementType("IF_STATEMENT");
@@ -132,6 +134,7 @@ public interface ZigLangTypes {
   IElementType EQUALEQUAL = new ZigLangTokenType("==");
   IElementType EQUALRARROW = new ZigLangTokenType("=>");
   IElementType ERRDEFER = new ZigLangTokenType("errdefer");
+  IElementType ERROR = new ZigLangTokenType("ERROR");
   IElementType EXCLAMATIONMARK = new ZigLangTokenType("!");
   IElementType EXCLAMATIONMARKEQUAL = new ZigLangTokenType("!=");
   IElementType EXPORT = new ZigLangTokenType("export");
@@ -305,6 +308,9 @@ public interface ZigLangTypes {
       else if (type == CURLY_SUFFIX_EXPR) {
         return new ZigCurlySuffixExprImpl(node);
       }
+      else if (type == ERROR_SET_DECL) {
+        return new ZigErrorSetDeclImpl(node);
+      }
       else if (type == ERROR_UNION_EXPR) {
         return new ZigErrorUnionExprImpl(node);
       }
@@ -328,6 +334,9 @@ public interface ZigLangTypes {
       }
       else if (type == FOR_STATEMENT) {
         return new ZigForStatementImpl(node);
+      }
+      else if (type == IDENTIFIER_LIST) {
+        return new ZigIdentifierListImpl(node);
       }
       else if (type == IF_EXPR) {
         return new ZigIfExprImpl(node);

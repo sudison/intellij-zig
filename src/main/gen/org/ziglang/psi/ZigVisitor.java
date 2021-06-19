@@ -143,6 +143,10 @@ public class ZigVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitErrorSetDecl(@NotNull ZigErrorSetDecl o) {
+    visitPsiElement(o);
+  }
+
   public void visitErrorUnionExpr(@NotNull ZigErrorUnionExpr o) {
     visitPsiElement(o);
   }
@@ -172,6 +176,10 @@ public class ZigVisitor extends PsiElementVisitor {
   }
 
   public void visitForStatement(@NotNull ZigForStatement o) {
+    visitPsiElement(o);
+  }
+
+  public void visitIdentifierList(@NotNull ZigIdentifierList o) {
     visitPsiElement(o);
   }
 

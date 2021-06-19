@@ -168,6 +168,8 @@ PrimaryTypeExpr ::=
     | CHAR_LITERAL
     | ContainerDecl
     | DOT ID
+    | DOT InitList
+    | ErrorSetDecl
     | ID
     | INTEGER
     | STRINGLITERAL
@@ -179,6 +181,10 @@ ContainerDeclType ::=
     | OPAQUE
     | ENUM (LPAREN Expr RPAREN)?
     | UNION (LPAREN (ENUM (LPAREN Expr RPAREN)? | Expr) RPAREN)?
+
+ErrorSetDecl ::= ERROR LBRACE IdentifierList RBRACE
+
+IdentifierList ::= (DocComment? ID COMMA)* (DocComment? ID)?
 STRINGLITERAL ::= STRINGLITERALSINGLE
 BUILTINIDENTIFIER ::='@' ID
 FnCallArguments ::= LPAREN ExprList RPAREN

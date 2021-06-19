@@ -5,9 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ZigContainerMembers extends PsiElement {
+public interface ZigErrorSetDecl extends PsiElement {
 
   @NotNull
-  ZigContainerDeclarations getContainerDeclarations();
+  ZigIdentifierList getIdentifierList();
 
 }

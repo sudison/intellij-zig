@@ -41,8 +41,20 @@ public class ZigPrimaryTypeExprImpl extends ASTWrapperPsiElement implements ZigP
 
   @Override
   @Nullable
+  public ZigErrorSetDecl getErrorSetDecl() {
+    return findChildByClass(ZigErrorSetDecl.class);
+  }
+
+  @Override
+  @Nullable
   public ZigFnCallArguments getFnCallArguments() {
     return findChildByClass(ZigFnCallArguments.class);
+  }
+
+  @Override
+  @Nullable
+  public ZigInitList getInitList() {
+    return findChildByClass(ZigInitList.class);
   }
 
   @Override

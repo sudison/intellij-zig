@@ -5,3 +5,13 @@ pub export fn fkd() {
 pub export const v = {};
 test "df" {}
 const a = struct { x:i32,y:i32};
+var pt: Point = .{
+        .x = 13,
+        .y = 67,
+    };
+
+const FileOpenError = error {
+    AccessDenied,
+    OutOfMemory,
+    FileNotFound,
+};
