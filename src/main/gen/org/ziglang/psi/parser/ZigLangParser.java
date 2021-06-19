@@ -2067,6 +2067,7 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // BUILTINIDENTIFIER FnCallArguments
+  //     | CHAR_LITERAL
   //     | DOT ID
   //     | ID
   //     | INTEGER
@@ -2076,6 +2077,7 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, PRIMARY_TYPE_EXPR, "<primary type expr>");
     r = PrimaryTypeExpr_0(b, l + 1);
+    if (!r) r = consumeToken(b, CHAR_LITERAL);
     if (!r) r = parseTokens(b, 0, DOT, ID);
     if (!r) r = consumeToken(b, ID);
     if (!r) r = consumeToken(b, INTEGER);

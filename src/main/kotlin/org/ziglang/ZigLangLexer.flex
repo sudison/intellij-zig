@@ -23,21 +23,46 @@ import static org.ziglang.psi.ZigLangTypes.*;
 %unicode
 
 EOL=\R
-WHITE_SPACE=\s+
+ox80_oxBF=[\200-\277]
+oxF4='\364'
+ox80_ox8F=[\200-\217]
+oxF1_oxF3=[\361-\363]
+oxF0='\360'
+ox90_0xBF=[\220-\277]
+oxEE_oxEF=[\356-\357]
+oxED='\355'
+ox80_ox9F=[\200-\237]
+oxE1_oxEC=[\341-\354]
+oxE0='\340'
+oxA0_oxBF=[\240-\277]
+oxC2_oxDF=[\302-\337]
+mb_utf8_literal=
+       ({oxF4} {ox80_ox8F} {ox80_oxBF} {ox80_oxBF})
+     | ({oxF1_oxF3} {ox80_oxBF} {ox80_oxBF} {ox80_oxBF})
+     | ({oxF0} {ox90_0xBF} {ox80_oxBF} {ox80_oxBF})
+     | ({oxEE_oxEF} {ox80_oxBF} {ox80_oxBF})
+     | ({oxED} {ox80_ox9F} {ox80_oxBF})
+     | ({oxE1_oxEC} {ox80_oxBF} {ox80_oxBF})
+     | ({oxE0} {oxA0_oxBF} {ox80_oxBF})
+     | ({oxC2_oxDF} {ox80_oxBF})
 
-WHITESPACE=[\s]+
+ascii_char_not_nl_slash_squote=[\000-\011\013-\046\050-\133\135-\177]
+
+WHITE_SPACE=[\s]+
 CONTAINER_DOC="//"!.*
 COMMENT="///".*
 HEX=[0-9a-fA-F]
 INTEGER=[0-9]+
 ID=[A-Za-z_][A-Za-z0-9_]*
 CHAR_ESCAPE=\\x{HEX}{HEX}|\\u\{{HEX}+}|\\[nr\t\'\"]
+char_char={mb_utf8_literal} | {CHAR_ESCAPE} | {ascii_char_not_nl_slash_squote}
+CHAR_LITERAL=\' {char_char} \'
 STRING_CHAR={CHAR_ESCAPE}|[^\"\n]
 STRINGLITERALSINGLE=\"{STRING_CHAR}*\"
 
 %%
 <YYINITIAL> {
-  {WHITE_SPACE}              { return WHITE_SPACE; }
+  {WHITE_SPACE}               { return WHITE_SPACE; }
 
   "pub"                      { return PUB; }
   "fn"                       { return FN; }
@@ -135,8 +160,8 @@ STRINGLITERALSINGLE=\"{STRING_CHAR}*\"
   ","                        { return COMMA; }
   ":"                        { return COLON; }
   "AWAIT"                    { return AWAIT; }
+  {CHAR_LITERAL}      { return CHAR_LITERAL; }
 
-  {WHITESPACE}               { return WHITESPACE; }
   {CONTAINER_DOC}            { return CONTAINER_DOC; }
   {COMMENT}                  { return COMMENT; }
   {INTEGER}                  { return INTEGER; }

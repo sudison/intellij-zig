@@ -109,6 +109,7 @@ public interface ZigLangTypes {
   IElementType CARET = new ZigLangTokenType("^");
   IElementType CARETEQUAL = new ZigLangTokenType("^=");
   IElementType CATCH = new ZigLangTokenType("catch");
+  IElementType CHAR_LITERAL = new ZigLangTokenType("CHAR_LITERAL");
   IElementType COLON = new ZigLangTokenType(":");
   IElementType COMMA = new ZigLangTokenType(",");
   IElementType COMMENT = new ZigLangTokenType("COMMENT");

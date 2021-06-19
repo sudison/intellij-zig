@@ -165,6 +165,7 @@ SuffixOp ::= LBRACKET Expr (DOT2 (Expr? (COLON Expr)?)?)? RBRACKET
                   | DOTQUESTIONMARK
 PrimaryTypeExpr ::=
     BUILTINIDENTIFIER FnCallArguments
+    | CHAR_LITERAL
     | DOT ID
     | ID
     | INTEGER
