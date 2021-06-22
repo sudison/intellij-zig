@@ -155,7 +155,7 @@ PtrTypeStart ::=
 
 ArrayTypeStart ::= LBRACKET Expr (COLON Expr)? RBRACKET
 
-ErrorUnionExpr ::= SuffixExpr | (EXCLAMATIONMARK TypeExpr)?
+ErrorUnionExpr ::= SuffixExpr (EXCLAMATIONMARK TypeExpr)?
 SuffixExpr ::=
     ASYNC PrimaryTypeExpr SuffixOp* FnCallArguments
     | PrimaryTypeExpr (SuffixOp | FnCallArguments)*

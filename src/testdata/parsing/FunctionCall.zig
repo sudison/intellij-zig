@@ -1,4 +1,7 @@
 
+fn give() anyerror!u128 {
+    return 3;
+}
 var f = 1.1;
 const slice = array[0..];
 

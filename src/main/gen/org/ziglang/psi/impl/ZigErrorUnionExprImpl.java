@@ -28,9 +28,9 @@ public class ZigErrorUnionExprImpl extends ASTWrapperPsiElement implements ZigEr
   }
 
   @Override
-  @Nullable
+  @NotNull
   public ZigSuffixExpr getSuffixExpr() {
-    return findChildByClass(ZigSuffixExpr.class);
+    return findNotNullChildByClass(ZigSuffixExpr.class);
   }
 
   @Override
