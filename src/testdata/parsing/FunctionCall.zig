@@ -1,3 +1,6 @@
+var f = 1.1;
+const slice = array[0..];
+
 var a = 0b010101;
 var b = 123232;
 pub export fn fkd() {

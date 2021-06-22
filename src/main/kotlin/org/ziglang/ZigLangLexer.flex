@@ -68,17 +68,17 @@ hex_ = '_'? {hex}
 dec = [0-9]
 dec_ = '_'? {dec}
 
-bin_int = [01_]*
-oct_int = [0-7_]*
-dec_int = [0-9_]*
-hex_int = [0-9a-fA-F_]*
+bin_int = [01] [01_]*
+oct_int = [0-7] [0-7_]*
+dec_int = [0-9] [0-9_]*
+hex_int = [0-9a-fA-F] [0-9a-fA-F_]*
 FLOAT=
  "0x" {hex_int} "." {hex_int} ([pP] [-+]? {dec_int})?
  | {dec_int} "." {dec_int} ([eE] [-+]? {dec_int})?
  | "0x" {hex_int} [pP] [-+]? {dec_int}
  | {dec_int} [eE] [-+]? {dec_int}
 
-INTEGER= "0b" {bin_int} | "0o" {oct_int} | "0x" {hex_int} | [0-9] {dec_int}
+INTEGER= "0b" {bin_int} | "0o" {oct_int} | "0x" {hex_int} | {dec_int}
 
 %%
 <YYINITIAL> {
