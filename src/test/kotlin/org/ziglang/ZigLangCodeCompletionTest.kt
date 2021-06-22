@@ -32,6 +32,6 @@ class ZigLangCodeCompletionTest: LightPlatformCodeInsightFixture4TestCase() {
 
     val l = myFixture.completeBasic()
     assertTrue(l.size == 2)
-    assertEquals(l[0].lookupString, "import(\"")
+    assertEquals(l[0].lookupString, "import(")
   }
 }

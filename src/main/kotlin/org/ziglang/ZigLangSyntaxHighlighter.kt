@@ -66,13 +66,16 @@ object ZigLangSyntaxHighlighter: SyntaxHighlighterBase() {
     ZigLangTypes.VOLATILE,
     ZigLangTypes.WHILE
   )
-  private val KEYWORD = TextAttributesKey.createTextAttributesKey("ZIGLANG_KEYWORD", DefaultLanguageHighlighterColors.KEYWORD)
+  private val KEYWORD = arrayOf(TextAttributesKey.createTextAttributesKey("ZIGLANG_KEYWORD", DefaultLanguageHighlighterColors.KEYWORD))
+  private val builtInFunctions =
+    arrayOf(TextAttributesKey.createTextAttributesKey("ZIGLANG_BUILTIN_FUNCTIONS", DefaultLanguageHighlighterColors.STATIC_METHOD))
 
   override fun getHighlightingLexer(): Lexer = ZigLexerAdapter()
 
   override fun getTokenHighlights(tokenType: IElementType?): Array<TextAttributesKey> =
     when (tokenType) {
-      in KEYWORDS -> arrayOf(KEYWORD)
+      in KEYWORDS -> KEYWORD
+      ZigLangTypes.BUILTINIDENTIFIER -> builtInFunctions
       else -> emptyArray()
     }
   }
