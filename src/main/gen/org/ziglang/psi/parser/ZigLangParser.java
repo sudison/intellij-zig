@@ -1496,6 +1496,38 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // ForPrefix TypeExpr (ELSE TypeExpr)?
+  public static boolean ForTypeExpr(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ForTypeExpr")) return false;
+    if (!nextTokenIs(b, FOR)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = ForPrefix(b, l + 1);
+    r = r && TypeExpr(b, l + 1);
+    r = r && ForTypeExpr_2(b, l + 1);
+    exit_section_(b, m, FOR_TYPE_EXPR, r);
+    return r;
+  }
+
+  // (ELSE TypeExpr)?
+  private static boolean ForTypeExpr_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ForTypeExpr_2")) return false;
+    ForTypeExpr_2_0(b, l + 1);
+    return true;
+  }
+
+  // ELSE TypeExpr
+  private static boolean ForTypeExpr_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ForTypeExpr_2_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, ELSE);
+    r = r && TypeExpr(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
   // LPAREN Expr RPAREN
   public static boolean GroupedExpr(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "GroupedExpr")) return false;
@@ -1862,6 +1894,47 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // BlockLabel Block | BlockLabel? LoopTypeExpr
+  public static boolean LabeledTypeExpr(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "LabeledTypeExpr")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, LABELED_TYPE_EXPR, "<labeled type expr>");
+    r = LabeledTypeExpr_0(b, l + 1);
+    if (!r) r = LabeledTypeExpr_1(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // BlockLabel Block
+  private static boolean LabeledTypeExpr_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "LabeledTypeExpr_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = BlockLabel(b, l + 1);
+    r = r && Block(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // BlockLabel? LoopTypeExpr
+  private static boolean LabeledTypeExpr_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "LabeledTypeExpr_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = LabeledTypeExpr_1_0(b, l + 1);
+    r = r && LoopTypeExpr(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // BlockLabel?
+  private static boolean LabeledTypeExpr_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "LabeledTypeExpr_1_0")) return false;
+    BlockLabel(b, l + 1);
+    return true;
+  }
+
+  /* ********************************************************** */
   // LINKSECTION LPAREN Expr RPAREN
   public static boolean LinkSection(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "LinkSection")) return false;
@@ -1928,6 +2001,34 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
     boolean r;
     r = ForStatement(b, l + 1);
     if (!r) r = WhileStatement(b, l + 1);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // INLINE? (ForTypeExpr | WhileTypeExpr)
+  public static boolean LoopTypeExpr(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "LoopTypeExpr")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, LOOP_TYPE_EXPR, "<loop type expr>");
+    r = LoopTypeExpr_0(b, l + 1);
+    r = r && LoopTypeExpr_1(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // INLINE?
+  private static boolean LoopTypeExpr_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "LoopTypeExpr_0")) return false;
+    consumeToken(b, INLINE);
+    return true;
+  }
+
+  // ForTypeExpr | WhileTypeExpr
+  private static boolean LoopTypeExpr_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "LoopTypeExpr_1")) return false;
+    boolean r;
+    r = ForTypeExpr(b, l + 1);
+    if (!r) r = WhileTypeExpr(b, l + 1);
     return r;
   }
 
@@ -2391,6 +2492,7 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
   //     | FLOAT
   //     | FnProto
   //     | GroupedExpr
+  //     | LabeledTypeExpr
   //     | ID
   //     | INTEGER
   //     | STRINGLITERAL
@@ -2407,6 +2509,7 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, FLOAT);
     if (!r) r = FnProto(b, l + 1);
     if (!r) r = GroupedExpr(b, l + 1);
+    if (!r) r = LabeledTypeExpr(b, l + 1);
     if (!r) r = consumeToken(b, ID);
     if (!r) r = consumeToken(b, INTEGER);
     if (!r) r = STRINGLITERAL(b, l + 1);
@@ -3527,6 +3630,46 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
   // Payload?
   private static boolean WhileStatement_1_2_1_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "WhileStatement_1_2_1_1")) return false;
+    Payload(b, l + 1);
+    return true;
+  }
+
+  /* ********************************************************** */
+  // WhilePrefix TypeExpr (ELSE Payload? TypeExpr)?
+  public static boolean WhileTypeExpr(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "WhileTypeExpr")) return false;
+    if (!nextTokenIs(b, WHILE)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = WhilePrefix(b, l + 1);
+    r = r && TypeExpr(b, l + 1);
+    r = r && WhileTypeExpr_2(b, l + 1);
+    exit_section_(b, m, WHILE_TYPE_EXPR, r);
+    return r;
+  }
+
+  // (ELSE Payload? TypeExpr)?
+  private static boolean WhileTypeExpr_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "WhileTypeExpr_2")) return false;
+    WhileTypeExpr_2_0(b, l + 1);
+    return true;
+  }
+
+  // ELSE Payload? TypeExpr
+  private static boolean WhileTypeExpr_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "WhileTypeExpr_2_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, ELSE);
+    r = r && WhileTypeExpr_2_0_1(b, l + 1);
+    r = r && TypeExpr(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // Payload?
+  private static boolean WhileTypeExpr_2_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "WhileTypeExpr_2_0_1")) return false;
     Payload(b, l + 1);
     return true;
   }

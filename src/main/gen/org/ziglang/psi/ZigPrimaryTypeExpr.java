@@ -32,6 +32,9 @@ public interface ZigPrimaryTypeExpr extends PsiElement {
   ZigInitList getInitList();
 
   @Nullable
+  ZigLabeledTypeExpr getLabeledTypeExpr();
+
+  @Nullable
   ZigLinkSection getLinkSection();
 
   @Nullable

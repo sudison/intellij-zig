@@ -179,6 +179,10 @@ public class ZigVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitForTypeExpr(@NotNull ZigForTypeExpr o) {
+    visitPsiElement(o);
+  }
+
   public void visitGroupedExpr(@NotNull ZigGroupedExpr o) {
     visitPsiElement(o);
   }
@@ -207,6 +211,10 @@ public class ZigVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitLabeledTypeExpr(@NotNull ZigLabeledTypeExpr o) {
+    visitPsiElement(o);
+  }
+
   public void visitLinkSection(@NotNull ZigLinkSection o) {
     visitPsiElement(o);
   }
@@ -216,6 +224,10 @@ public class ZigVisitor extends PsiElementVisitor {
   }
 
   public void visitLoopStatement(@NotNull ZigLoopStatement o) {
+    visitPsiElement(o);
+  }
+
+  public void visitLoopTypeExpr(@NotNull ZigLoopTypeExpr o) {
     visitPsiElement(o);
   }
 
@@ -348,6 +360,10 @@ public class ZigVisitor extends PsiElementVisitor {
   }
 
   public void visitWhileStatement(@NotNull ZigWhileStatement o) {
+    visitPsiElement(o);
+  }
+
+  public void visitWhileTypeExpr(@NotNull ZigWhileTypeExpr o) {
     visitPsiElement(o);
   }
 

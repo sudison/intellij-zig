@@ -19,3 +19,13 @@ const FileOpenError = error {
 };
 
 var a = (1);
+
+const x = blk: {
+        y += 1;
+    };
+
+const y = outer: while (true) {
+
+    } else false;
+
+const z = outer: for(items) |value| {} else false;

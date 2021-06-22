@@ -51,6 +51,7 @@ public interface ZigLangTypes {
   IElementType FOR_EXPR = new ZigLangElementType("FOR_EXPR");
   IElementType FOR_PREFIX = new ZigLangElementType("FOR_PREFIX");
   IElementType FOR_STATEMENT = new ZigLangElementType("FOR_STATEMENT");
+  IElementType FOR_TYPE_EXPR = new ZigLangElementType("FOR_TYPE_EXPR");
   IElementType GROUPED_EXPR = new ZigLangElementType("GROUPED_EXPR");
   IElementType IDENTIFIER_LIST = new ZigLangElementType("IDENTIFIER_LIST");
   IElementType IF_EXPR = new ZigLangElementType("IF_EXPR");
@@ -58,9 +59,11 @@ public interface ZigLangTypes {
   IElementType IF_STATEMENT = new ZigLangElementType("IF_STATEMENT");
   IElementType INIT_LIST = new ZigLangElementType("INIT_LIST");
   IElementType LABELED_STATEMENT = new ZigLangElementType("LABELED_STATEMENT");
+  IElementType LABELED_TYPE_EXPR = new ZigLangElementType("LABELED_TYPE_EXPR");
   IElementType LINK_SECTION = new ZigLangElementType("LINK_SECTION");
   IElementType LOOP_EXPR = new ZigLangElementType("LOOP_EXPR");
   IElementType LOOP_STATEMENT = new ZigLangElementType("LOOP_STATEMENT");
+  IElementType LOOP_TYPE_EXPR = new ZigLangElementType("LOOP_TYPE_EXPR");
   IElementType MULTIPLY_EXPR = new ZigLangElementType("MULTIPLY_EXPR");
   IElementType MULTIPLY_OP = new ZigLangElementType("MULTIPLY_OP");
   IElementType PARAM_DECL = new ZigLangElementType("PARAM_DECL");
@@ -94,6 +97,7 @@ public interface ZigLangTypes {
   IElementType WHILE_EXPR = new ZigLangElementType("WHILE_EXPR");
   IElementType WHILE_PREFIX = new ZigLangElementType("WHILE_PREFIX");
   IElementType WHILE_STATEMENT = new ZigLangElementType("WHILE_STATEMENT");
+  IElementType WHILE_TYPE_EXPR = new ZigLangElementType("WHILE_TYPE_EXPR");
 
   IElementType ALIGN = new ZigLangTokenType("align");
   IElementType ALLOWZERO = new ZigLangTokenType("allowzero");
@@ -337,6 +341,9 @@ public interface ZigLangTypes {
       else if (type == FOR_STATEMENT) {
         return new ZigForStatementImpl(node);
       }
+      else if (type == FOR_TYPE_EXPR) {
+        return new ZigForTypeExprImpl(node);
+      }
       else if (type == GROUPED_EXPR) {
         return new ZigGroupedExprImpl(node);
       }
@@ -358,6 +365,9 @@ public interface ZigLangTypes {
       else if (type == LABELED_STATEMENT) {
         return new ZigLabeledStatementImpl(node);
       }
+      else if (type == LABELED_TYPE_EXPR) {
+        return new ZigLabeledTypeExprImpl(node);
+      }
       else if (type == LINK_SECTION) {
         return new ZigLinkSectionImpl(node);
       }
@@ -366,6 +376,9 @@ public interface ZigLangTypes {
       }
       else if (type == LOOP_STATEMENT) {
         return new ZigLoopStatementImpl(node);
+      }
+      else if (type == LOOP_TYPE_EXPR) {
+        return new ZigLoopTypeExprImpl(node);
       }
       else if (type == MULTIPLY_EXPR) {
         return new ZigMultiplyExprImpl(node);
@@ -465,6 +478,9 @@ public interface ZigLangTypes {
       }
       else if (type == WHILE_STATEMENT) {
         return new ZigWhileStatementImpl(node);
+      }
+      else if (type == WHILE_TYPE_EXPR) {
+        return new ZigWhileTypeExprImpl(node);
       }
       throw new AssertionError("Unknown element type: " + type);
     }

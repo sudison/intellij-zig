@@ -173,6 +173,7 @@ PrimaryTypeExpr ::=
     | FLOAT
     | FnProto
     | GroupedExpr
+    | LabeledTypeExpr
     | ID
     | INTEGER
     | STRINGLITERAL
@@ -188,6 +189,14 @@ ContainerDeclType ::=
 ErrorSetDecl ::= ERROR LBRACE IdentifierList RBRACE
 
 GroupedExpr ::= LPAREN Expr RPAREN
+
+LabeledTypeExpr ::= BlockLabel Block | BlockLabel? LoopTypeExpr
+
+LoopTypeExpr ::= INLINE? (ForTypeExpr | WhileTypeExpr)
+
+ForTypeExpr ::= ForPrefix TypeExpr (ELSE TypeExpr)?
+WhileTypeExpr ::= WhilePrefix TypeExpr (ELSE Payload? TypeExpr)?
+
 IdentifierList ::= (DocComment? ID COMMA)* (DocComment? ID)?
 STRINGLITERAL ::= STRINGLITERALSINGLE
 BUILTINIDENTIFIER ::='@' ID
