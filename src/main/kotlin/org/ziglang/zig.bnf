@@ -18,7 +18,6 @@ FN='fn'
 CONST='const'
 VAR='var'
 EQUAL='='
-LETTERC='c'
 OR='or'
 AND='and'
 EXPORT='export'
@@ -138,7 +137,7 @@ CallConv ::= CALLCONV LPAREN Expr RPAREN
 
 ParamDeclList ::= (ParamDecl COMMA)* ParamDecl?
 ParamDecl ::= DocComment? (NOALIAS | COMPTIME)? (ID COLON)? ParamType | DOT3
-ParamType ::= TypeExpr
+ParamType ::= ANY_TYPE | TypeExpr
 TypeExpr ::= PrefixTypeOp* ErrorUnionExpr
 PrefixTypeOp ::=
     QUESTIONMARK
@@ -151,7 +150,7 @@ SliceTypeStart ::= LBRACKET (COLON Expr)? RBRACKET
 PtrTypeStart ::=
     ASTERISK
     | ASTERISK2
-    | LBRACKET ASTERISK (LETTERC | COLON Expr)? RBRACKET
+    | LBRACKET ASTERISK ('c' | COLON Expr)? RBRACKET
 
 ArrayTypeStart ::= LBRACKET Expr (COLON Expr)? RBRACKET
 
@@ -282,7 +281,7 @@ Block ::= LBRACE Statement* RBRACE
 BlockExpr ::= BlockLabel? Block
 BlockLabel ::= ID COLON
 Statement ::=
-    VarDecl
+    COMPTIME? VarDecl
     | COMPTIME BlockExprStatement
     | NOSUSPEND BlockExprStatement
     | SUSPEND BlockExprStatement
@@ -310,7 +309,7 @@ WhileStatement ::=
     | WhilePrefix AssignExpr (SEMICOLON | ELSE Payload? Statement)
 
 SwitchExpr ::= SWITCH LPAREN Expr RPAREN LBRACE SwitchProngList RBRACE
-SwitchProngList ::= (SwitchProng COMMA)* SwitchProng
+SwitchProngList ::= (SwitchProng COMMA)* SwitchProng?
 SwitchProng ::= SwitchCase EQUALRARROW PtrPayload? AssignExpr
 SwitchCase ::= SwitchItem (COMMA SwitchItem)* COMMA? | ELSE
 SwitchItem ::= Expr (DOT3 Expr)?

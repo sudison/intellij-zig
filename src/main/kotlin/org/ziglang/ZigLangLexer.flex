@@ -104,7 +104,6 @@ INTEGER= "0b" {bin_int} | "0o" {oct_int} | "0x" {hex_int} | {dec_int}
   "const"                    { return CONST; }
   "var"                      { return VAR; }
   "="                        { return EQUAL; }
-  "c"                        { return LETTERC; }
   "or"                       { return OR; }
   "and"                      { return AND; }
   "export"                   { return EXPORT; }
@@ -194,7 +193,7 @@ INTEGER= "0b" {bin_int} | "0o" {oct_int} | "0x" {hex_int} | {dec_int}
   ")"                        { return RPAREN; }
   ","                        { return COMMA; }
   ":"                        { return COLON; }
-  "AWAIT"                    { return AWAIT; }
+  "await"                    { return AWAIT; }
   {CHAR_LITERAL}      { return CHAR_LITERAL; }
 
   {CONTAINER_DOC}            { return CONTAINER_DOC; }

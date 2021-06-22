@@ -159,7 +159,6 @@ public interface ZigLangTypes {
   IElementType LARROWEQUAL = new ZigLangTokenType("<=");
   IElementType LBRACE = new ZigLangTokenType("{");
   IElementType LBRACKET = new ZigLangTokenType("[");
-  IElementType LETTERC = new ZigLangTokenType("c");
   IElementType LINKSECTION = new ZigLangTokenType("linksection");
   IElementType LPAREN = new ZigLangTokenType("(");
   IElementType MINUS = new ZigLangTokenType("-");

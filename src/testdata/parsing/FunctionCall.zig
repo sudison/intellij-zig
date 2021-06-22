@@ -1,4 +1,22 @@
 
+fn @"weird function name"() i32 {
+    return 1234;
+}
+
+fn testPeerErrorAndArray(x: u8) anyerror![]const u8 {
+            await f;
+
+    return switch (x) {
+        0x00 => "OK",
+        else => error.BadValue,
+    };
+}
+const blah: packed struct {
+    a: u3,
+    b: u3,
+    c: u2,
+} = undefined;
+
 fn give() anyerror!u128 {
     return 3;
 }
@@ -21,6 +39,8 @@ var pt: Point = .{
         .x = 13,
         .y = 67,
     };
+
+
 
 const FileOpenError = error {
     AccessDenied,

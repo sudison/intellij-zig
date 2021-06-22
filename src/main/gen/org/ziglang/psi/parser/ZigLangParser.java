@@ -2229,12 +2229,13 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // TypeExpr
+  // ANY_TYPE | TypeExpr
   public static boolean ParamType(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ParamType")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, PARAM_TYPE, "<param type>");
-    r = TypeExpr(b, l + 1);
+    r = consumeToken(b, ANY_TYPE);
+    if (!r) r = TypeExpr(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -2710,7 +2711,7 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
   /* ********************************************************** */
   // ASTERISK
   //     | ASTERISK2
-  //     | LBRACKET ASTERISK (LETTERC | COLON Expr)? RBRACKET
+  //     | LBRACKET ASTERISK ('c' | COLON Expr)? RBRACKET
   public static boolean PtrTypeStart(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "PtrTypeStart")) return false;
     boolean r;
@@ -2722,7 +2723,7 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // LBRACKET ASTERISK (LETTERC | COLON Expr)? RBRACKET
+  // LBRACKET ASTERISK ('c' | COLON Expr)? RBRACKET
   private static boolean PtrTypeStart_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "PtrTypeStart_2")) return false;
     boolean r;
@@ -2734,19 +2735,19 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // (LETTERC | COLON Expr)?
+  // ('c' | COLON Expr)?
   private static boolean PtrTypeStart_2_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "PtrTypeStart_2_2")) return false;
     PtrTypeStart_2_2_0(b, l + 1);
     return true;
   }
 
-  // LETTERC | COLON Expr
+  // 'c' | COLON Expr
   private static boolean PtrTypeStart_2_2_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "PtrTypeStart_2_2_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, LETTERC);
+    r = consumeToken(b, "c");
     if (!r) r = PtrTypeStart_2_2_0_1(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
@@ -2808,7 +2809,7 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // VarDecl
+  // COMPTIME? VarDecl
   //     | COMPTIME BlockExprStatement
   //     | NOSUSPEND BlockExprStatement
   //     | SUSPEND BlockExprStatement
@@ -2822,7 +2823,7 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "Statement")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, STATEMENT, "<statement>");
-    r = VarDecl(b, l + 1);
+    r = Statement_0(b, l + 1);
     if (!r) r = Statement_1(b, l + 1);
     if (!r) r = Statement_2(b, l + 1);
     if (!r) r = Statement_3(b, l + 1);
@@ -2834,6 +2835,24 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
     if (!r) r = Statement_9(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
+  }
+
+  // COMPTIME? VarDecl
+  private static boolean Statement_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Statement_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = Statement_0_0(b, l + 1);
+    r = r && VarDecl(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // COMPTIME?
+  private static boolean Statement_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Statement_0_0")) return false;
+    consumeToken(b, COMPTIME);
+    return true;
   }
 
   // COMPTIME BlockExprStatement
@@ -3231,13 +3250,13 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (SwitchProng COMMA)* SwitchProng
+  // (SwitchProng COMMA)* SwitchProng?
   public static boolean SwitchProngList(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "SwitchProngList")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, SWITCH_PRONG_LIST, "<switch prong list>");
     r = SwitchProngList_0(b, l + 1);
-    r = r && SwitchProng(b, l + 1);
+    r = r && SwitchProngList_1(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -3262,6 +3281,13 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
     r = r && consumeToken(b, COMMA);
     exit_section_(b, m, null, r);
     return r;
+  }
+
+  // SwitchProng?
+  private static boolean SwitchProngList_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "SwitchProngList_1")) return false;
+    SwitchProng(b, l + 1);
+    return true;
   }
 
   /* ********************************************************** */

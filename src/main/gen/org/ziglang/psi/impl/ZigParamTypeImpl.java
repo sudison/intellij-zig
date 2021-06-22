@@ -28,9 +28,9 @@ public class ZigParamTypeImpl extends ASTWrapperPsiElement implements ZigParamTy
   }
 
   @Override
-  @NotNull
+  @Nullable
   public ZigTypeExpr getTypeExpr() {
-    return findNotNullChildByClass(ZigTypeExpr.class);
+    return findChildByClass(ZigTypeExpr.class);
   }
 
 }
