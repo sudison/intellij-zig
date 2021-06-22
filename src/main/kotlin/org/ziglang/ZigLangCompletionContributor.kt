@@ -36,7 +36,13 @@ class ZigLangCompletionContributor : CompletionContributor() {
     ZigLangTypes.CONST,
     ZigLangTypes.VAR,
     ZigLangTypes.FN,
-    ZigLangTypes.PUB
+    ZigLangTypes.PUB,
+    ZigLangTypes.EXPORT,
+    ZigLangTypes.EXTERN,
+    ZigLangTypes.INLINE,
+    ZigLangTypes.NOINLINE,
+    ZigLangTypes.THREAD_LOCAL,
+    ZigLangTypes.USING_NAME_SPACE
   ).map {
     LookupElementBuilder
       .create("$it ")
