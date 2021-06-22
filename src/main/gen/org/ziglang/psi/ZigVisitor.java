@@ -179,6 +179,10 @@ public class ZigVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitGroupedExpr(@NotNull ZigGroupedExpr o) {
+    visitPsiElement(o);
+  }
+
   public void visitIdentifierList(@NotNull ZigIdentifierList o) {
     visitPsiElement(o);
   }

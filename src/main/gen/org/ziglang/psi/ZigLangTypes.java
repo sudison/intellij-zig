@@ -51,6 +51,7 @@ public interface ZigLangTypes {
   IElementType FOR_EXPR = new ZigLangElementType("FOR_EXPR");
   IElementType FOR_PREFIX = new ZigLangElementType("FOR_PREFIX");
   IElementType FOR_STATEMENT = new ZigLangElementType("FOR_STATEMENT");
+  IElementType GROUPED_EXPR = new ZigLangElementType("GROUPED_EXPR");
   IElementType IDENTIFIER_LIST = new ZigLangElementType("IDENTIFIER_LIST");
   IElementType IF_EXPR = new ZigLangElementType("IF_EXPR");
   IElementType IF_PREFIX = new ZigLangElementType("IF_PREFIX");
@@ -335,6 +336,9 @@ public interface ZigLangTypes {
       }
       else if (type == FOR_STATEMENT) {
         return new ZigForStatementImpl(node);
+      }
+      else if (type == GROUPED_EXPR) {
+        return new ZigGroupedExprImpl(node);
       }
       else if (type == IDENTIFIER_LIST) {
         return new ZigIdentifierListImpl(node);

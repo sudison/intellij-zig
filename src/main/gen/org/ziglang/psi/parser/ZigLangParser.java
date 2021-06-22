@@ -1496,6 +1496,20 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // LPAREN Expr RPAREN
+  public static boolean GroupedExpr(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "GroupedExpr")) return false;
+    if (!nextTokenIs(b, LPAREN)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, LPAREN);
+    r = r && Expr(b, l + 1);
+    r = r && consumeToken(b, RPAREN);
+    exit_section_(b, m, GROUPED_EXPR, r);
+    return r;
+  }
+
+  /* ********************************************************** */
   // (DocComment? ID COMMA)* (DocComment? ID)?
   public static boolean IdentifierList(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "IdentifierList")) return false;
@@ -2375,6 +2389,8 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
   //     | DOT InitList
   //     | ErrorSetDecl
   //     | FLOAT
+  //     | FnProto
+  //     | GroupedExpr
   //     | ID
   //     | INTEGER
   //     | STRINGLITERAL
@@ -2389,6 +2405,8 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
     if (!r) r = PrimaryTypeExpr_4(b, l + 1);
     if (!r) r = ErrorSetDecl(b, l + 1);
     if (!r) r = consumeToken(b, FLOAT);
+    if (!r) r = FnProto(b, l + 1);
+    if (!r) r = GroupedExpr(b, l + 1);
     if (!r) r = consumeToken(b, ID);
     if (!r) r = consumeToken(b, INTEGER);
     if (!r) r = STRINGLITERAL(b, l + 1);

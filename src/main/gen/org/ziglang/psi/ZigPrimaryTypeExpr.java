@@ -11,6 +11,12 @@ public interface ZigPrimaryTypeExpr extends PsiElement {
   ZigBuiltinidentifier getBuiltinidentifier();
 
   @Nullable
+  ZigByteAlign getByteAlign();
+
+  @Nullable
+  ZigCallConv getCallConv();
+
+  @Nullable
   ZigContainerDecl getContainerDecl();
 
   @Nullable
@@ -20,9 +26,21 @@ public interface ZigPrimaryTypeExpr extends PsiElement {
   ZigFnCallArguments getFnCallArguments();
 
   @Nullable
+  ZigGroupedExpr getGroupedExpr();
+
+  @Nullable
   ZigInitList getInitList();
 
   @Nullable
+  ZigLinkSection getLinkSection();
+
+  @Nullable
+  ZigParamDeclList getParamDeclList();
+
+  @Nullable
   ZigStringliteral getStringliteral();
+
+  @Nullable
+  ZigTypeExpr getTypeExpr();
 
 }

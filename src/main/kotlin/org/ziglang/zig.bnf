@@ -171,6 +171,8 @@ PrimaryTypeExpr ::=
     | DOT InitList
     | ErrorSetDecl
     | FLOAT
+    | FnProto
+    | GroupedExpr
     | ID
     | INTEGER
     | STRINGLITERAL
@@ -185,6 +187,7 @@ ContainerDeclType ::=
 
 ErrorSetDecl ::= ERROR LBRACE IdentifierList RBRACE
 
+GroupedExpr ::= LPAREN Expr RPAREN
 IdentifierList ::= (DocComment? ID COMMA)* (DocComment? ID)?
 STRINGLITERAL ::= STRINGLITERALSINGLE
 BUILTINIDENTIFIER ::='@' ID

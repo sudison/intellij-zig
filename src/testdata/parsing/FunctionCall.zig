@@ -17,3 +17,5 @@ const FileOpenError = error {
     OutOfMemory,
     FileNotFound,
 };
+
+var a = (1);
