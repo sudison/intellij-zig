@@ -49,7 +49,8 @@ mb_utf8_literal=
 ascii_char_not_nl_slash_squote=[\000-\011\013-\046\050-\133\135-\177]
 
 WHITE_SPACE=[\s]+
-CONTAINER_DOC="//"!.*
+CONTAINER_DOC="//!".*
+LINE_COMMENT="//" [^\n]* | "////" [^\n]*
 COMMENT="///".*
 hex = [0-9a-fA-F]
 
@@ -197,6 +198,8 @@ INTEGER= "0b" {bin_int} | "0o" {oct_int} | "0x" {hex_int} | {dec_int}
 
   {CONTAINER_DOC}            { return CONTAINER_DOC; }
   {COMMENT}                  { return COMMENT; }
+        {LINE_COMMENT}             {}
+
   {FLOAT}                    {return FLOAT;}
   {INTEGER}                  { return INTEGER; }
   {ID}                       { return ID; }
