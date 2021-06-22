@@ -210,7 +210,6 @@ IfTypeExpr ::= IfPrefix TypeExpr (ELSE Payload? TypeExpr)?
 
 IdentifierList ::= (DocComment? ID COMMA)* (DocComment? ID)?
 STRINGLITERAL ::= STRINGLITERALSINGLE
-BUILTINIDENTIFIER ::='@' ID
 FnCallArguments ::= LPAREN ExprList RPAREN
 ExprList ::= (Expr COMMA)* Expr?
 

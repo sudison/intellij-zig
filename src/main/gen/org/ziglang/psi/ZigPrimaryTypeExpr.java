@@ -8,9 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface ZigPrimaryTypeExpr extends PsiElement {
 
   @Nullable
-  ZigBuiltinidentifier getBuiltinidentifier();
-
-  @Nullable
   ZigByteAlign getByteAlign();
 
   @Nullable

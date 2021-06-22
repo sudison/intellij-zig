@@ -24,4 +24,14 @@ class ZigLangCodeCompletionTest: LightPlatformCodeInsightFixture4TestCase() {
     assertTrue(l.size == 1)
     assertEquals(l[0].lookupString, "${ZigLangTypes.FN} ")
   }
+
+  @Test
+  fun testImport() {
+    myFixture.configureByText(ZigFileType, "")
+    myFixture.type("const a = @imp")
+
+    val l = myFixture.completeBasic()
+    assertTrue(l.size == 2)
+    assertEquals(l[0].lookupString, "import(\"")
+  }
 }

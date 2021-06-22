@@ -29,12 +29,6 @@ public class ZigPrimaryTypeExprImpl extends ASTWrapperPsiElement implements ZigP
 
   @Override
   @Nullable
-  public ZigBuiltinidentifier getBuiltinidentifier() {
-    return findChildByClass(ZigBuiltinidentifier.class);
-  }
-
-  @Override
-  @Nullable
   public ZigByteAlign getByteAlign() {
     return findChildByClass(ZigByteAlign.class);
   }

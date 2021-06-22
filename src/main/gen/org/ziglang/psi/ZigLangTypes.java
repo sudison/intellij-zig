@@ -32,7 +32,6 @@ public interface ZigLangTypes {
   IElementType BOOL_AND_EXPR = new ZigLangElementType("BOOL_AND_EXPR");
   IElementType BOOL_OR_EXPR = new ZigLangElementType("BOOL_OR_EXPR");
   IElementType BREAK_LABEL = new ZigLangElementType("BREAK_LABEL");
-  IElementType BUILTINIDENTIFIER = new ZigLangElementType("BUILTINIDENTIFIER");
   IElementType BYTE_ALIGN = new ZigLangElementType("BYTE_ALIGN");
   IElementType CALL_CONV = new ZigLangElementType("CALL_CONV");
   IElementType COMPARE_EXPR = new ZigLangElementType("COMPARE_EXPR");
@@ -116,6 +115,7 @@ public interface ZigLangTypes {
   IElementType ASYNC = new ZigLangTokenType("async");
   IElementType AWAIT = new ZigLangTokenType("AWAIT");
   IElementType BREAK = new ZigLangTokenType("break");
+  IElementType BUILTINIDENTIFIER = new ZigLangTokenType("BUILTINIDENTIFIER");
   IElementType CALLCONV = new ZigLangTokenType("callconv");
   IElementType CARET = new ZigLangTokenType("^");
   IElementType CARETEQUAL = new ZigLangTokenType("^=");
@@ -289,9 +289,6 @@ public interface ZigLangTypes {
       }
       else if (type == BREAK_LABEL) {
         return new ZigBreakLabelImpl(node);
-      }
-      else if (type == BUILTINIDENTIFIER) {
-        return new ZigBuiltinidentifierImpl(node);
       }
       else if (type == BYTE_ALIGN) {
         return new ZigByteAlignImpl(node);

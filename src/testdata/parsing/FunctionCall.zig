@@ -1,4 +1,5 @@
 
+const a = @import("dfdf");
 fn @"weird function name"() i32 {
     return 1234;
 }

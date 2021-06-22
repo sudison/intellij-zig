@@ -55,6 +55,7 @@ COMMENT="///".*
 hex = [0-9a-fA-F]
 
 ID=[A-Za-z_][A-Za-z0-9_]* | "@\"" {STRING_CHAR}* \"
+BUILTINIDENTIFIER="@"[A-Za-z_][A-Za-z0-9_]*
 CHAR_ESCAPE=\\x{hex}{hex}|\\u\{{hex}+}|\\[nr\t\'\"]
 char_char={mb_utf8_literal} | {CHAR_ESCAPE} | {ascii_char_not_nl_slash_squote}
 CHAR_LITERAL=\' {char_char} \'
@@ -202,6 +203,7 @@ INTEGER= "0b" {bin_int} | "0o" {oct_int} | "0x" {hex_int} | {dec_int}
 
   {FLOAT}                    {return FLOAT;}
   {INTEGER}                  { return INTEGER; }
+  {BUILTINIDENTIFIER}        {return BUILTINIDENTIFIER;}
   {ID}                       { return ID; }
   {STRINGLITERALSINGLE}      { return STRINGLITERALSINGLE; }
 

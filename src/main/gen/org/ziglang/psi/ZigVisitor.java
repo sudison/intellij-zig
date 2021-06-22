@@ -59,10 +59,6 @@ public class ZigVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitBuiltinidentifier(@NotNull ZigBuiltinidentifier o) {
-    visitPsiElement(o);
-  }
-
   public void visitBitShiftExpr(@NotNull ZigBitShiftExpr o) {
     visitPsiElement(o);
   }

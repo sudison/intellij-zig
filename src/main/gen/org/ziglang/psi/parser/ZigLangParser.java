@@ -401,18 +401,6 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // '@' ID
-  public static boolean BUILTINIDENTIFIER(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "BUILTINIDENTIFIER")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, BUILTINIDENTIFIER, "<builtinidentifier>");
-    r = consumeToken(b, "@");
-    r = r && consumeToken(b, ID);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  /* ********************************************************** */
   // AdditionExpr (BitShiftOp AdditionExpr)*
   public static boolean BitShiftExpr(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "BitShiftExpr")) return false;
@@ -2619,7 +2607,7 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "PrimaryTypeExpr_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = BUILTINIDENTIFIER(b, l + 1);
+    r = consumeToken(b, BUILTINIDENTIFIER);
     r = r && FnCallArguments(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
