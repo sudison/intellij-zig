@@ -57,6 +57,7 @@ public interface ZigLangTypes {
   IElementType IF_EXPR = new ZigLangElementType("IF_EXPR");
   IElementType IF_PREFIX = new ZigLangElementType("IF_PREFIX");
   IElementType IF_STATEMENT = new ZigLangElementType("IF_STATEMENT");
+  IElementType IF_TYPE_EXPR = new ZigLangElementType("IF_TYPE_EXPR");
   IElementType INIT_LIST = new ZigLangElementType("INIT_LIST");
   IElementType LABELED_STATEMENT = new ZigLangElementType("LABELED_STATEMENT");
   IElementType LABELED_TYPE_EXPR = new ZigLangElementType("LABELED_TYPE_EXPR");
@@ -144,6 +145,7 @@ public interface ZigLangTypes {
   IElementType EXCLAMATIONMARKEQUAL = new ZigLangTokenType("!=");
   IElementType EXPORT = new ZigLangTokenType("export");
   IElementType EXTERN = new ZigLangTokenType("extern");
+  IElementType FALSE = new ZigLangTokenType("FALSE");
   IElementType FLOAT = new ZigLangTokenType("FLOAT");
   IElementType FN = new ZigLangTokenType("fn");
   IElementType FOR = new ZigLangTokenType("for");
@@ -167,6 +169,7 @@ public interface ZigLangTypes {
   IElementType MINUSRARROW = new ZigLangTokenType("->");
   IElementType NOINLINE = new ZigLangTokenType("noinline");
   IElementType NOSUSPEND = new ZigLangTokenType("nosuspend");
+  IElementType NULL = new ZigLangTokenType("NULL");
   IElementType OPAQUE = new ZigLangTokenType("OPAQUE");
   IElementType OR = new ZigLangTokenType("or");
   IElementType ORELSE = new ZigLangTokenType("orelse");
@@ -202,8 +205,11 @@ public interface ZigLangTypes {
   IElementType TEST = new ZigLangTokenType("test");
   IElementType THREAD_LOCAL = new ZigLangTokenType("threadlocal");
   IElementType TILDE = new ZigLangTokenType("~");
+  IElementType TRUE = new ZigLangTokenType("TRUE");
   IElementType TRY = new ZigLangTokenType("try");
+  IElementType UNDEFINED = new ZigLangTokenType("UNDEFINED");
   IElementType UNION = new ZigLangTokenType("UNION");
+  IElementType UNREACHABLE = new ZigLangTokenType("UNREACHABLE");
   IElementType USING_NAME_SPACE = new ZigLangTokenType("usingnamespace");
   IElementType VAR = new ZigLangTokenType("var");
   IElementType VOLATILE = new ZigLangTokenType("volatile");
@@ -358,6 +364,9 @@ public interface ZigLangTypes {
       }
       else if (type == IF_STATEMENT) {
         return new ZigIfStatementImpl(node);
+      }
+      else if (type == IF_TYPE_EXPR) {
+        return new ZigIfTypeExprImpl(node);
       }
       else if (type == INIT_LIST) {
         return new ZigInitListImpl(node);

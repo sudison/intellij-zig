@@ -29,6 +29,9 @@ public interface ZigPrimaryTypeExpr extends PsiElement {
   ZigGroupedExpr getGroupedExpr();
 
   @Nullable
+  ZigIfTypeExpr getIfTypeExpr();
+
+  @Nullable
   ZigInitList getInitList();
 
   @Nullable
@@ -42,6 +45,9 @@ public interface ZigPrimaryTypeExpr extends PsiElement {
 
   @Nullable
   ZigStringliteral getStringliteral();
+
+  @Nullable
+  ZigSwitchExpr getSwitchExpr();
 
   @Nullable
   ZigTypeExpr getTypeExpr();

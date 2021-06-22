@@ -175,8 +175,18 @@ PrimaryTypeExpr ::=
     | GroupedExpr
     | LabeledTypeExpr
     | ID
+    | IfTypeExpr
     | INTEGER
+    | COMPTIME TypeExpr
+    | ERROR DOT ID
+    | FALSE
+    | NULL
+    | ANYFRAME
+    | TRUE
+    | UNDEFINED
+    | UNREACHABLE
     | STRINGLITERAL
+    | SwitchExpr
 
 ContainerDecl ::= (EXTERN | PACKED)? ContainerDeclAuto
 ContainerDeclAuto ::= ContainerDeclType LBRACE container_doc_comment? ContainerMembers RBRACE
@@ -196,6 +206,8 @@ LoopTypeExpr ::= INLINE? (ForTypeExpr | WhileTypeExpr)
 
 ForTypeExpr ::= ForPrefix TypeExpr (ELSE TypeExpr)?
 WhileTypeExpr ::= WhilePrefix TypeExpr (ELSE Payload? TypeExpr)?
+
+IfTypeExpr ::= IfPrefix TypeExpr (ELSE Payload? TypeExpr)?
 
 IdentifierList ::= (DocComment? ID COMMA)* (DocComment? ID)?
 STRINGLITERAL ::= STRINGLITERALSINGLE

@@ -71,6 +71,12 @@ public class ZigPrimaryTypeExprImpl extends ASTWrapperPsiElement implements ZigP
 
   @Override
   @Nullable
+  public ZigIfTypeExpr getIfTypeExpr() {
+    return findChildByClass(ZigIfTypeExpr.class);
+  }
+
+  @Override
+  @Nullable
   public ZigInitList getInitList() {
     return findChildByClass(ZigInitList.class);
   }
@@ -97,6 +103,12 @@ public class ZigPrimaryTypeExprImpl extends ASTWrapperPsiElement implements ZigP
   @Nullable
   public ZigStringliteral getStringliteral() {
     return findChildByClass(ZigStringliteral.class);
+  }
+
+  @Override
+  @Nullable
+  public ZigSwitchExpr getSwitchExpr() {
+    return findChildByClass(ZigSwitchExpr.class);
   }
 
   @Override

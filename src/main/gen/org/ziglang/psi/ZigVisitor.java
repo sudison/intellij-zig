@@ -203,6 +203,10 @@ public class ZigVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitIfTypeExpr(@NotNull ZigIfTypeExpr o) {
+    visitPsiElement(o);
+  }
+
   public void visitInitList(@NotNull ZigInitList o) {
     visitPsiElement(o);
   }

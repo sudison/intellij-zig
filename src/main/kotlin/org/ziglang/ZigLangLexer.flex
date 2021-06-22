@@ -53,7 +53,6 @@ CONTAINER_DOC="//"!.*
 COMMENT="///".*
 hex = [0-9a-fA-F]
 
-INTEGER=[0-9]+
 ID=[A-Za-z_][A-Za-z0-9_]*
 CHAR_ESCAPE=\\x{hex}{hex}|\\u\{{hex}+}|\\[nr\t\'\"]
 char_char={mb_utf8_literal} | {CHAR_ESCAPE} | {ascii_char_not_nl_slash_squote}
@@ -69,15 +68,17 @@ hex_ = '_'? {hex}
 dec = [0-9]
 dec_ = '_'? {dec}
 
-bin_int = {bin} {bin_}*
-oct_int = {oct} {oct_}*
-dec_int = {dec} {dec_}*
-hex_int = {hex} {hex_}*
+bin_int = [01_]*
+oct_int = [0-7_]*
+dec_int = [0-9_]*
+hex_int = [0-9a-fA-F_]*
 FLOAT=
  "0x" {hex_int} "." {hex_int} ([pP] [-+]? {dec_int})?
  | {dec_int} "." {dec_int} ([eE] [-+]? {dec_int})?
  | "0x" {hex_int} [pP] [-+]? {dec_int}
  | {dec_int} [eE] [-+]? {dec_int}
+
+INTEGER= "0b" {bin_int} | "0o" {oct_int} | "0x" {hex_int} | [0-9] {dec_int}
 
 %%
 <YYINITIAL> {
@@ -88,6 +89,11 @@ FLOAT=
   "enum"                     {return ENUM;}
   "union"                    {return UNION;}
   "error"                    {return ERROR;}
+  "false"                    {return FALSE;}
+  "true"                     {return TRUE;}
+  "null"                     {return NULL;}
+  "undefined"                {return UNDEFINED;}
+  "unreachable"              {return UNREACHABLE;}
 
 
   "packed"                   {return PACKED;}

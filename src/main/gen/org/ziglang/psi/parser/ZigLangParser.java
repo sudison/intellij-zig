@@ -1764,6 +1764,46 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // IfPrefix TypeExpr (ELSE Payload? TypeExpr)?
+  public static boolean IfTypeExpr(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "IfTypeExpr")) return false;
+    if (!nextTokenIs(b, IF)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = IfPrefix(b, l + 1);
+    r = r && TypeExpr(b, l + 1);
+    r = r && IfTypeExpr_2(b, l + 1);
+    exit_section_(b, m, IF_TYPE_EXPR, r);
+    return r;
+  }
+
+  // (ELSE Payload? TypeExpr)?
+  private static boolean IfTypeExpr_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "IfTypeExpr_2")) return false;
+    IfTypeExpr_2_0(b, l + 1);
+    return true;
+  }
+
+  // ELSE Payload? TypeExpr
+  private static boolean IfTypeExpr_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "IfTypeExpr_2_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, ELSE);
+    r = r && IfTypeExpr_2_0_1(b, l + 1);
+    r = r && TypeExpr(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // Payload?
+  private static boolean IfTypeExpr_2_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "IfTypeExpr_2_0_1")) return false;
+    Payload(b, l + 1);
+    return true;
+  }
+
+  /* ********************************************************** */
   // LBRACE FieldInit (COMMA FieldInit)* COMMA? RBRACE
   //     | LBRACE Expr (COMMA Expr)* COMMA? RBRACE
   //     | LBRACE RBRACE
@@ -2494,8 +2534,18 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
   //     | GroupedExpr
   //     | LabeledTypeExpr
   //     | ID
+  //     | IfTypeExpr
   //     | INTEGER
+  //     | COMPTIME TypeExpr
+  //     | ERROR DOT ID
+  //     | FALSE
+  //     | NULL
+  //     | ANYFRAME
+  //     | TRUE
+  //     | UNDEFINED
+  //     | UNREACHABLE
   //     | STRINGLITERAL
+  //     | SwitchExpr
   public static boolean PrimaryTypeExpr(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "PrimaryTypeExpr")) return false;
     boolean r;
@@ -2511,8 +2561,18 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
     if (!r) r = GroupedExpr(b, l + 1);
     if (!r) r = LabeledTypeExpr(b, l + 1);
     if (!r) r = consumeToken(b, ID);
+    if (!r) r = IfTypeExpr(b, l + 1);
     if (!r) r = consumeToken(b, INTEGER);
+    if (!r) r = PrimaryTypeExpr_13(b, l + 1);
+    if (!r) r = parseTokens(b, 0, ERROR, DOT, ID);
+    if (!r) r = consumeToken(b, FALSE);
+    if (!r) r = consumeToken(b, NULL);
+    if (!r) r = consumeToken(b, ANYFRAME);
+    if (!r) r = consumeToken(b, TRUE);
+    if (!r) r = consumeToken(b, UNDEFINED);
+    if (!r) r = consumeToken(b, UNREACHABLE);
     if (!r) r = STRINGLITERAL(b, l + 1);
+    if (!r) r = SwitchExpr(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -2535,6 +2595,17 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b);
     r = consumeToken(b, DOT);
     r = r && InitList(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // COMPTIME TypeExpr
+  private static boolean PrimaryTypeExpr_13(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "PrimaryTypeExpr_13")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, COMPTIME);
+    r = r && TypeExpr(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
