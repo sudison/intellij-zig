@@ -54,7 +54,7 @@ LINE_COMMENT="//" [^\n]* | "////" [^\n]*
 COMMENT="///".*
 hex = [0-9a-fA-F]
 
-ID=[A-Za-z_][A-Za-z0-9_]*
+ID=[A-Za-z_][A-Za-z0-9_]* | "@\"" {STRING_CHAR}* \"
 CHAR_ESCAPE=\\x{hex}{hex}|\\u\{{hex}+}|\\[nr\t\'\"]
 char_char={mb_utf8_literal} | {CHAR_ESCAPE} | {ascii_char_not_nl_slash_squote}
 CHAR_LITERAL=\' {char_char} \'
