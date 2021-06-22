@@ -167,6 +167,7 @@ public interface ZigLangTypes {
   IElementType MINUSPERCENT = new ZigLangTokenType("-%");
   IElementType MINUSPERCENTEQUAL = new ZigLangTokenType("-%=");
   IElementType MINUSRARROW = new ZigLangTokenType("->");
+  IElementType NOALIAS = new ZigLangTokenType("NOALIAS");
   IElementType NOINLINE = new ZigLangTokenType("noinline");
   IElementType NOSUSPEND = new ZigLangTokenType("nosuspend");
   IElementType NULL = new ZigLangTokenType("NULL");

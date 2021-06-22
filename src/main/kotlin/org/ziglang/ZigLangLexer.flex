@@ -95,6 +95,7 @@ INTEGER= "0b" {bin_int} | "0o" {oct_int} | "0x" {hex_int} | {dec_int}
   "null"                     {return NULL;}
   "undefined"                {return UNDEFINED;}
   "unreachable"              {return UNREACHABLE;}
+  "noalias"                  {return NOALIAS;}
 
 
   "packed"                   {return PACKED;}

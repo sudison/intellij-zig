@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface ZigParamDecl extends PsiElement {
 
-  @NotNull
+  @Nullable
   ZigParamType getParamType();
 
 }

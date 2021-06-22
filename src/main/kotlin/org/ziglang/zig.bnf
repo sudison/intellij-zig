@@ -137,7 +137,7 @@ LinkSection ::= LINKSECTION LPAREN Expr RPAREN
 CallConv ::= CALLCONV LPAREN Expr RPAREN
 
 ParamDeclList ::= (ParamDecl COMMA)* ParamDecl?
-ParamDecl ::= (ID COLON)? ParamType
+ParamDecl ::= DocComment? (NOALIAS | COMPTIME)? (ID COLON)? ParamType | DOT3
 ParamType ::= TypeExpr
 TypeExpr ::= PrefixTypeOp* ErrorUnionExpr
 PrefixTypeOp ::=

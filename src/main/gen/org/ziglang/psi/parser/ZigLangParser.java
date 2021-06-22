@@ -2123,27 +2123,63 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (ID COLON)? ParamType
+  // DocComment? (NOALIAS | COMPTIME)? (ID COLON)? ParamType | DOT3
   public static boolean ParamDecl(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ParamDecl")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, PARAM_DECL, "<param decl>");
     r = ParamDecl_0(b, l + 1);
-    r = r && ParamType(b, l + 1);
+    if (!r) r = consumeToken(b, DOT3);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
-  // (ID COLON)?
+  // DocComment? (NOALIAS | COMPTIME)? (ID COLON)? ParamType
   private static boolean ParamDecl_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ParamDecl_0")) return false;
-    ParamDecl_0_0(b, l + 1);
+    boolean r;
+    Marker m = enter_section_(b);
+    r = ParamDecl_0_0(b, l + 1);
+    r = r && ParamDecl_0_1(b, l + 1);
+    r = r && ParamDecl_0_2(b, l + 1);
+    r = r && ParamType(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // DocComment?
+  private static boolean ParamDecl_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ParamDecl_0_0")) return false;
+    DocComment(b, l + 1);
+    return true;
+  }
+
+  // (NOALIAS | COMPTIME)?
+  private static boolean ParamDecl_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ParamDecl_0_1")) return false;
+    ParamDecl_0_1_0(b, l + 1);
+    return true;
+  }
+
+  // NOALIAS | COMPTIME
+  private static boolean ParamDecl_0_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ParamDecl_0_1_0")) return false;
+    boolean r;
+    r = consumeToken(b, NOALIAS);
+    if (!r) r = consumeToken(b, COMPTIME);
+    return r;
+  }
+
+  // (ID COLON)?
+  private static boolean ParamDecl_0_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ParamDecl_0_2")) return false;
+    ParamDecl_0_2_0(b, l + 1);
     return true;
   }
 
   // ID COLON
-  private static boolean ParamDecl_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "ParamDecl_0_0")) return false;
+  private static boolean ParamDecl_0_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ParamDecl_0_2_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeTokens(b, 0, ID, COLON);
