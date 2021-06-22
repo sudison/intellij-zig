@@ -12,7 +12,7 @@ import com.intellij.psi.tree.IElementType
 import org.ziglang.psi.ZigLangTypes
 
 object ZigLangSyntaxHighlighter: SyntaxHighlighterBase() {
-  val KEYWORDS = listOf(
+  private val KEYWORDS = listOf(
     ZigLangTypes.PUB,
     ZigLangTypes.CONST,
     ZigLangTypes.FN,
@@ -66,7 +66,7 @@ object ZigLangSyntaxHighlighter: SyntaxHighlighterBase() {
     ZigLangTypes.VOLATILE,
     ZigLangTypes.WHILE
   )
-  val KEYWORD = TextAttributesKey.createTextAttributesKey("ZIGLANG_KEYWORD", DefaultLanguageHighlighterColors.KEYWORD)
+  private val KEYWORD = TextAttributesKey.createTextAttributesKey("ZIGLANG_KEYWORD", DefaultLanguageHighlighterColors.KEYWORD)
 
   override fun getHighlightingLexer(): Lexer = ZigLexerAdapter()
 
