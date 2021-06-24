@@ -1,5 +1,5 @@
 <idea-plugin>
-    <id>org.jetbrains.plugins.template</id>
+    <id>org.ziglang</id>
     <name>ZigLang</name>
     <vendor>ZigLang</vendor>
 
@@ -11,7 +11,7 @@
         <applicationService serviceImplementation="org.ziglang.template.services.MyApplicationService"/>
         <projectService serviceImplementation="org.ziglang.template.services.MyProjectService"/>
         <fileType name="ZigLang" implementationClass="org.ziglang.ZigFileType"
-                  fieldName="INSTANCE" language="ZigLang" extensions="ziglang"/>
+                  fieldName="INSTANCE" language="ZigLang" extensions="zig"/>
         <lang.parserDefinition language="ZigLang"
                                implementationClass="org.ziglang.ZigParserDefinition"/>
         <lang.syntaxHighlighterFactory

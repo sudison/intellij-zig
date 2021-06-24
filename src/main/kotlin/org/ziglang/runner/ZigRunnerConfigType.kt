@@ -9,20 +9,23 @@ import com.intellij.execution.process.KillableProcessHandler
 import com.intellij.execution.process.ProcessHandler
 import com.intellij.execution.process.ProcessTerminatedListener
 import com.intellij.execution.runners.ExecutionEnvironment
-import com.intellij.openapi.fileTypes.PlainTextLanguage
+import com.intellij.openapi.Disposable
+import com.intellij.openapi.fileChooser.FileChooserDescriptor
+import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory
 import com.intellij.openapi.options.SettingsEditor
 import com.intellij.openapi.project.DumbAware
 import com.intellij.openapi.project.Project
+import com.intellij.openapi.ui.TextComponentAccessor
+import com.intellij.openapi.ui.TextFieldWithBrowseButton
 import com.intellij.openapi.util.Key
-import com.intellij.ui.LanguageTextField
-import com.intellij.ui.TextAccessor
+import com.intellij.ui.DocumentAdapter
+import com.intellij.ui.EditorTextField
 import com.intellij.ui.components.Label
 import com.intellij.ui.layout.CCFlags
 import com.intellij.ui.layout.panel
 import org.ziglang.ZigIcons
-import java.awt.BorderLayout
 import javax.swing.JComponent
-import javax.swing.JPanel
+import javax.swing.event.DocumentEvent
 import kotlin.math.max
 
 class ZigRunnerConfigType : ConfigurationTypeBase(
@@ -90,47 +93,57 @@ class ZigRunState(
 
 }
 
-class ZigCommandLineEditor(
-  private val project: Project
-) : JPanel(BorderLayout()), TextAccessor {
-  private val textField = createTextField("")
+fun pathTextField(
+  fileChooserDescriptor: FileChooserDescriptor,
+  disposable: Disposable,
+  title: String,
+  onTextChanged: () -> Unit = {}
+): TextFieldWithBrowseButton {
 
-  init {
-    add(textField, BorderLayout.CENTER)
-  }
+  val component = TextFieldWithBrowseButton(null, disposable)
+  component.addBrowseFolderListener(
+    title, null, null,
+    fileChooserDescriptor,
+    TextComponentAccessor.TEXT_FIELD_WHOLE_TEXT
+  )
+  component.childComponent.document.addDocumentListener(object : DocumentAdapter() {
+    override fun textChanged(e: DocumentEvent) {
+      onTextChanged()
+    }
+  })
 
-  override fun setText(text: String?) {
-    textField.setText(text)
-  }
-
-  override fun getText(): String = textField.text
-
-  private fun createTextField(value: String): LanguageTextField =
-    LanguageTextField(
-      PlainTextLanguage.INSTANCE,
-      project,
-      value
-    )
+  return component
 }
 
 class ZigRunnerConfigurationEditor(
-  project: Project
 ) : SettingsEditor<ZigCommandConfiguration>() {
 
-  private val command = ZigCommandLineEditor(project)
+  private val command: TextFieldWithBrowseButton =
+    pathTextField(FileChooserDescriptorFactory.createSingleFileDescriptor(), this, "Path of zig compiler")
+      .apply { isEnabled = true }
+
+  private val args = EditorTextField("")
   override fun resetEditorFrom(s: ZigCommandConfiguration) {
     command.text = s.command
+    args.text = s.args
   }
 
   override fun applyEditorTo(s: ZigCommandConfiguration) {
     s.command = command.text
+    s.args = args.text
   }
 
   override fun createEditor(): JComponent = panel {
-    val label = Label("&Command:")
+    val label = Label("&Zig:")
     label.labelFor = command
     row(label) {
       command(CCFlags.pushX, CCFlags.growX)
+    }
+
+    val label2 = Label("&Args:")
+    label.labelFor = args
+    row(label2) {
+      args(CCFlags.pushX, CCFlags.growX)
     }
   }
 }
@@ -141,13 +154,14 @@ class ZigCommandConfiguration(
   factory: ConfigurationFactory
 ) : LocatableConfigurationBase<RunProfileState>(project, factory, name),
   RunConfigurationWithSuppressedDefaultDebugAction {
-  var command: String = "/Volumes/external/dev/zig-macos-x86_64-0.8.0-dev.2676+c0aa9292b/zig"
+  var command: String = ""
+  var args: String = ""
   override fun getState(executor: Executor, environment: ExecutionEnvironment): RunProfileState? {
     return ZigRunState(environment, this)
   }
 
   override fun getConfigurationEditor(): SettingsEditor<out RunConfiguration> {
-    return ZigRunnerConfigurationEditor(project)
+    return ZigRunnerConfigurationEditor()
   }
 
 }
