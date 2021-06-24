@@ -19,6 +19,10 @@
                 implementationClass="org.ziglang.ZigLangSyntaxHighlighterFactory"/>
         <completion.contributor language="ZigLang"
                                 implementationClass="org.ziglang.ZigLangCompletionContributor"/>
+
+        <programRunner implementation="org.ziglang.runner.ZigRunner"/>
+        <configurationType implementation="org.ziglang.runner.ZigRunnerConfigType"/>
+
     </extensions>
 
     <applicationListeners>
