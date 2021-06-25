@@ -23,6 +23,7 @@ import com.intellij.ui.EditorTextField
 import com.intellij.ui.components.Label
 import com.intellij.ui.layout.CCFlags
 import com.intellij.ui.layout.panel
+import com.intellij.util.containers.toArray
 import org.ziglang.ZigIcons
 import javax.swing.JComponent
 import javax.swing.event.DocumentEvent
@@ -83,8 +84,10 @@ class ZigRunState(
   }
 
   override fun startProcess(): ProcessHandler {
+    val cmds = mutableListOf(config.command)
+    cmds.addAll(config.args.split(" "))
     val cmdLine =
-      GeneralCommandLine(config.command, "build-exe", "hello.zig").withWorkDirectory(environment.project.basePath)
+      GeneralCommandLine(cmds).withWorkDirectory(environment.project.basePath)
 
     val handler = ZigProcessHandler(cmdLine)
     ProcessTerminatedListener.attach(handler)
