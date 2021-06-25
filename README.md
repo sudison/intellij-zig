@@ -6,6 +6,6 @@
 
 # Screenshots
 ## code completion
-![](./assets/code_completion.png)
+![](./assets/code-completion.gif)
 ## build integration
 ![](./assets/build.gif)
