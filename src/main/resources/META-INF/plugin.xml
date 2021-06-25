@@ -1,23 +1,23 @@
 <idea-plugin>
-    <id>org.ziglang</id>
+    <id>org.zig</id>
     <name>ZigLang</name>
     <vendor>intellij-zig</vendor>
 
     <depends>com.intellij.modules.lang</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <fileType name="ZigLang" implementationClass="org.ziglang.ZigFileType"
+        <fileType name="ZigLang" implementationClass="org.zig.ZigFileType"
                   fieldName="INSTANCE" language="ZigLang" extensions="zig"/>
         <lang.parserDefinition language="ZigLang"
-                               implementationClass="org.ziglang.ZigParserDefinition"/>
+                               implementationClass="org.zig.ZigParserDefinition"/>
         <lang.syntaxHighlighterFactory
                 language="ZigLang"
-                implementationClass="org.ziglang.ZigLangSyntaxHighlighterFactory"/>
+                implementationClass="org.zig.ZigLangSyntaxHighlighterFactory"/>
         <completion.contributor language="ZigLang"
-                                implementationClass="org.ziglang.ZigLangCompletionContributor"/>
+                                implementationClass="org.zig.ZigLangCompletionContributor"/>
 
-        <programRunner implementation="org.ziglang.runner.ZigRunner"/>
-        <configurationType implementation="org.ziglang.runner.ZigRunnerConfigType"/>
+        <programRunner implementation="org.zig.runner.ZigRunner"/>
+        <configurationType implementation="org.zig.runner.ZigRunnerConfigType"/>
 
     </extensions>
 </idea-plugin>
