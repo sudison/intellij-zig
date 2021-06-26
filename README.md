@@ -1,7 +1,11 @@
 # IntelliJ ZigLang Plugin
 
 <!-- Plugin description -->
-A plugin for [Zig](https://ziglang.org), supports Zig 0.8.0 syntax and more.
+Adds the support for [Zig](https://ziglang.org) in Intellij.
+Supports the following features:
+1. Supports Zig 0.8.0 syntax.
+2. Code completion for top level function and variable declaration.
+3. Zig compiler integration.
 <!-- Plugin description end -->
 
 # Screenshots
