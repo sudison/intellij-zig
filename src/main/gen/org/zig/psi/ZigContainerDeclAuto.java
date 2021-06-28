@@ -8,15 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface ZigContainerDeclAuto extends PsiElement {
 
   @NotNull
-  List<ZigBlock> getBlockList();
-
-  @NotNull
-  List<ZigByteAlign> getByteAlignList();
-
-  @NotNull
-  List<ZigCallConv> getCallConvList();
-
-  @NotNull
   ZigContainerDeclType getContainerDeclType();
 
   @NotNull
@@ -26,19 +17,13 @@ public interface ZigContainerDeclAuto extends PsiElement {
   List<ZigExpr> getExprList();
 
   @NotNull
-  List<ZigLinkSection> getLinkSectionList();
-
-  @NotNull
-  List<ZigParamDeclList> getParamDeclListList();
+  List<ZigFnDecl> getFnDeclList();
 
   @NotNull
   List<ZigTestDecl> getTestDeclList();
 
   @NotNull
   List<ZigTopLevelComptime> getTopLevelComptimeList();
-
-  @NotNull
-  List<ZigTypeExpr> getTypeExprList();
 
   @NotNull
   List<ZigVarDecl> getVarDeclList();

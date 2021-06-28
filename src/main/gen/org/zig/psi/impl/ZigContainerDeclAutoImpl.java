@@ -29,24 +29,6 @@ public class ZigContainerDeclAutoImpl extends ASTWrapperPsiElement implements Zi
 
   @Override
   @NotNull
-  public List<ZigBlock> getBlockList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ZigBlock.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ZigByteAlign> getByteAlignList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ZigByteAlign.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ZigCallConv> getCallConvList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ZigCallConv.class);
-  }
-
-  @Override
-  @NotNull
   public ZigContainerDeclType getContainerDeclType() {
     return findNotNullChildByClass(ZigContainerDeclType.class);
   }
@@ -65,14 +47,8 @@ public class ZigContainerDeclAutoImpl extends ASTWrapperPsiElement implements Zi
 
   @Override
   @NotNull
-  public List<ZigLinkSection> getLinkSectionList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ZigLinkSection.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ZigParamDeclList> getParamDeclListList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ZigParamDeclList.class);
+  public List<ZigFnDecl> getFnDeclList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ZigFnDecl.class);
   }
 
   @Override
@@ -85,12 +61,6 @@ public class ZigContainerDeclAutoImpl extends ASTWrapperPsiElement implements Zi
   @NotNull
   public List<ZigTopLevelComptime> getTopLevelComptimeList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, ZigTopLevelComptime.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ZigTypeExpr> getTypeExprList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ZigTypeExpr.class);
   }
 
   @Override

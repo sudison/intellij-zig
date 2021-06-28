@@ -1,4 +1,5 @@
 
+
 const a = @import("dfdf");
 fn @"weird function name"() i32 {
     return 1234;
@@ -26,7 +27,7 @@ const slice = array[0..];
 
 var a = 0b010101;
 var b = 123232;
-pub export fn fkd() {
+pub export fn fkd() void {
     // dfjkdfj
     const a = 1;
     const b = '1';

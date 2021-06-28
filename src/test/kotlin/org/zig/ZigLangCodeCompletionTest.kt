@@ -34,4 +34,13 @@ class ZigLangCodeCompletionTest: LightPlatformCodeInsightFixture4TestCase() {
     assertTrue(l.size == 2)
     assertEquals(l[0].lookupString, "import(")
   }
+
+  @Test
+  fun testFnReturnType() {
+    myFixture.configureByText(ZigFileType, "")
+    myFixture.type("fn main() i")
+
+    val l = myFixture.completeBasic()
+    assertTrue(l.size == 13)
+  }
 }

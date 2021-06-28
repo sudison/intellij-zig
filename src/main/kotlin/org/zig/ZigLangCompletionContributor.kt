@@ -6,6 +6,8 @@ import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.patterns.PlatformPatterns.psiElement
 import com.intellij.psi.PsiErrorElement
+import com.intellij.psi.PsiWhiteSpace
+import com.intellij.psi.impl.source.tree.PsiWhiteSpaceImpl
 import com.intellij.util.ProcessingContext
 import org.zig.psi.ZigFile
 import org.zig.psi.ZigLangTypes
@@ -41,6 +43,13 @@ class ZigLangCompletionContributor : CompletionContributor() {
       .withAutoCompletionPolicy(AutoCompletionPolicy.NEVER_AUTOCOMPLETE)
   }
 
+  private val primitiveTypesElements = ZigLangHelper.primitiveTypes.map {
+    LookupElementBuilder
+      .create("$it ")
+      .withPresentableText(it)
+      .withAutoCompletionPolicy(AutoCompletionPolicy.NEVER_AUTOCOMPLETE)
+  }
+
   private val builtInFunctions = ZigLangHelper.builtInFunctions.map {
     LookupElementBuilder
       .create("$it(")
@@ -60,5 +69,9 @@ class ZigLangCompletionContributor : CompletionContributor() {
       psiElement(ZigLangTypes.BUILTINIDENTIFIER),
       ZigCompletionProvider(builtInFunctions)
     )
+
+    extend(CompletionType.BASIC,
+           psiElement(ZigLangTypes.ID).withAncestor(6, psiElement(ZigLangTypes.FN_PROTO)),
+           ZigCompletionProvider(primitiveTypesElements))
   }
 }

@@ -8,12 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface ZigPrimaryTypeExpr extends PsiElement {
 
   @Nullable
-  ZigByteAlign getByteAlign();
-
-  @Nullable
-  ZigCallConv getCallConv();
-
-  @Nullable
   ZigContainerDecl getContainerDecl();
 
   @Nullable
@@ -21,6 +15,9 @@ public interface ZigPrimaryTypeExpr extends PsiElement {
 
   @Nullable
   ZigFnCallArguments getFnCallArguments();
+
+  @Nullable
+  ZigFnProto getFnProto();
 
   @Nullable
   ZigGroupedExpr getGroupedExpr();
@@ -33,12 +30,6 @@ public interface ZigPrimaryTypeExpr extends PsiElement {
 
   @Nullable
   ZigLabeledTypeExpr getLabeledTypeExpr();
-
-  @Nullable
-  ZigLinkSection getLinkSection();
-
-  @Nullable
-  ZigParamDeclList getParamDeclList();
 
   @Nullable
   ZigStringliteral getStringliteral();

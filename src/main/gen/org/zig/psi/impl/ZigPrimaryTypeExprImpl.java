@@ -29,18 +29,6 @@ public class ZigPrimaryTypeExprImpl extends ASTWrapperPsiElement implements ZigP
 
   @Override
   @Nullable
-  public ZigByteAlign getByteAlign() {
-    return findChildByClass(ZigByteAlign.class);
-  }
-
-  @Override
-  @Nullable
-  public ZigCallConv getCallConv() {
-    return findChildByClass(ZigCallConv.class);
-  }
-
-  @Override
-  @Nullable
   public ZigContainerDecl getContainerDecl() {
     return findChildByClass(ZigContainerDecl.class);
   }
@@ -55,6 +43,12 @@ public class ZigPrimaryTypeExprImpl extends ASTWrapperPsiElement implements ZigP
   @Nullable
   public ZigFnCallArguments getFnCallArguments() {
     return findChildByClass(ZigFnCallArguments.class);
+  }
+
+  @Override
+  @Nullable
+  public ZigFnProto getFnProto() {
+    return findChildByClass(ZigFnProto.class);
   }
 
   @Override
@@ -79,18 +73,6 @@ public class ZigPrimaryTypeExprImpl extends ASTWrapperPsiElement implements ZigP
   @Nullable
   public ZigLabeledTypeExpr getLabeledTypeExpr() {
     return findChildByClass(ZigLabeledTypeExpr.class);
-  }
-
-  @Override
-  @Nullable
-  public ZigLinkSection getLinkSection() {
-    return findChildByClass(ZigLinkSection.class);
-  }
-
-  @Override
-  @Nullable
-  public ZigParamDeclList getParamDeclList() {
-    return findChildByClass(ZigParamDeclList.class);
   }
 
   @Override

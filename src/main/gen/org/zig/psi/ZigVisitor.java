@@ -163,6 +163,14 @@ public class ZigVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitFnDecl(@NotNull ZigFnDecl o) {
+    visitPsiElement(o);
+  }
+
+  public void visitFnProto(@NotNull ZigFnProto o) {
+    visitPsiElement(o);
+  }
+
   public void visitForExpr(@NotNull ZigForExpr o) {
     visitPsiElement(o);
   }

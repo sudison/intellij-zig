@@ -47,6 +47,8 @@ public interface ZigLangTypes {
   IElementType EXPR_LIST = new ZigLangElementType("EXPR_LIST");
   IElementType FIELD_INIT = new ZigLangElementType("FIELD_INIT");
   IElementType FN_CALL_ARGUMENTS = new ZigLangElementType("FN_CALL_ARGUMENTS");
+  IElementType FN_DECL = new ZigLangElementType("FN_DECL");
+  IElementType FN_PROTO = new ZigLangElementType("FN_PROTO");
   IElementType FOR_EXPR = new ZigLangElementType("FOR_EXPR");
   IElementType FOR_PREFIX = new ZigLangElementType("FOR_PREFIX");
   IElementType FOR_STATEMENT = new ZigLangElementType("FOR_STATEMENT");
@@ -334,6 +336,12 @@ public interface ZigLangTypes {
       }
       else if (type == FN_CALL_ARGUMENTS) {
         return new ZigFnCallArgumentsImpl(node);
+      }
+      else if (type == FN_DECL) {
+        return new ZigFnDeclImpl(node);
+      }
+      else if (type == FN_PROTO) {
+        return new ZigFnProtoImpl(node);
       }
       else if (type == FOR_EXPR) {
         return new ZigForExprImpl(node);

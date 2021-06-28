@@ -126,11 +126,17 @@ TestDecl ::= DocComment? TEST STRINGLITERALSINGLE? Block
 
 private DocComment ::= COMMENT+
 private TopLevelDecl ::=
-    (EXPORT | EXTERN STRINGLITERALSINGLE? | (INLINE | NOINLINE))?  FnProto (SEMICOLON | Block)
+    FnDecl
     |(EXPORT | EXTERN STRINGLITERALSINGLE?)? THREAD_LOCAL? VarDecl
     | USING_NAME_SPACE Expr SEMICOLON
 
-private FnProto ::= FN ID? LPAREN ParamDeclList RPAREN ByteAlign? LinkSection? CallConv? EXCLAMATIONMARK?  TypeExpr
+FnDecl ::= (EXPORT | EXTERN STRINGLITERALSINGLE? | (INLINE | NOINLINE))?  FnProto (SEMICOLON | Block) {
+    pin = 'FnProto'
+}
+
+FnProto ::= FN ID LPAREN ParamDeclList RPAREN ByteAlign? LinkSection? CallConv? EXCLAMATIONMARK?  TypeExpr {
+  pin = 'ID'
+}
 ByteAlign ::= ALIGN LPAREN Expr RPAREN
 LinkSection ::= LINKSECTION LPAREN Expr RPAREN
 CallConv ::= CALLCONV LPAREN Expr RPAREN
