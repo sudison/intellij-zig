@@ -19,5 +19,8 @@
         <programRunner implementation="org.zig.runner.ZigRunner"/>
         <configurationType implementation="org.zig.runner.ZigRunnerConfigType"/>
 
+        <annotator language="ZigLang" implementationClass="org.zig.ZigHighlightingAnnotator"/>
+
+
     </extensions>
 </idea-plugin>
