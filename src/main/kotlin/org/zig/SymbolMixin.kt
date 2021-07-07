@@ -6,6 +6,6 @@ import com.intellij.psi.PsiReference
 
 abstract class SymbolMixin(node: ASTNode) : ASTWrapperPsiElement(node) {
   override fun getReference(): PsiReference? {
-    return ZigFnCallReference(this, node.firstChildNode?.psi)
+    return ZigFnCallReference(this, node.firstChildNode?.psi!!)
   }
 }

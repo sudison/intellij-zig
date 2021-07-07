@@ -23,7 +23,7 @@ abstract class ZigFnMixin(node: ASTNode) : ASTWrapperPsiElement(node), PsiNameId
   }
 
   override fun getReference(): PsiReference? {
-    return ZigFnCallReference(this, nameIdentifier)
+    return ZigFnCallReference(this, nameIdentifier!!)
   }
 
   override fun setName(name: String): PsiElement {
