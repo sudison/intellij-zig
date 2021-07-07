@@ -21,6 +21,7 @@ public interface ZigLangTypes {
   IElementType ASM_OUTPUT_LIST = new ZigLangElementType("ASM_OUTPUT_LIST");
   IElementType ASSIGN_EXPR = new ZigLangElementType("ASSIGN_EXPR");
   IElementType ASSIGN_OP = new ZigLangElementType("ASSIGN_OP");
+  IElementType ASSIGN_STATEMENT = new ZigLangElementType("ASSIGN_STATEMENT");
   IElementType BITWISE_EXPR = new ZigLangElementType("BITWISE_EXPR");
   IElementType BITWISE_OP = new ZigLangElementType("BITWISE_OP");
   IElementType BIT_SHIFT_EXPR = new ZigLangElementType("BIT_SHIFT_EXPR");
@@ -91,6 +92,7 @@ public interface ZigLangTypes {
   IElementType SWITCH_ITEM = new ZigLangElementType("SWITCH_ITEM");
   IElementType SWITCH_PRONG = new ZigLangElementType("SWITCH_PRONG");
   IElementType SWITCH_PRONG_LIST = new ZigLangElementType("SWITCH_PRONG_LIST");
+  IElementType SYMBOL = new ZigLangElementType("SYMBOL");
   IElementType TEST_DECL = new ZigLangElementType("TEST_DECL");
   IElementType TOP_LEVEL_COMPTIME = new ZigLangElementType("TOP_LEVEL_COMPTIME");
   IElementType TYPE_EXPR = new ZigLangElementType("TYPE_EXPR");
@@ -258,6 +260,9 @@ public interface ZigLangTypes {
       }
       else if (type == ASSIGN_OP) {
         return new ZigAssignOpImpl(node);
+      }
+      else if (type == ASSIGN_STATEMENT) {
+        return new ZigAssignStatementImpl(node);
       }
       else if (type == BITWISE_EXPR) {
         return new ZigBitwiseExprImpl(node);
@@ -468,6 +473,9 @@ public interface ZigLangTypes {
       }
       else if (type == SWITCH_PRONG_LIST) {
         return new ZigSwitchProngListImpl(node);
+      }
+      else if (type == SYMBOL) {
+        return new ZigSymbolImpl(node);
       }
       else if (type == TEST_DECL) {
         return new ZigTestDeclImpl(node);

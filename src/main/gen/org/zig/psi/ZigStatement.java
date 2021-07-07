@@ -8,7 +8,7 @@ import com.intellij.psi.PsiElement;
 public interface ZigStatement extends PsiElement {
 
   @Nullable
-  ZigAssignExpr getAssignExpr();
+  ZigAssignStatement getAssignStatement();
 
   @Nullable
   ZigBlockExprStatement getBlockExprStatement();

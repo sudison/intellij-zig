@@ -132,6 +132,8 @@ private TopLevelDecl ::=
 
 FnDecl ::= (EXPORT | EXTERN STRINGLITERALSINGLE? | (INLINE | NOINLINE))?  FnProto (SEMICOLON | Block) {
     pin = 'FnProto'
+    implements=['com.intellij.psi.PsiNameIdentifierOwner']
+    mixin='org.zig.ZigFnMixin'
 }
 
 FnProto ::= FN ID LPAREN ParamDeclList RPAREN ByteAlign? LinkSection? CallConv? EXCLAMATIONMARK?  TypeExpr {
@@ -179,7 +181,7 @@ PrimaryTypeExpr ::=
     | FnProto
     | GroupedExpr
     | LabeledTypeExpr
-    | ID
+    | Symbol
     | IfTypeExpr
     | INTEGER
     | COMPTIME TypeExpr
@@ -192,6 +194,10 @@ PrimaryTypeExpr ::=
     | UNREACHABLE
     | STRINGLITERAL
     | SwitchExpr
+
+Symbol ::= ID {
+    mixin='org.zig.SymbolMixin'
+}
 
 ContainerDecl ::= (EXTERN | PACKED)? ContainerDeclAuto
 ContainerDeclAuto ::= ContainerDeclType LBRACE container_doc_comment? ContainerMembers RBRACE
@@ -281,7 +287,9 @@ FieldInit ::= DOT ID EQUAL Expr
 IfExpr ::= IfPrefix Expr (ELSE Payload? Expr)?
 IfPrefix ::= IF LPAREN Expr RPAREN PtrPayload?
 PtrPayload ::= PIPE ASTERISK? ID PIPE
-Block ::= LBRACE Statement* RBRACE
+Block ::= LBRACE Statement* RBRACE {
+  pin = 1
+}
 
 BlockExpr ::= BlockLabel? Block
 BlockLabel ::= ID COLON
@@ -295,7 +303,11 @@ Statement ::=
     | IfStatement
     | LabeledStatement
     | SwitchExpr
-    | AssignExpr SEMICOLON
+    | AssignStatement
+
+AssignStatement ::= AssignExpr SEMICOLON {
+    pin = 1
+}
 
 IfStatement ::=
     IfPrefix BlockExpr (ELSE Payload? Statement)?

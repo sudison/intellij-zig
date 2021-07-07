@@ -4,6 +4,7 @@ package org.zig.psi;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiNameIdentifierOwner;
 
 public class ZigVisitor extends PsiElementVisitor {
 
@@ -56,6 +57,10 @@ public class ZigVisitor extends PsiElementVisitor {
   }
 
   public void visitAssignOp(@NotNull ZigAssignOp o) {
+    visitPsiElement(o);
+  }
+
+  public void visitAssignStatement(@NotNull ZigAssignStatement o) {
     visitPsiElement(o);
   }
 
@@ -164,7 +169,7 @@ public class ZigVisitor extends PsiElementVisitor {
   }
 
   public void visitFnDecl(@NotNull ZigFnDecl o) {
-    visitPsiElement(o);
+    visitPsiNameIdentifierOwner(o);
   }
 
   public void visitFnProto(@NotNull ZigFnProto o) {
@@ -339,6 +344,10 @@ public class ZigVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitSymbol(@NotNull ZigSymbol o) {
+    visitPsiElement(o);
+  }
+
   public void visitTestDecl(@NotNull ZigTestDecl o) {
     visitPsiElement(o);
   }
@@ -373,6 +382,10 @@ public class ZigVisitor extends PsiElementVisitor {
 
   public void visitWhileTypeExpr(@NotNull ZigWhileTypeExpr o) {
     visitPsiElement(o);
+  }
+
+  public void visitPsiNameIdentifierOwner(@NotNull PsiNameIdentifierOwner o) {
+    visitElement(o);
   }
 
   public void visitPsiElement(@NotNull PsiElement o) {

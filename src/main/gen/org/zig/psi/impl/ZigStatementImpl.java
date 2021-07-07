@@ -29,8 +29,8 @@ public class ZigStatementImpl extends ASTWrapperPsiElement implements ZigStateme
 
   @Override
   @Nullable
-  public ZigAssignExpr getAssignExpr() {
-    return findChildByClass(ZigAssignExpr.class);
+  public ZigAssignStatement getAssignStatement() {
+    return findChildByClass(ZigAssignStatement.class);
   }
 
   @Override

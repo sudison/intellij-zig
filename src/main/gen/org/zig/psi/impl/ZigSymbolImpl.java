@@ -8,35 +8,23 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static org.zig.psi.ZigLangTypes.*;
-import org.zig.ZigFnMixin;
+import org.zig.SymbolMixin;
 import org.zig.psi.*;
 
-public class ZigFnDeclImpl extends ZigFnMixin implements ZigFnDecl {
+public class ZigSymbolImpl extends SymbolMixin implements ZigSymbol {
 
-  public ZigFnDeclImpl(@NotNull ASTNode node) {
+  public ZigSymbolImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ZigVisitor visitor) {
-    visitor.visitFnDecl(this);
+    visitor.visitSymbol(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ZigVisitor) accept((ZigVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @Nullable
-  public ZigBlock getBlock() {
-    return findChildByClass(ZigBlock.class);
-  }
-
-  @Override
-  @NotNull
-  public ZigFnProto getFnProto() {
-    return findNotNullChildByClass(ZigFnProto.class);
   }
 
 }

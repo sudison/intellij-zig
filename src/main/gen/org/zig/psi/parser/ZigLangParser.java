@@ -401,6 +401,19 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // AssignExpr SEMICOLON
+  public static boolean AssignStatement(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AssignStatement")) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, ASSIGN_STATEMENT, "<assign statement>");
+    r = AssignExpr(b, l + 1);
+    p = r; // pin = 1
+    r = r && consumeToken(b, SEMICOLON);
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
+  }
+
+  /* ********************************************************** */
   // AdditionExpr (BitShiftOp AdditionExpr)*
   public static boolean BitShiftExpr(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "BitShiftExpr")) return false;
@@ -519,13 +532,14 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
   public static boolean Block(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Block")) return false;
     if (!nextTokenIs(b, LBRACE)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, BLOCK, null);
     r = consumeToken(b, LBRACE);
-    r = r && Block_1(b, l + 1);
-    r = r && consumeToken(b, RBRACE);
-    exit_section_(b, m, BLOCK, r);
-    return r;
+    p = r; // pin = 1
+    r = r && report_error_(b, Block_1(b, l + 1));
+    r = p && consumeToken(b, RBRACE) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   // Statement*
@@ -2619,7 +2633,7 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
   //     | FnProto
   //     | GroupedExpr
   //     | LabeledTypeExpr
-  //     | ID
+  //     | Symbol
   //     | IfTypeExpr
   //     | INTEGER
   //     | COMPTIME TypeExpr
@@ -2646,7 +2660,7 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
     if (!r) r = FnProto(b, l + 1);
     if (!r) r = GroupedExpr(b, l + 1);
     if (!r) r = LabeledTypeExpr(b, l + 1);
-    if (!r) r = consumeToken(b, ID);
+    if (!r) r = Symbol(b, l + 1);
     if (!r) r = IfTypeExpr(b, l + 1);
     if (!r) r = consumeToken(b, INTEGER);
     if (!r) r = PrimaryTypeExpr_13(b, l + 1);
@@ -2867,7 +2881,7 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
   //     | IfStatement
   //     | LabeledStatement
   //     | SwitchExpr
-  //     | AssignExpr SEMICOLON
+  //     | AssignStatement
   public static boolean Statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Statement")) return false;
     boolean r;
@@ -2881,7 +2895,7 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
     if (!r) r = IfStatement(b, l + 1);
     if (!r) r = LabeledStatement(b, l + 1);
     if (!r) r = SwitchExpr(b, l + 1);
-    if (!r) r = Statement_9(b, l + 1);
+    if (!r) r = AssignStatement(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -2965,17 +2979,6 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "Statement_5_1")) return false;
     Payload(b, l + 1);
     return true;
-  }
-
-  // AssignExpr SEMICOLON
-  private static boolean Statement_9(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "Statement_9")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = AssignExpr(b, l + 1);
-    r = r && consumeToken(b, SEMICOLON);
-    exit_section_(b, m, null, r);
-    return r;
   }
 
   /* ********************************************************** */
@@ -3337,6 +3340,18 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "SwitchProngList_1")) return false;
     SwitchProng(b, l + 1);
     return true;
+  }
+
+  /* ********************************************************** */
+  // ID
+  public static boolean Symbol(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Symbol")) return false;
+    if (!nextTokenIs(b, ID)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, ID);
+    exit_section_(b, m, SYMBOL, r);
+    return r;
   }
 
   /* ********************************************************** */

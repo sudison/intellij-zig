@@ -20,6 +20,7 @@
         <configurationType implementation="org.zig.runner.ZigRunnerConfigType"/>
 
         <annotator language="ZigLang" implementationClass="org.zig.ZigHighlightingAnnotator"/>
+        <psi.referenceContributor language="ZigLang" implementation="org.zig.ZigReferenceContributor"/>
 
 
     </extensions>

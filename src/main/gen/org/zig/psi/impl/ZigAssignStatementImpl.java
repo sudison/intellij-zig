@@ -8,17 +8,17 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static org.zig.psi.ZigLangTypes.*;
-import org.zig.ZigFnMixin;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import org.zig.psi.*;
 
-public class ZigFnDeclImpl extends ZigFnMixin implements ZigFnDecl {
+public class ZigAssignStatementImpl extends ASTWrapperPsiElement implements ZigAssignStatement {
 
-  public ZigFnDeclImpl(@NotNull ASTNode node) {
+  public ZigAssignStatementImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ZigVisitor visitor) {
-    visitor.visitFnDecl(this);
+    visitor.visitAssignStatement(this);
   }
 
   @Override
@@ -28,15 +28,9 @@ public class ZigFnDeclImpl extends ZigFnMixin implements ZigFnDecl {
   }
 
   @Override
-  @Nullable
-  public ZigBlock getBlock() {
-    return findChildByClass(ZigBlock.class);
-  }
-
-  @Override
   @NotNull
-  public ZigFnProto getFnProto() {
-    return findNotNullChildByClass(ZigFnProto.class);
+  public ZigAssignExpr getAssignExpr() {
+    return findNotNullChildByClass(ZigAssignExpr.class);
   }
 
 }

@@ -38,6 +38,9 @@ public interface ZigPrimaryTypeExpr extends PsiElement {
   ZigSwitchExpr getSwitchExpr();
 
   @Nullable
+  ZigSymbol getSymbol();
+
+  @Nullable
   ZigTypeExpr getTypeExpr();
 
 }
