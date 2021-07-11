@@ -8,23 +8,29 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static org.zig.psi.ZigLangTypes.*;
-import org.zig.reference.SymbolMixin;
+import org.zig.reference.TopVarDeclMixin;
 import org.zig.psi.*;
 
-public class ZigSymbolImpl extends SymbolMixin implements ZigSymbol {
+public class ZigTopVarDeclImpl extends TopVarDeclMixin implements ZigTopVarDecl {
 
-  public ZigSymbolImpl(@NotNull ASTNode node) {
+  public ZigTopVarDeclImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ZigVisitor visitor) {
-    visitor.visitSymbol(this);
+    visitor.visitTopVarDecl(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ZigVisitor) accept((ZigVisitor)visitor);
     else super.accept(visitor);
+  }
+
+  @Override
+  @NotNull
+  public ZigVarDecl getVarDecl() {
+    return findNotNullChildByClass(ZigVarDecl.class);
   }
 
 }

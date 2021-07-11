@@ -26,6 +26,6 @@ public interface ZigContainerDeclAuto extends PsiElement {
   List<ZigTopLevelComptime> getTopLevelComptimeList();
 
   @NotNull
-  List<ZigVarDecl> getVarDeclList();
+  List<ZigTopVarDecl> getTopVarDeclList();
 
 }

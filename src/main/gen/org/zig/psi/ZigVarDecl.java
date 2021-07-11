@@ -11,7 +11,7 @@ public interface ZigVarDecl extends PsiElement {
   ZigByteAlign getByteAlign();
 
   @Nullable
-  ZigExpr getExpr();
+  ZigEqualExpr getEqualExpr();
 
   @Nullable
   ZigLinkSection getLinkSection();

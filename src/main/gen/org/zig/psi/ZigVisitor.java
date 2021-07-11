@@ -144,6 +144,10 @@ public class ZigVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitEqualExpr(@NotNull ZigEqualExpr o) {
+    visitPsiElement(o);
+  }
+
   public void visitErrorSetDecl(@NotNull ZigErrorSetDecl o) {
     visitPsiElement(o);
   }
@@ -354,6 +358,10 @@ public class ZigVisitor extends PsiElementVisitor {
 
   public void visitTopLevelComptime(@NotNull ZigTopLevelComptime o) {
     visitPsiElement(o);
+  }
+
+  public void visitTopVarDecl(@NotNull ZigTopVarDecl o) {
+    visitPsiNameIdentifierOwner(o);
   }
 
   public void visitTypeExpr(@NotNull ZigTypeExpr o) {

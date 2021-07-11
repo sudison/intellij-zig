@@ -65,8 +65,8 @@ public class ZigContainerDeclAutoImpl extends ASTWrapperPsiElement implements Zi
 
   @Override
   @NotNull
-  public List<ZigVarDecl> getVarDeclList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ZigVarDecl.class);
+  public List<ZigTopVarDecl> getTopVarDeclList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ZigTopVarDecl.class);
   }
 
 }

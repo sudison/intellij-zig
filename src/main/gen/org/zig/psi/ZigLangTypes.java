@@ -42,6 +42,7 @@ public interface ZigLangTypes {
   IElementType CONTAINER_DECL_TYPE = new ZigLangElementType("CONTAINER_DECL_TYPE");
   IElementType CONTAINER_FIELD = new ZigLangElementType("CONTAINER_FIELD");
   IElementType CURLY_SUFFIX_EXPR = new ZigLangElementType("CURLY_SUFFIX_EXPR");
+  IElementType EQUAL_EXPR = new ZigLangElementType("EQUAL_EXPR");
   IElementType ERROR_SET_DECL = new ZigLangElementType("ERROR_SET_DECL");
   IElementType ERROR_UNION_EXPR = new ZigLangElementType("ERROR_UNION_EXPR");
   IElementType EXPR = new ZigLangElementType("EXPR");
@@ -95,6 +96,7 @@ public interface ZigLangTypes {
   IElementType SYMBOL = new ZigLangElementType("SYMBOL");
   IElementType TEST_DECL = new ZigLangElementType("TEST_DECL");
   IElementType TOP_LEVEL_COMPTIME = new ZigLangElementType("TOP_LEVEL_COMPTIME");
+  IElementType TOP_VAR_DECL = new ZigLangElementType("TOP_VAR_DECL");
   IElementType TYPE_EXPR = new ZigLangElementType("TYPE_EXPR");
   IElementType VAR_DECL = new ZigLangElementType("VAR_DECL");
   IElementType WHILE_CONTINUE_EXPR = new ZigLangElementType("WHILE_CONTINUE_EXPR");
@@ -324,6 +326,9 @@ public interface ZigLangTypes {
       else if (type == CURLY_SUFFIX_EXPR) {
         return new ZigCurlySuffixExprImpl(node);
       }
+      else if (type == EQUAL_EXPR) {
+        return new ZigEqualExprImpl(node);
+      }
       else if (type == ERROR_SET_DECL) {
         return new ZigErrorSetDeclImpl(node);
       }
@@ -482,6 +487,9 @@ public interface ZigLangTypes {
       }
       else if (type == TOP_LEVEL_COMPTIME) {
         return new ZigTopLevelComptimeImpl(node);
+      }
+      else if (type == TOP_VAR_DECL) {
+        return new ZigTopVarDeclImpl(node);
       }
       else if (type == TYPE_EXPR) {
         return new ZigTypeExprImpl(node);

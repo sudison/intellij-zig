@@ -1194,6 +1194,20 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // EQUAL Expr
+  public static boolean EqualExpr(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "EqualExpr")) return false;
+    if (!nextTokenIs(b, EQUAL)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, EQUAL_EXPR, null);
+    r = consumeToken(b, EQUAL);
+    p = r; // pin = 1
+    r = r && Expr(b, l + 1);
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
+  }
+
+  /* ********************************************************** */
   // ERROR LBRACE IdentifierList RBRACE
   public static boolean ErrorSetDecl(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ErrorSetDecl")) return false;
@@ -3406,72 +3420,17 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // FnDecl
-  //     |(EXPORT | EXTERN STRINGLITERALSINGLE?)? THREAD_LOCAL? VarDecl
+  //     | TopVarDecl
   //     | USING_NAME_SPACE Expr SEMICOLON
   static boolean TopLevelDecl(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "TopLevelDecl")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = FnDecl(b, l + 1);
-    if (!r) r = TopLevelDecl_1(b, l + 1);
+    if (!r) r = TopVarDecl(b, l + 1);
     if (!r) r = TopLevelDecl_2(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
-  }
-
-  // (EXPORT | EXTERN STRINGLITERALSINGLE?)? THREAD_LOCAL? VarDecl
-  private static boolean TopLevelDecl_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "TopLevelDecl_1")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = TopLevelDecl_1_0(b, l + 1);
-    r = r && TopLevelDecl_1_1(b, l + 1);
-    r = r && VarDecl(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // (EXPORT | EXTERN STRINGLITERALSINGLE?)?
-  private static boolean TopLevelDecl_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "TopLevelDecl_1_0")) return false;
-    TopLevelDecl_1_0_0(b, l + 1);
-    return true;
-  }
-
-  // EXPORT | EXTERN STRINGLITERALSINGLE?
-  private static boolean TopLevelDecl_1_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "TopLevelDecl_1_0_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, EXPORT);
-    if (!r) r = TopLevelDecl_1_0_0_1(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // EXTERN STRINGLITERALSINGLE?
-  private static boolean TopLevelDecl_1_0_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "TopLevelDecl_1_0_0_1")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, EXTERN);
-    r = r && TopLevelDecl_1_0_0_1_1(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // STRINGLITERALSINGLE?
-  private static boolean TopLevelDecl_1_0_0_1_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "TopLevelDecl_1_0_0_1_1")) return false;
-    consumeToken(b, STRINGLITERALSINGLE);
-    return true;
-  }
-
-  // THREAD_LOCAL?
-  private static boolean TopLevelDecl_1_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "TopLevelDecl_1_1")) return false;
-    consumeToken(b, THREAD_LOCAL);
-    return true;
   }
 
   // USING_NAME_SPACE Expr SEMICOLON
@@ -3484,6 +3443,62 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
     r = r && consumeToken(b, SEMICOLON);
     exit_section_(b, m, null, r);
     return r;
+  }
+
+  /* ********************************************************** */
+  // (EXPORT | EXTERN STRINGLITERALSINGLE?)? THREAD_LOCAL? VarDecl
+  public static boolean TopVarDecl(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "TopVarDecl")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, TOP_VAR_DECL, "<top var decl>");
+    r = TopVarDecl_0(b, l + 1);
+    r = r && TopVarDecl_1(b, l + 1);
+    r = r && VarDecl(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // (EXPORT | EXTERN STRINGLITERALSINGLE?)?
+  private static boolean TopVarDecl_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "TopVarDecl_0")) return false;
+    TopVarDecl_0_0(b, l + 1);
+    return true;
+  }
+
+  // EXPORT | EXTERN STRINGLITERALSINGLE?
+  private static boolean TopVarDecl_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "TopVarDecl_0_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, EXPORT);
+    if (!r) r = TopVarDecl_0_0_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // EXTERN STRINGLITERALSINGLE?
+  private static boolean TopVarDecl_0_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "TopVarDecl_0_0_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, EXTERN);
+    r = r && TopVarDecl_0_0_1_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // STRINGLITERALSINGLE?
+  private static boolean TopVarDecl_0_0_1_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "TopVarDecl_0_0_1_1")) return false;
+    consumeToken(b, STRINGLITERALSINGLE);
+    return true;
+  }
+
+  // THREAD_LOCAL?
+  private static boolean TopVarDecl_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "TopVarDecl_1")) return false;
+    consumeToken(b, THREAD_LOCAL);
+    return true;
   }
 
   /* ********************************************************** */
@@ -3510,11 +3525,11 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (CONST |VAR) ID (COLON TypeExpr)? ByteAlign? LinkSection? (EQUAL Expr)? SEMICOLON
+  // (CONST |VAR) ID (COLON TypeExpr)? ByteAlign? LinkSection? EqualExpr? SEMICOLON
   public static boolean VarDecl(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "VarDecl")) return false;
     if (!nextTokenIs(b, "<var decl>", CONST, VAR)) return false;
-    boolean r;
+    boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, VAR_DECL, "<var decl>");
     r = VarDecl_0(b, l + 1);
     r = r && consumeToken(b, ID);
@@ -3522,9 +3537,10 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
     r = r && VarDecl_3(b, l + 1);
     r = r && VarDecl_4(b, l + 1);
     r = r && VarDecl_5(b, l + 1);
+    p = r; // pin = 6
     r = r && consumeToken(b, SEMICOLON);
-    exit_section_(b, l, m, r, false, null);
-    return r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   // CONST |VAR
@@ -3568,22 +3584,11 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // (EQUAL Expr)?
+  // EqualExpr?
   private static boolean VarDecl_5(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "VarDecl_5")) return false;
-    VarDecl_5_0(b, l + 1);
+    EqualExpr(b, l + 1);
     return true;
-  }
-
-  // EQUAL Expr
-  private static boolean VarDecl_5_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "VarDecl_5_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, EQUAL);
-    r = r && Expr(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
   }
 
   /* ********************************************************** */

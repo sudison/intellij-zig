@@ -8,7 +8,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static org.zig.psi.ZigLangTypes.*;
-import org.zig.ZigFnMixin;
+import org.zig.reference.ZigFnMixin;
 import org.zig.psi.*;
 
 public class ZigFnDeclImpl extends ZigFnMixin implements ZigFnDecl {

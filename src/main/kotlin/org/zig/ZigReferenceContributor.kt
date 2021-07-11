@@ -9,6 +9,7 @@ import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.util.ProcessingContext
 import org.zig.psi.ZigFnDecl
 import org.zig.psi.ZigLangTypes
+import org.zig.psi.ZigTopVarDecl
 
 class ZigReferenceContributor : PsiReferenceContributor() {
   override fun registerReferenceProviders(registrar: PsiReferenceRegistrar) {
@@ -23,7 +24,7 @@ class ZigReferenceProvider : PsiReferenceProvider() {
   }
 }
 
-class ZigFnCallReference(element: PsiElement, private val id: PsiElement) :
+class ZigTopLevelReference(element: PsiElement, private val id: PsiElement) :
   PsiPolyVariantReferenceBase<PsiElement>(element) {
 
 
@@ -31,7 +32,15 @@ class ZigFnCallReference(element: PsiElement, private val id: PsiElement) :
     val refFuns = PsiTreeUtil.collectElementsOfType(
       element.containingFile, ZigFnDecl::class.java
     )
-    return refFuns.map { PsiElementResolveResult(it, true) }.toTypedArray()
+    val topVarDecl = PsiTreeUtil.collectElementsOfType(
+      element.containingFile, ZigTopVarDecl::class.java
+    )
+    return (refFuns.map { PsiElementResolveResult(it, true) } + topVarDecl.map {
+      PsiElementResolveResult(
+        it,
+        true
+      )
+    }).toTypedArray()
   }
 
   override fun calculateDefaultRangeInElement(): TextRange {
@@ -42,11 +51,19 @@ class ZigFnCallReference(element: PsiElement, private val id: PsiElement) :
     val refFuns = PsiTreeUtil.collectElementsOfType(
       element.containingFile, ZigFnDecl::class.java
     )
-    return refFuns.map {
+    val topVarDecl = PsiTreeUtil.collectElementsOfType(
+      element.containingFile, ZigTopVarDecl::class.java
+    )
+    return (refFuns.map {
       LookupElementBuilder
         .create(it.nameIdentifier?.text!!)
         .withPresentableText(it.nameIdentifier?.text!!)
         .withAutoCompletionPolicy(AutoCompletionPolicy.NEVER_AUTOCOMPLETE)
-    }.toTypedArray()
+    } + topVarDecl.map {
+      LookupElementBuilder
+        .create(it.nameIdentifier?.text!!)
+        .withPresentableText(it.nameIdentifier?.text!!)
+        .withAutoCompletionPolicy(AutoCompletionPolicy.NEVER_AUTOCOMPLETE)
+    }).toTypedArray()
   }
 }

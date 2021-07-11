@@ -127,13 +127,18 @@ TestDecl ::= DocComment? TEST STRINGLITERALSINGLE? Block
 private DocComment ::= COMMENT+
 private TopLevelDecl ::=
     FnDecl
-    |(EXPORT | EXTERN STRINGLITERALSINGLE?)? THREAD_LOCAL? VarDecl
+    | TopVarDecl
     | USING_NAME_SPACE Expr SEMICOLON
+
+TopVarDecl ::= (EXPORT | EXTERN STRINGLITERALSINGLE?)? THREAD_LOCAL? VarDecl {
+    implements=['com.intellij.psi.PsiNameIdentifierOwner']
+    mixin='org.zig.reference.TopVarDeclMixin'
+}
 
 FnDecl ::= (EXPORT | EXTERN STRINGLITERALSINGLE? | (INLINE | NOINLINE))?  FnProto (SEMICOLON | Block) {
     pin = 'FnProto'
     implements=['com.intellij.psi.PsiNameIdentifierOwner']
-    mixin='org.zig.ZigFnMixin'
+    mixin='org.zig.reference.ZigFnMixin'
 }
 
 FnProto ::= FN ID LPAREN ParamDeclList RPAREN ByteAlign? LinkSection? CallConv? EXCLAMATIONMARK?  TypeExpr {
@@ -196,7 +201,7 @@ PrimaryTypeExpr ::=
     | SwitchExpr
 
 Symbol ::= ID {
-    mixin='org.zig.SymbolMixin'
+    mixin='org.zig.reference.SymbolMixin'
 }
 
 ContainerDecl ::= (EXTERN | PACKED)? ContainerDeclAuto
@@ -225,7 +230,12 @@ STRINGLITERAL ::= STRINGLITERALSINGLE
 FnCallArguments ::= LPAREN ExprList RPAREN
 ExprList ::= (Expr COMMA)* Expr?
 
-VarDecl ::= (CONST |VAR) ID (COLON TypeExpr)? ByteAlign? LinkSection? (EQUAL Expr)? SEMICOLON
+VarDecl ::= (CONST |VAR) ID (COLON TypeExpr)? ByteAlign? LinkSection? EqualExpr? SEMICOLON {
+pin = 6
+}
+EqualExpr ::= EQUAL Expr {
+ pin = 1
+}
 
 ContainerField ::= DocComment? COMPTIME? ID (COLON (ANY_TYPE|TypeExpr) ByteAlign?)? (EQUAL Expr)?
 
