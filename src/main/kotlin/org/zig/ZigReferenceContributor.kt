@@ -31,10 +31,10 @@ class ZigTopLevelReference(element: PsiElement, private val id: PsiElement) :
   override fun multiResolve(incompleteCode: Boolean): Array<ResolveResult> {
     val refFuns = PsiTreeUtil.collectElementsOfType(
       element.containingFile, ZigFnDecl::class.java
-    )
+    ).filter { it.nameIdentifier?.text == id.text }
     val topVarDecl = PsiTreeUtil.collectElementsOfType(
       element.containingFile, ZigTopVarDecl::class.java
-    )
+    ).filter { it.nameIdentifier?.text == id.text }
     return (refFuns.map { PsiElementResolveResult(it, true) } + topVarDecl.map {
       PsiElementResolveResult(
         it,
