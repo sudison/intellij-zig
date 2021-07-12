@@ -304,7 +304,7 @@ Block ::= LBRACE Statement* RBRACE {
 BlockExpr ::= BlockLabel? Block
 BlockLabel ::= ID COLON
 Statement ::=
-    COMPTIME? VarDecl
+    LocalVarDecl
     | COMPTIME BlockExprStatement
     | NOSUSPEND BlockExprStatement
     | SUSPEND BlockExprStatement
@@ -314,6 +314,11 @@ Statement ::=
     | LabeledStatement
     | SwitchExpr
     | AssignStatement
+
+LocalVarDecl ::= COMPTIME? VarDecl {
+    implements=['com.intellij.psi.PsiNameIdentifierOwner']
+    mixin='org.zig.reference.LocalVarDecl'
+}
 
 AssignStatement ::= AssignExpr SEMICOLON {
     pin = 1

@@ -53,6 +53,12 @@ public class ZigStatementImpl extends ASTWrapperPsiElement implements ZigStateme
 
   @Override
   @Nullable
+  public ZigLocalVarDecl getLocalVarDecl() {
+    return findChildByClass(ZigLocalVarDecl.class);
+  }
+
+  @Override
+  @Nullable
   public ZigPayload getPayload() {
     return findChildByClass(ZigPayload.class);
   }
@@ -61,12 +67,6 @@ public class ZigStatementImpl extends ASTWrapperPsiElement implements ZigStateme
   @Nullable
   public ZigSwitchExpr getSwitchExpr() {
     return findChildByClass(ZigSwitchExpr.class);
-  }
-
-  @Override
-  @Nullable
-  public ZigVarDecl getVarDecl() {
-    return findChildByClass(ZigVarDecl.class);
   }
 
 }

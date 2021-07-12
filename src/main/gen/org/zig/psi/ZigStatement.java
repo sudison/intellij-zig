@@ -20,12 +20,12 @@ public interface ZigStatement extends PsiElement {
   ZigLabeledStatement getLabeledStatement();
 
   @Nullable
+  ZigLocalVarDecl getLocalVarDecl();
+
+  @Nullable
   ZigPayload getPayload();
 
   @Nullable
   ZigSwitchExpr getSwitchExpr();
-
-  @Nullable
-  ZigVarDecl getVarDecl();
 
 }

@@ -2066,6 +2066,25 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // COMPTIME? VarDecl
+  public static boolean LocalVarDecl(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "LocalVarDecl")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, LOCAL_VAR_DECL, "<local var decl>");
+    r = LocalVarDecl_0(b, l + 1);
+    r = r && VarDecl(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // COMPTIME?
+  private static boolean LocalVarDecl_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "LocalVarDecl_0")) return false;
+    consumeToken(b, COMPTIME);
+    return true;
+  }
+
+  /* ********************************************************** */
   // INLINE? (ForExpr | WhileExpr)
   public static boolean LoopExpr(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "LoopExpr")) return false;
@@ -2886,7 +2905,7 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // COMPTIME? VarDecl
+  // LocalVarDecl
   //     | COMPTIME BlockExprStatement
   //     | NOSUSPEND BlockExprStatement
   //     | SUSPEND BlockExprStatement
@@ -2900,7 +2919,7 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "Statement")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, STATEMENT, "<statement>");
-    r = Statement_0(b, l + 1);
+    r = LocalVarDecl(b, l + 1);
     if (!r) r = Statement_1(b, l + 1);
     if (!r) r = Statement_2(b, l + 1);
     if (!r) r = Statement_3(b, l + 1);
@@ -2912,24 +2931,6 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
     if (!r) r = AssignStatement(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
-  }
-
-  // COMPTIME? VarDecl
-  private static boolean Statement_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "Statement_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = Statement_0_0(b, l + 1);
-    r = r && VarDecl(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // COMPTIME?
-  private static boolean Statement_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "Statement_0_0")) return false;
-    consumeToken(b, COMPTIME);
-    return true;
   }
 
   // COMPTIME BlockExprStatement

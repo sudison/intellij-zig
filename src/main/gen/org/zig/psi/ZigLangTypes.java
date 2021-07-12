@@ -65,6 +65,7 @@ public interface ZigLangTypes {
   IElementType LABELED_STATEMENT = new ZigLangElementType("LABELED_STATEMENT");
   IElementType LABELED_TYPE_EXPR = new ZigLangElementType("LABELED_TYPE_EXPR");
   IElementType LINK_SECTION = new ZigLangElementType("LINK_SECTION");
+  IElementType LOCAL_VAR_DECL = new ZigLangElementType("LOCAL_VAR_DECL");
   IElementType LOOP_EXPR = new ZigLangElementType("LOOP_EXPR");
   IElementType LOOP_STATEMENT = new ZigLangElementType("LOOP_STATEMENT");
   IElementType LOOP_TYPE_EXPR = new ZigLangElementType("LOOP_TYPE_EXPR");
@@ -394,6 +395,9 @@ public interface ZigLangTypes {
       }
       else if (type == LINK_SECTION) {
         return new ZigLinkSectionImpl(node);
+      }
+      else if (type == LOCAL_VAR_DECL) {
+        return new ZigLocalVarDeclImpl(node);
       }
       else if (type == LOOP_EXPR) {
         return new ZigLoopExprImpl(node);
