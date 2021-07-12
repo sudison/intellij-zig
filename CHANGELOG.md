@@ -2,6 +2,11 @@
 
 # IntelliJ ZigLang Plugin Changelog
 
+## [0.2.1]
+### Added
+- Local variable auto completion
+- Top level variable auto completion
+
 ## [0.2.0]
 ### Added
 - Function return type auto completion
