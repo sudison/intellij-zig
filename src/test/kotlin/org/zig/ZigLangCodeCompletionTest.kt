@@ -45,11 +45,49 @@ class ZigLangCodeCompletionTest: LightPlatformCodeInsightFixture4TestCase() {
   }
 
   @Test
-  fun testStruct() {
+  fun testRefStruct() {
+    myFixture.configureByText(ZigFileType, "")
+
+    myFixture.type("const Point = packed struct {a:i32}; const p = P")
+    val l = myFixture.completeBasic()
+    assertTrue(l[0].lookupString == "Point")
+  }
+
+  @Test
+  fun testPackedStruct() {
     myFixture.configureByText(ZigFileType, "")
 
     myFixture.type("const Point = packed s")
     val l = myFixture.completeBasic()
-    assertTrue(l.size == 1)
+    assertTrue(l[0].lookupString == "struct")
   }
+
+  @Test
+  fun testStruct() {
+    myFixture.configureByText(ZigFileType, "")
+
+    myFixture.type("const Point = s")
+    val l = myFixture.completeBasic()
+    assertTrue(l[0].lookupString == "struct")
+  }
+
+  @Test
+  fun testPacked() {
+    myFixture.configureByText(ZigFileType, "")
+
+    myFixture.type("const Point = p")
+    val l = myFixture.completeBasic()
+    assertTrue(l[0].lookupString == "packed")
+  }
+
+  @Test
+  fun testRefMemberFieldPrimitiveType() {
+    myFixture.configureByText(ZigFileType, "")
+
+    myFixture.type("const Point = struct {x:i3")
+    val l = myFixture.completeBasic()
+    assertTrue(l[0].lookupString == "i32")
+  }
+
+
 }
