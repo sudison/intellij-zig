@@ -23,6 +23,72 @@ class ZigReferenceProvider : PsiReferenceProvider() {
   }
 }
 
+class ZigTypeReference(element: PsiElement, private val id: PsiElement) :
+  PsiPolyVariantReferenceBase<PsiElement>(element) {
+  override fun multiResolve(incompleteCode: Boolean): Array<ResolveResult> {
+    val topContainerTypes =
+      PsiTreeUtil.collectElementsOfType(
+        element.containingFile, ZigTopVarDecl::class.java
+      ).filter { it.isContainerType() && it.nameIdentifier?.text == id.text }
+        .map { PsiElementResolveResult(it, true) }
+
+    val refs = mutableListOf<ResolveResult>()
+
+    localVarRef(element) {
+      if (it.isContainerType() && it.nameIdentifier?.text == id.text) {
+        refs.add(PsiElementResolveResult(it, true))
+      }
+    }
+    return (topContainerTypes + refs).toTypedArray()
+  }
+
+  override fun calculateDefaultRangeInElement(): TextRange {
+    return TextRange.from(id.startOffsetInParent, id.textLength)
+  }
+
+  override fun getVariants(): Array<Any> {
+    val topContainerTypes =
+      PsiTreeUtil.collectElementsOfType(
+        element.containingFile, ZigTopVarDecl::class.java
+      ).filter { it.isContainerType() }
+
+    val localVars = mutableListOf<ZigLocalVarDecl>()
+    localVarRef(element) {
+      if (it.isContainerType()) {
+        localVars.add(it)
+      }
+    }
+    return (localVars.map { createLookup(it) } + topContainerTypes.map { createLookup(it) } + ZigLangHelper.primitiveTypesLookup).toTypedArray()
+  }
+}
+
+private fun localVarRef(element: PsiElement, consumer: (ZigLocalVarDecl) -> Unit): Unit {
+  var statement = PsiTreeUtil.findFirstParent(element) { it is ZigStatement }
+  while (statement != null) {
+    var e: PsiElement? = statement.prevSibling
+    while (e != null) {
+      if (ZigLangTypes.STATEMENT == e.node.elementType) {
+        val localVarDecl = e.firstChild
+        if (localVarDecl is ZigLocalVarDecl) {
+          consumer(localVarDecl)
+        }
+      }
+      e = e.prevSibling
+    }
+
+    val block = PsiTreeUtil.findFirstParent(statement) { it is ZigBlock }
+    statement = PsiTreeUtil.findFirstParent(block) { it is ZigStatement }
+  }
+
+}
+
+private fun createLookup(e: PsiNameIdentifierOwner): LookupElement {
+  return LookupElementBuilder
+    .create(e.nameIdentifier?.text!!)
+    .withPresentableText(e.nameIdentifier?.text!!)
+    .withAutoCompletionPolicy(AutoCompletionPolicy.NEVER_AUTOCOMPLETE)
+}
+
 class ZigReference(element: PsiElement, private val id: PsiElement) :
   PsiPolyVariantReferenceBase<PsiElement>(element) {
 
@@ -42,29 +108,10 @@ class ZigReference(element: PsiElement, private val id: PsiElement) :
     })
   }
 
-  private fun localVarRef(consumer: (ZigLocalVarDecl) -> Unit): Unit {
-    var statement = PsiTreeUtil.findFirstParent(element) { it is ZigStatement }
-    while (statement != null) {
-      var e: PsiElement? = statement.prevSibling
-      while (e != null) {
-        if (ZigLangTypes.STATEMENT == e.node.elementType) {
-          val localVarDecl = e.firstChild
-          if (localVarDecl is ZigLocalVarDecl) {
-            consumer(localVarDecl)
-          }
-        }
-        e = e.prevSibling
-      }
-
-      val block = PsiTreeUtil.findFirstParent(statement) { it is ZigBlock }
-      statement = PsiTreeUtil.findFirstParent(block) { it is ZigStatement }
-    }
-
-  }
 
   private fun localVarResolve(): List<ResolveResult> {
     val refs = mutableListOf<ResolveResult>()
-    localVarRef {
+    localVarRef(element) {
       if (it.nameIdentifier?.text == id.text) {
         refs.add(PsiElementResolveResult(it, true))
       }
@@ -90,14 +137,9 @@ class ZigReference(element: PsiElement, private val id: PsiElement) :
       element.containingFile, ZigTopVarDecl::class.java
     )
     val localVars = mutableListOf<ZigLocalVarDecl>()
-    localVarRef { localVars.add(it) }
+    localVarRef(element) { localVars.add(it) }
 
-    fun createLookup(e: PsiNameIdentifierOwner): LookupElement {
-      return LookupElementBuilder
-        .create(e.nameIdentifier?.text!!)
-        .withPresentableText(e.nameIdentifier?.text!!)
-        .withAutoCompletionPolicy(AutoCompletionPolicy.NEVER_AUTOCOMPLETE)
-    }
+
     return (refFuns.map {
       createLookup(it)
     } + topVarDecl.map {

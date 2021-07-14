@@ -131,7 +131,8 @@ private TopLevelDecl ::=
     | USING_NAME_SPACE Expr SEMICOLON
 
 TopVarDecl ::= (EXPORT | EXTERN STRINGLITERALSINGLE?)? THREAD_LOCAL? VarDecl {
-    implements=['com.intellij.psi.PsiNameIdentifierOwner']
+    implements=['com.intellij.psi.PsiNameIdentifierOwner'
+                'org.zig.psi.VarDeclaration']
     mixin='org.zig.reference.TopVarDeclMixin'
 }
 
@@ -327,7 +328,8 @@ Statement ::=
     | AssignStatement
 
 LocalVarDecl ::= COMPTIME? VarDecl {
-    implements=['com.intellij.psi.PsiNameIdentifierOwner']
+    implements=['com.intellij.psi.PsiNameIdentifierOwner'
+     'org.zig.psi.VarDeclaration']
     mixin='org.zig.reference.LocalVarDecl'
 }
 

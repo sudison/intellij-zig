@@ -1,5 +1,8 @@
 package org.zig
 
+import com.intellij.codeInsight.lookup.AutoCompletionPolicy
+import com.intellij.codeInsight.lookup.LookupElementBuilder
+
 object ZigLangHelper {
   val builtInFunctions = listOf(
     "addWithOverflow",
@@ -142,4 +145,11 @@ object ZigLangHelper {
     "comptime_int",
     "comptime_float"
   )
+
+  val primitiveTypesLookup = primitiveTypes.map {
+    LookupElementBuilder
+      .create("$it")
+      .withPresentableText(it)
+      .withAutoCompletionPolicy(AutoCompletionPolicy.NEVER_AUTOCOMPLETE)
+  }
 }

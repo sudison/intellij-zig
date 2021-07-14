@@ -69,14 +69,6 @@ class ZigLangCompletionContributor : CompletionContributor() {
         .withAutoCompletionPolicy(AutoCompletionPolicy.NEVER_AUTOCOMPLETE)
     }
 
-
-  private val primitiveTypesElements = ZigLangHelper.primitiveTypes.map {
-    LookupElementBuilder
-      .create("$it ")
-      .withPresentableText(it)
-      .withAutoCompletionPolicy(AutoCompletionPolicy.NEVER_AUTOCOMPLETE)
-  }
-
   private val builtInFunctions = ZigLangHelper.builtInFunctions.map {
     LookupElementBuilder
       .create("$it(")
@@ -91,12 +83,14 @@ class ZigLangCompletionContributor : CompletionContributor() {
       ZigCompletionProvider(topKeyWords)
     )
 
+    // "const Point = s"
     extend(
       CompletionType.BASIC,
       psiElement(ZigLangTypes.ID).withAncestor(4, psiElement(ZigLangTypes.EQUAL_EXPR)),
       ZigCompletionProvider(containerDecl)
     )
 
+    // "const Point = packed s"
     extend(
       CompletionType.BASIC,
       psiElement(ZigLangTypes.ID).withAncestor(5, psiElement(ZigLangTypes.EQUAL_EXPR)),
@@ -112,7 +106,7 @@ class ZigLangCompletionContributor : CompletionContributor() {
     extend(
       CompletionType.BASIC,
       psiElement(ZigLangTypes.ID).withAncestor(6, psiElement(ZigLangTypes.FN_PROTO)),
-      ZigCompletionProvider(primitiveTypesElements)
+      ZigCompletionProvider(ZigLangHelper.primitiveTypesLookup)
     )
   }
 }

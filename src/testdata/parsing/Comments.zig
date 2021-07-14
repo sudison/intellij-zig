@@ -1,5 +1,4 @@
 fn foo() void {}
-const s = extern s
 fn main() void {
    var a =
     var a = foo();
@@ -12,3 +11,4 @@ fn main() void {
       }
     }
 }
+const s = extern struct { x: a

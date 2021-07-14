@@ -6,7 +6,7 @@ import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiNameIdentifierOwner;
 
-public interface ZigTopVarDecl extends PsiNameIdentifierOwner {
+public interface ZigTopVarDecl extends PsiNameIdentifierOwner, VarDeclaration {
 
   @NotNull
   ZigVarDecl getVarDecl();

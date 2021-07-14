@@ -194,6 +194,7 @@ public class ZigVisitor extends PsiElementVisitor {
 
   public void visitLocalVarDecl(@NotNull ZigLocalVarDecl o) {
     visitPsiNameIdentifierOwner(o);
+    // visitVarDeclaration(o);
   }
 
   public void visitLoopExpr(@NotNull ZigLoopExpr o) {
@@ -306,6 +307,7 @@ public class ZigVisitor extends PsiElementVisitor {
 
   public void visitTopVarDecl(@NotNull ZigTopVarDecl o) {
     visitPsiNameIdentifierOwner(o);
+    // visitVarDeclaration(o);
   }
 
   public void visitVarDecl(@NotNull ZigVarDecl o) {
