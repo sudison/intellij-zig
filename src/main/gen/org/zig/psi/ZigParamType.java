@@ -7,7 +7,16 @@ import com.intellij.psi.PsiElement;
 
 public interface ZigParamType extends PsiElement {
 
-  @Nullable
-  ZigTypeExpr getTypeExpr();
+  @NotNull
+  List<ZigFnCallArguments> getFnCallArgumentsList();
+
+  @NotNull
+  List<ZigPrefixTypeOp> getPrefixTypeOpList();
+
+  @NotNull
+  List<ZigPrimaryTypeExpr> getPrimaryTypeExprList();
+
+  @NotNull
+  List<ZigSuffixOp> getSuffixOpList();
 
 }

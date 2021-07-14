@@ -29,14 +29,32 @@ public class ZigAsmOutputItemImpl extends ASTWrapperPsiElement implements ZigAsm
 
   @Override
   @NotNull
+  public List<ZigFnCallArguments> getFnCallArgumentsList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ZigFnCallArguments.class);
+  }
+
+  @Override
+  @NotNull
+  public List<ZigPrefixTypeOp> getPrefixTypeOpList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ZigPrefixTypeOp.class);
+  }
+
+  @Override
+  @Nullable
+  public ZigPrimaryTypeExpr getPrimaryTypeExpr() {
+    return findChildByClass(ZigPrimaryTypeExpr.class);
+  }
+
+  @Override
+  @NotNull
   public ZigStringliteral getStringliteral() {
     return findNotNullChildByClass(ZigStringliteral.class);
   }
 
   @Override
-  @Nullable
-  public ZigTypeExpr getTypeExpr() {
-    return findChildByClass(ZigTypeExpr.class);
+  @NotNull
+  public List<ZigSuffixOp> getSuffixOpList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ZigSuffixOp.class);
   }
 
 }

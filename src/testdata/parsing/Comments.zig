@@ -1,4 +1,5 @@
 fn foo() void {}
+const s = extern s
 fn main() void {
    var a =
     var a = foo();

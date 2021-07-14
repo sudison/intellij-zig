@@ -40,9 +40,27 @@ public class ZigContainerFieldImpl extends ASTWrapperPsiElement implements ZigCo
   }
 
   @Override
-  @Nullable
-  public ZigTypeExpr getTypeExpr() {
-    return findChildByClass(ZigTypeExpr.class);
+  @NotNull
+  public List<ZigFnCallArguments> getFnCallArgumentsList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ZigFnCallArguments.class);
+  }
+
+  @Override
+  @NotNull
+  public List<ZigPrefixTypeOp> getPrefixTypeOpList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ZigPrefixTypeOp.class);
+  }
+
+  @Override
+  @NotNull
+  public List<ZigPrimaryTypeExpr> getPrimaryTypeExprList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ZigPrimaryTypeExpr.class);
+  }
+
+  @Override
+  @NotNull
+  public List<ZigSuffixOp> getSuffixOpList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ZigSuffixOp.class);
   }
 
 }

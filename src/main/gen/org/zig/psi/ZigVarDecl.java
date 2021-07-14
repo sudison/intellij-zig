@@ -13,10 +13,19 @@ public interface ZigVarDecl extends PsiElement {
   @Nullable
   ZigEqualExpr getEqualExpr();
 
+  @NotNull
+  List<ZigFnCallArguments> getFnCallArgumentsList();
+
   @Nullable
   ZigLinkSection getLinkSection();
 
-  @Nullable
-  ZigTypeExpr getTypeExpr();
+  @NotNull
+  List<ZigPrefixTypeOp> getPrefixTypeOpList();
+
+  @NotNull
+  List<ZigPrimaryTypeExpr> getPrimaryTypeExprList();
+
+  @NotNull
+  List<ZigSuffixOp> getSuffixOpList();
 
 }

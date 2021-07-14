@@ -8,9 +8,18 @@ import com.intellij.psi.PsiElement;
 public interface ZigForTypeExpr extends PsiElement {
 
   @NotNull
+  List<ZigFnCallArguments> getFnCallArgumentsList();
+
+  @NotNull
   ZigForPrefix getForPrefix();
 
   @NotNull
-  List<ZigTypeExpr> getTypeExprList();
+  List<ZigPrefixTypeOp> getPrefixTypeOpList();
+
+  @NotNull
+  List<ZigPrimaryTypeExpr> getPrimaryTypeExprList();
+
+  @NotNull
+  List<ZigSuffixOp> getSuffixOpList();
 
 }

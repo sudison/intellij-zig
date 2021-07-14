@@ -151,7 +151,7 @@ CallConv ::= CALLCONV LPAREN Expr RPAREN
 ParamDeclList ::= (ParamDecl COMMA)* ParamDecl?
 ParamDecl ::= DocComment? (NOALIAS | COMPTIME)? (ID COLON)? ParamType | DOT3
 ParamType ::= ANY_TYPE | TypeExpr
-TypeExpr ::= PrefixTypeOp* ErrorUnionExpr
+private TypeExpr ::= PrefixTypeOp* ErrorUnionExpr
 PrefixTypeOp ::=
     QUESTIONMARK
     | ANYFRAME MINUSRARROW
@@ -167,8 +167,8 @@ PtrTypeStart ::=
 
 ArrayTypeStart ::= LBRACKET Expr (COLON Expr)? RBRACKET
 
-ErrorUnionExpr ::= SuffixExpr (EXCLAMATIONMARK TypeExpr)?
-SuffixExpr ::=
+private ErrorUnionExpr ::= SuffixExpr (EXCLAMATIONMARK TypeExpr)?
+private SuffixExpr ::=
     ASYNC PrimaryTypeExpr SuffixOp* FnCallArguments
     | PrimaryTypeExpr (SuffixOp | FnCallArguments)*
 SuffixOp ::= LBRACKET Expr (DOT2 (Expr? (COLON Expr)?)?)? RBRACKET
@@ -204,8 +204,19 @@ Symbol ::= ID {
     mixin='org.zig.reference.SymbolMixin'
 }
 
-ContainerDecl ::= (EXTERN | PACKED)? ContainerDeclAuto
-ContainerDeclAuto ::= ContainerDeclType LBRACE container_doc_comment? ContainerMembers RBRACE
+ContainerDecl ::=  ContainerDeclAuto | PackedContainerDecl | ExternContainerDecl
+
+private PackedContainerDecl ::= PACKED ContainerDeclType LBRACE container_doc_comment? ContainerMembers RBRACE {
+pin = 1
+}
+
+private ExternContainerDecl ::= EXTERN ContainerDeclType LBRACE container_doc_comment? ContainerMembers RBRACE {
+pin = 1
+}
+
+private ContainerDeclAuto ::= ContainerDeclType LBRACE container_doc_comment? ContainerMembers RBRACE {
+  pin = 1
+}
 ContainerDeclType ::=
     STRUCT
     | OPAQUE
@@ -240,23 +251,23 @@ EqualExpr ::= EQUAL Expr {
 ContainerField ::= DocComment? COMPTIME? ID (COLON (ANY_TYPE|TypeExpr) ByteAlign?)? (EQUAL Expr)?
 
 Expr ::= BoolOrExpr
-BoolOrExpr ::= BoolAndExpr (OR BoolAndExpr)*
-BoolAndExpr ::= CompareExpr (AND CompareExpr)*
-CompareExpr ::= BitwiseExpr (CompareOp BitwiseExpr)?
-CompareOp ::= EQUALEQUAL | EXCLAMATIONMARKEQUAL |LARROW |RARROW|LARROWEQUAL|RARROWEQUAL
-BitwiseExpr ::= BitShiftExpr (BitwiseOp BitShiftExpr)*
+private BoolOrExpr ::= BoolAndExpr (OR BoolAndExpr)*
+private BoolAndExpr ::= CompareExpr (AND CompareExpr)*
+private CompareExpr ::= BitwiseExpr (CompareOp BitwiseExpr)?
+private CompareOp ::= EQUALEQUAL | EXCLAMATIONMARKEQUAL |LARROW |RARROW|LARROWEQUAL|RARROWEQUAL
+private BitwiseExpr ::= BitShiftExpr (BitwiseOp BitShiftExpr)*
 
-BitwiseOp ::= AMPERSAND | CARET | PIPE | orelse | catch Payload?
+private BitwiseOp ::= AMPERSAND | CARET | PIPE | orelse | catch Payload?
 Payload ::= PIPE ID PIPE
 
-BitShiftExpr ::= AdditionExpr (BitShiftOp AdditionExpr)*
+private BitShiftExpr ::= AdditionExpr (BitShiftOp AdditionExpr)*
 BitShiftOp ::=  LARROW2 | RARROW2
-AdditionExpr ::= MultiplyExpr (AdditionOp MultiplyExpr)*
+private AdditionExpr ::= MultiplyExpr (AdditionOp MultiplyExpr)*
 AdditionOp ::= PLUS | MINUS | PLUS2 | PLUSPERCENT | MINUSPERCENT
-MultiplyExpr ::= PrefixExpr (MultiplyOp PrefixExpr)*
+private MultiplyExpr ::= PrefixExpr (MultiplyOp PrefixExpr)*
 MultiplyOp ::= PIPE2 | ASTERISK | SLASH | PERCENT | ASTERISK2 | ASTERISKPERCENT
-PrefixExpr ::= PrefixOp* PrimaryExpr
-PrimaryExpr::=
+private PrefixExpr ::= PrefixOp* PrimaryExpr
+private PrimaryExpr::=
     AsmExpr
     | IfExpr
     | BREAK BreakLabel? Expr?
@@ -286,7 +297,7 @@ LoopExpr ::= INLINE? (ForExpr | WhileExpr)
 ForExpr ::= ForPrefix Expr (ELSE Expr)?
 WhileExpr ::= WhilePrefix Expr (ELSE Payload? Expr)?
 
-CurlySuffixExpr ::= TypeExpr InitList?
+private CurlySuffixExpr ::= TypeExpr InitList?
 InitList ::=
     LBRACE FieldInit (COMMA FieldInit)* COMMA? RBRACE
     | LBRACE Expr (COMMA Expr)* COMMA? RBRACE

@@ -43,4 +43,13 @@ class ZigLangCodeCompletionTest: LightPlatformCodeInsightFixture4TestCase() {
     val l = myFixture.completeBasic()
     assertTrue(l.size == 13)
   }
+
+  @Test
+  fun testStruct() {
+    myFixture.configureByText(ZigFileType, "")
+
+    myFixture.type("const Point = packed s")
+    val l = myFixture.completeBasic()
+    assertTrue(l.size == 1)
+  }
 }

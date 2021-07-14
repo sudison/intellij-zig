@@ -37,13 +37,13 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // MultiplyExpr (AdditionOp MultiplyExpr)*
-  public static boolean AdditionExpr(PsiBuilder b, int l) {
+  static boolean AdditionExpr(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "AdditionExpr")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, ADDITION_EXPR, "<addition expr>");
+    Marker m = enter_section_(b);
     r = MultiplyExpr(b, l + 1);
     r = r && AdditionExpr_1(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -415,13 +415,13 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // AdditionExpr (BitShiftOp AdditionExpr)*
-  public static boolean BitShiftExpr(PsiBuilder b, int l) {
+  static boolean BitShiftExpr(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "BitShiftExpr")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, BIT_SHIFT_EXPR, "<bit shift expr>");
+    Marker m = enter_section_(b);
     r = AdditionExpr(b, l + 1);
     r = r && BitShiftExpr_1(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -462,13 +462,13 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // BitShiftExpr (BitwiseOp BitShiftExpr)*
-  public static boolean BitwiseExpr(PsiBuilder b, int l) {
+  static boolean BitwiseExpr(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "BitwiseExpr")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, BITWISE_EXPR, "<bitwise expr>");
+    Marker m = enter_section_(b);
     r = BitShiftExpr(b, l + 1);
     r = r && BitwiseExpr_1(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -496,16 +496,16 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // AMPERSAND | CARET | PIPE | orelse | catch Payload?
-  public static boolean BitwiseOp(PsiBuilder b, int l) {
+  static boolean BitwiseOp(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "BitwiseOp")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, BITWISE_OP, "<bitwise op>");
+    Marker m = enter_section_(b);
     r = consumeToken(b, AMPERSAND);
     if (!r) r = consumeToken(b, CARET);
     if (!r) r = consumeToken(b, PIPE);
     if (!r) r = consumeToken(b, ORELSE);
     if (!r) r = BitwiseOp_4(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -610,13 +610,13 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // CompareExpr (AND CompareExpr)*
-  public static boolean BoolAndExpr(PsiBuilder b, int l) {
+  static boolean BoolAndExpr(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "BoolAndExpr")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, BOOL_AND_EXPR, "<bool and expr>");
+    Marker m = enter_section_(b);
     r = CompareExpr(b, l + 1);
     r = r && BoolAndExpr_1(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -644,13 +644,13 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // BoolAndExpr (OR BoolAndExpr)*
-  public static boolean BoolOrExpr(PsiBuilder b, int l) {
+  static boolean BoolOrExpr(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "BoolOrExpr")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, BOOL_OR_EXPR, "<bool or expr>");
+    Marker m = enter_section_(b);
     r = BoolAndExpr(b, l + 1);
     r = r && BoolOrExpr_1(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -718,13 +718,13 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // BitwiseExpr (CompareOp BitwiseExpr)?
-  public static boolean CompareExpr(PsiBuilder b, int l) {
+  static boolean CompareExpr(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CompareExpr")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, COMPARE_EXPR, "<compare expr>");
+    Marker m = enter_section_(b);
     r = BitwiseExpr(b, l + 1);
     r = r && CompareExpr_1(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -748,61 +748,45 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // EQUALEQUAL | EXCLAMATIONMARKEQUAL |LARROW |RARROW|LARROWEQUAL|RARROWEQUAL
-  public static boolean CompareOp(PsiBuilder b, int l) {
+  static boolean CompareOp(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CompareOp")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, COMPARE_OP, "<compare op>");
     r = consumeToken(b, EQUALEQUAL);
     if (!r) r = consumeToken(b, EXCLAMATIONMARKEQUAL);
     if (!r) r = consumeToken(b, LARROW);
     if (!r) r = consumeToken(b, RARROW);
     if (!r) r = consumeToken(b, LARROWEQUAL);
     if (!r) r = consumeToken(b, RARROWEQUAL);
-    exit_section_(b, l, m, r, false, null);
     return r;
   }
 
   /* ********************************************************** */
-  // (EXTERN | PACKED)? ContainerDeclAuto
+  // ContainerDeclAuto | PackedContainerDecl | ExternContainerDecl
   public static boolean ContainerDecl(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ContainerDecl")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, CONTAINER_DECL, "<container decl>");
-    r = ContainerDecl_0(b, l + 1);
-    r = r && ContainerDeclAuto(b, l + 1);
+    r = ContainerDeclAuto(b, l + 1);
+    if (!r) r = PackedContainerDecl(b, l + 1);
+    if (!r) r = ExternContainerDecl(b, l + 1);
     exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // (EXTERN | PACKED)?
-  private static boolean ContainerDecl_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "ContainerDecl_0")) return false;
-    ContainerDecl_0_0(b, l + 1);
-    return true;
-  }
-
-  // EXTERN | PACKED
-  private static boolean ContainerDecl_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "ContainerDecl_0_0")) return false;
-    boolean r;
-    r = consumeToken(b, EXTERN);
-    if (!r) r = consumeToken(b, PACKED);
     return r;
   }
 
   /* ********************************************************** */
   // ContainerDeclType LBRACE container_doc_comment? ContainerMembers RBRACE
-  public static boolean ContainerDeclAuto(PsiBuilder b, int l) {
+  static boolean ContainerDeclAuto(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ContainerDeclAuto")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, CONTAINER_DECL_AUTO, "<container decl auto>");
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_);
     r = ContainerDeclType(b, l + 1);
-    r = r && consumeToken(b, LBRACE);
-    r = r && ContainerDeclAuto_2(b, l + 1);
-    r = r && ContainerMembers(b, l + 1);
-    r = r && consumeToken(b, RBRACE);
-    exit_section_(b, l, m, r, false, null);
-    return r;
+    p = r; // pin = 1
+    r = r && report_error_(b, consumeToken(b, LBRACE));
+    r = p && report_error_(b, ContainerDeclAuto_2(b, l + 1)) && r;
+    r = p && report_error_(b, ContainerMembers(b, l + 1)) && r;
+    r = p && consumeToken(b, RBRACE) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   // container_doc_comment?
@@ -1159,13 +1143,13 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // TypeExpr InitList?
-  public static boolean CurlySuffixExpr(PsiBuilder b, int l) {
+  static boolean CurlySuffixExpr(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CurlySuffixExpr")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, CURLY_SUFFIX_EXPR, "<curly suffix expr>");
+    Marker m = enter_section_(b);
     r = TypeExpr(b, l + 1);
     r = r && CurlySuffixExpr_1(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -1223,13 +1207,13 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // SuffixExpr (EXCLAMATIONMARK TypeExpr)?
-  public static boolean ErrorUnionExpr(PsiBuilder b, int l) {
+  static boolean ErrorUnionExpr(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ErrorUnionExpr")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, ERROR_UNION_EXPR, "<error union expr>");
+    Marker m = enter_section_(b);
     r = SuffixExpr(b, l + 1);
     r = r && ErrorUnionExpr_1(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -1256,7 +1240,7 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
   public static boolean Expr(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Expr")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, EXPR, "<expr>");
+    Marker m = enter_section_(b, l, _COLLAPSE_, EXPR, "<expr>");
     r = BoolOrExpr(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
@@ -1300,6 +1284,31 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
   private static boolean ExprList_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ExprList_1")) return false;
     Expr(b, l + 1);
+    return true;
+  }
+
+  /* ********************************************************** */
+  // EXTERN ContainerDeclType LBRACE container_doc_comment? ContainerMembers RBRACE
+  static boolean ExternContainerDecl(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ExternContainerDecl")) return false;
+    if (!nextTokenIs(b, EXTERN)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_);
+    r = consumeToken(b, EXTERN);
+    p = r; // pin = 1
+    r = r && report_error_(b, ContainerDeclType(b, l + 1));
+    r = p && report_error_(b, consumeToken(b, LBRACE)) && r;
+    r = p && report_error_(b, ExternContainerDecl_3(b, l + 1)) && r;
+    r = p && report_error_(b, ContainerMembers(b, l + 1)) && r;
+    r = p && consumeToken(b, RBRACE) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
+  }
+
+  // container_doc_comment?
+  private static boolean ExternContainerDecl_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ExternContainerDecl_3")) return false;
+    container_doc_comment(b, l + 1);
     return true;
   }
 
@@ -2170,13 +2179,13 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // PrefixExpr (MultiplyOp PrefixExpr)*
-  public static boolean MultiplyExpr(PsiBuilder b, int l) {
+  static boolean MultiplyExpr(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "MultiplyExpr")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, MULTIPLY_EXPR, "<multiply expr>");
+    Marker m = enter_section_(b);
     r = PrefixExpr(b, l + 1);
     r = r && MultiplyExpr_1(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -2216,6 +2225,31 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, ASTERISKPERCENT);
     exit_section_(b, l, m, r, false, null);
     return r;
+  }
+
+  /* ********************************************************** */
+  // PACKED ContainerDeclType LBRACE container_doc_comment? ContainerMembers RBRACE
+  static boolean PackedContainerDecl(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "PackedContainerDecl")) return false;
+    if (!nextTokenIs(b, PACKED)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_);
+    r = consumeToken(b, PACKED);
+    p = r; // pin = 1
+    r = r && report_error_(b, ContainerDeclType(b, l + 1));
+    r = p && report_error_(b, consumeToken(b, LBRACE)) && r;
+    r = p && report_error_(b, PackedContainerDecl_3(b, l + 1)) && r;
+    r = p && report_error_(b, ContainerMembers(b, l + 1)) && r;
+    r = p && consumeToken(b, RBRACE) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
+  }
+
+  // container_doc_comment?
+  private static boolean PackedContainerDecl_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "PackedContainerDecl_3")) return false;
+    container_doc_comment(b, l + 1);
+    return true;
   }
 
   /* ********************************************************** */
@@ -2350,13 +2384,13 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // PrefixOp* PrimaryExpr
-  public static boolean PrefixExpr(PsiBuilder b, int l) {
+  static boolean PrefixExpr(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "PrefixExpr")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, PREFIX_EXPR, "<prefix expr>");
+    Marker m = enter_section_(b);
     r = PrefixExpr_0(b, l + 1);
     r = r && PrimaryExpr(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -2523,10 +2557,10 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
   //     | BlockLabel? LoopExpr
   //     | Block
   //     | CurlySuffixExpr
-  public static boolean PrimaryExpr(PsiBuilder b, int l) {
+  static boolean PrimaryExpr(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "PrimaryExpr")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, PRIMARY_EXPR, "<primary expr>");
+    Marker m = enter_section_(b);
     r = AsmExpr(b, l + 1);
     if (!r) r = IfExpr(b, l + 1);
     if (!r) r = PrimaryExpr_2(b, l + 1);
@@ -2538,7 +2572,7 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
     if (!r) r = PrimaryExpr_8(b, l + 1);
     if (!r) r = Block(b, l + 1);
     if (!r) r = CurlySuffixExpr(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -3040,13 +3074,13 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
   /* ********************************************************** */
   // ASYNC PrimaryTypeExpr SuffixOp* FnCallArguments
   //     | PrimaryTypeExpr (SuffixOp | FnCallArguments)*
-  public static boolean SuffixExpr(PsiBuilder b, int l) {
+  static boolean SuffixExpr(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "SuffixExpr")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, SUFFIX_EXPR, "<suffix expr>");
+    Marker m = enter_section_(b);
     r = SuffixExpr_0(b, l + 1);
     if (!r) r = SuffixExpr_1(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -3504,13 +3538,13 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // PrefixTypeOp* ErrorUnionExpr
-  public static boolean TypeExpr(PsiBuilder b, int l) {
+  static boolean TypeExpr(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "TypeExpr")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, TYPE_EXPR, "<type expr>");
+    Marker m = enter_section_(b);
     r = TypeExpr_0(b, l + 1);
     r = r && ErrorUnionExpr(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
+    exit_section_(b, m, null, r);
     return r;
   }
 

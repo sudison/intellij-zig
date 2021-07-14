@@ -8,9 +8,18 @@ import com.intellij.psi.PsiElement;
 public interface ZigAsmOutputItem extends PsiElement {
 
   @NotNull
-  ZigStringliteral getStringliteral();
+  List<ZigFnCallArguments> getFnCallArgumentsList();
+
+  @NotNull
+  List<ZigPrefixTypeOp> getPrefixTypeOpList();
 
   @Nullable
-  ZigTypeExpr getTypeExpr();
+  ZigPrimaryTypeExpr getPrimaryTypeExpr();
+
+  @NotNull
+  ZigStringliteral getStringliteral();
+
+  @NotNull
+  List<ZigSuffixOp> getSuffixOpList();
 
 }

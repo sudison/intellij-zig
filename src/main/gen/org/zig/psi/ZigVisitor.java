@@ -8,10 +8,6 @@ import com.intellij.psi.PsiNameIdentifierOwner;
 
 public class ZigVisitor extends PsiElementVisitor {
 
-  public void visitAdditionExpr(@NotNull ZigAdditionExpr o) {
-    visitPsiElement(o);
-  }
-
   public void visitAdditionOp(@NotNull ZigAdditionOp o) {
     visitPsiElement(o);
   }
@@ -64,19 +60,7 @@ public class ZigVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitBitShiftExpr(@NotNull ZigBitShiftExpr o) {
-    visitPsiElement(o);
-  }
-
   public void visitBitShiftOp(@NotNull ZigBitShiftOp o) {
-    visitPsiElement(o);
-  }
-
-  public void visitBitwiseExpr(@NotNull ZigBitwiseExpr o) {
-    visitPsiElement(o);
-  }
-
-  public void visitBitwiseOp(@NotNull ZigBitwiseOp o) {
     visitPsiElement(o);
   }
 
@@ -96,14 +80,6 @@ public class ZigVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitBoolAndExpr(@NotNull ZigBoolAndExpr o) {
-    visitPsiElement(o);
-  }
-
-  public void visitBoolOrExpr(@NotNull ZigBoolOrExpr o) {
-    visitPsiElement(o);
-  }
-
   public void visitBreakLabel(@NotNull ZigBreakLabel o) {
     visitPsiElement(o);
   }
@@ -116,19 +92,7 @@ public class ZigVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitCompareExpr(@NotNull ZigCompareExpr o) {
-    visitPsiElement(o);
-  }
-
-  public void visitCompareOp(@NotNull ZigCompareOp o) {
-    visitPsiElement(o);
-  }
-
   public void visitContainerDecl(@NotNull ZigContainerDecl o) {
-    visitPsiElement(o);
-  }
-
-  public void visitContainerDeclAuto(@NotNull ZigContainerDeclAuto o) {
     visitPsiElement(o);
   }
 
@@ -140,19 +104,11 @@ public class ZigVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitCurlySuffixExpr(@NotNull ZigCurlySuffixExpr o) {
-    visitPsiElement(o);
-  }
-
   public void visitEqualExpr(@NotNull ZigEqualExpr o) {
     visitPsiElement(o);
   }
 
   public void visitErrorSetDecl(@NotNull ZigErrorSetDecl o) {
-    visitPsiElement(o);
-  }
-
-  public void visitErrorUnionExpr(@NotNull ZigErrorUnionExpr o) {
     visitPsiElement(o);
   }
 
@@ -252,10 +208,6 @@ public class ZigVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitMultiplyExpr(@NotNull ZigMultiplyExpr o) {
-    visitPsiElement(o);
-  }
-
   public void visitMultiplyOp(@NotNull ZigMultiplyOp o) {
     visitPsiElement(o);
   }
@@ -276,19 +228,11 @@ public class ZigVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitPrefixExpr(@NotNull ZigPrefixExpr o) {
-    visitPsiElement(o);
-  }
-
   public void visitPrefixOp(@NotNull ZigPrefixOp o) {
     visitPsiElement(o);
   }
 
   public void visitPrefixTypeOp(@NotNull ZigPrefixTypeOp o) {
-    visitPsiElement(o);
-  }
-
-  public void visitPrimaryExpr(@NotNull ZigPrimaryExpr o) {
     visitPsiElement(o);
   }
 
@@ -321,10 +265,6 @@ public class ZigVisitor extends PsiElementVisitor {
   }
 
   public void visitStringList(@NotNull ZigStringList o) {
-    visitPsiElement(o);
-  }
-
-  public void visitSuffixExpr(@NotNull ZigSuffixExpr o) {
     visitPsiElement(o);
   }
 
@@ -366,10 +306,6 @@ public class ZigVisitor extends PsiElementVisitor {
 
   public void visitTopVarDecl(@NotNull ZigTopVarDecl o) {
     visitPsiNameIdentifierOwner(o);
-  }
-
-  public void visitTypeExpr(@NotNull ZigTypeExpr o) {
-    visitPsiElement(o);
   }
 
   public void visitVarDecl(@NotNull ZigVarDecl o) {

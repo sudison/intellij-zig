@@ -28,6 +28,12 @@ public class ZigWhileTypeExprImpl extends ASTWrapperPsiElement implements ZigWhi
   }
 
   @Override
+  @NotNull
+  public List<ZigFnCallArguments> getFnCallArgumentsList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ZigFnCallArguments.class);
+  }
+
+  @Override
   @Nullable
   public ZigPayload getPayload() {
     return findChildByClass(ZigPayload.class);
@@ -35,8 +41,20 @@ public class ZigWhileTypeExprImpl extends ASTWrapperPsiElement implements ZigWhi
 
   @Override
   @NotNull
-  public List<ZigTypeExpr> getTypeExprList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ZigTypeExpr.class);
+  public List<ZigPrefixTypeOp> getPrefixTypeOpList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ZigPrefixTypeOp.class);
+  }
+
+  @Override
+  @NotNull
+  public List<ZigPrimaryTypeExpr> getPrimaryTypeExprList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ZigPrimaryTypeExpr.class);
+  }
+
+  @Override
+  @NotNull
+  public List<ZigSuffixOp> getSuffixOpList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ZigSuffixOp.class);
   }
 
   @Override

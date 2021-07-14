@@ -31,16 +31,22 @@ public interface ZigPrimaryTypeExpr extends PsiElement {
   @Nullable
   ZigLabeledTypeExpr getLabeledTypeExpr();
 
+  @NotNull
+  List<ZigPrefixTypeOp> getPrefixTypeOpList();
+
+  @NotNull
+  List<ZigPrimaryTypeExpr> getPrimaryTypeExprList();
+
   @Nullable
   ZigStringliteral getStringliteral();
+
+  @NotNull
+  List<ZigSuffixOp> getSuffixOpList();
 
   @Nullable
   ZigSwitchExpr getSwitchExpr();
 
   @Nullable
   ZigSymbol getSymbol();
-
-  @Nullable
-  ZigTypeExpr getTypeExpr();
 
 }

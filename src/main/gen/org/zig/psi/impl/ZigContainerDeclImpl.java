@@ -28,9 +28,45 @@ public class ZigContainerDeclImpl extends ASTWrapperPsiElement implements ZigCon
   }
 
   @Override
+  @Nullable
+  public ZigContainerDeclType getContainerDeclType() {
+    return findChildByClass(ZigContainerDeclType.class);
+  }
+
+  @Override
   @NotNull
-  public ZigContainerDeclAuto getContainerDeclAuto() {
-    return findNotNullChildByClass(ZigContainerDeclAuto.class);
+  public List<ZigContainerField> getContainerFieldList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ZigContainerField.class);
+  }
+
+  @Override
+  @NotNull
+  public List<ZigExpr> getExprList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ZigExpr.class);
+  }
+
+  @Override
+  @NotNull
+  public List<ZigFnDecl> getFnDeclList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ZigFnDecl.class);
+  }
+
+  @Override
+  @NotNull
+  public List<ZigTestDecl> getTestDeclList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ZigTestDecl.class);
+  }
+
+  @Override
+  @NotNull
+  public List<ZigTopLevelComptime> getTopLevelComptimeList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ZigTopLevelComptime.class);
+  }
+
+  @Override
+  @NotNull
+  public List<ZigTopVarDecl> getTopVarDeclList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ZigTopVarDecl.class);
   }
 
 }

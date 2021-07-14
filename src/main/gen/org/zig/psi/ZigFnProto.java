@@ -13,13 +13,22 @@ public interface ZigFnProto extends PsiElement {
   @Nullable
   ZigCallConv getCallConv();
 
+  @NotNull
+  List<ZigFnCallArguments> getFnCallArgumentsList();
+
   @Nullable
   ZigLinkSection getLinkSection();
 
   @Nullable
   ZigParamDeclList getParamDeclList();
 
-  @Nullable
-  ZigTypeExpr getTypeExpr();
+  @NotNull
+  List<ZigPrefixTypeOp> getPrefixTypeOpList();
+
+  @NotNull
+  List<ZigPrimaryTypeExpr> getPrimaryTypeExprList();
+
+  @NotNull
+  List<ZigSuffixOp> getSuffixOpList();
 
 }

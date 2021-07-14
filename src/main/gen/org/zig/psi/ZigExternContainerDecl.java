@@ -5,12 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ZigBitShiftExpr extends PsiElement {
+public interface ZigExternContainerDecl extends PsiElement {
 
-  @NotNull
-  List<ZigAdditionExpr> getAdditionExprList();
-
-  @NotNull
-  List<ZigBitShiftOp> getBitShiftOpList();
+  @Nullable
+  ZigContainerDeclAuto getContainerDeclAuto();
 
 }

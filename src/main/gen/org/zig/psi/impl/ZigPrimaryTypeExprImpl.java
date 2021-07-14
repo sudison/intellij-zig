@@ -76,9 +76,27 @@ public class ZigPrimaryTypeExprImpl extends ASTWrapperPsiElement implements ZigP
   }
 
   @Override
+  @NotNull
+  public List<ZigPrefixTypeOp> getPrefixTypeOpList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ZigPrefixTypeOp.class);
+  }
+
+  @Override
+  @NotNull
+  public List<ZigPrimaryTypeExpr> getPrimaryTypeExprList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ZigPrimaryTypeExpr.class);
+  }
+
+  @Override
   @Nullable
   public ZigStringliteral getStringliteral() {
     return findChildByClass(ZigStringliteral.class);
+  }
+
+  @Override
+  @NotNull
+  public List<ZigSuffixOp> getSuffixOpList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ZigSuffixOp.class);
   }
 
   @Override
@@ -91,12 +109,6 @@ public class ZigPrimaryTypeExprImpl extends ASTWrapperPsiElement implements ZigP
   @Nullable
   public ZigSymbol getSymbol() {
     return findChildByClass(ZigSymbol.class);
-  }
-
-  @Override
-  @Nullable
-  public ZigTypeExpr getTypeExpr() {
-    return findChildByClass(ZigTypeExpr.class);
   }
 
 }

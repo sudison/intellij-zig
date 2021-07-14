@@ -7,11 +7,20 @@ import com.intellij.psi.PsiElement;
 
 public interface ZigWhileTypeExpr extends PsiElement {
 
+  @NotNull
+  List<ZigFnCallArguments> getFnCallArgumentsList();
+
   @Nullable
   ZigPayload getPayload();
 
   @NotNull
-  List<ZigTypeExpr> getTypeExprList();
+  List<ZigPrefixTypeOp> getPrefixTypeOpList();
+
+  @NotNull
+  List<ZigPrimaryTypeExpr> getPrimaryTypeExprList();
+
+  @NotNull
+  List<ZigSuffixOp> getSuffixOpList();
 
   @NotNull
   ZigWhilePrefix getWhilePrefix();

@@ -13,7 +13,16 @@ public interface ZigContainerField extends PsiElement {
   @Nullable
   ZigExpr getExpr();
 
-  @Nullable
-  ZigTypeExpr getTypeExpr();
+  @NotNull
+  List<ZigFnCallArguments> getFnCallArgumentsList();
+
+  @NotNull
+  List<ZigPrefixTypeOp> getPrefixTypeOpList();
+
+  @NotNull
+  List<ZigPrimaryTypeExpr> getPrimaryTypeExprList();
+
+  @NotNull
+  List<ZigSuffixOp> getSuffixOpList();
 
 }

@@ -6,8 +6,6 @@ import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.patterns.PlatformPatterns.psiElement
 import com.intellij.psi.PsiErrorElement
-import com.intellij.psi.PsiWhiteSpace
-import com.intellij.psi.impl.source.tree.PsiWhiteSpaceImpl
 import com.intellij.util.ProcessingContext
 import org.zig.psi.ZigFile
 import org.zig.psi.ZigLangTypes
@@ -43,6 +41,35 @@ class ZigLangCompletionContributor : CompletionContributor() {
       .withAutoCompletionPolicy(AutoCompletionPolicy.NEVER_AUTOCOMPLETE)
   }
 
+  private val containerDecl =
+    listOf(
+      ZigLangTypes.STRUCT,
+      ZigLangTypes.ENUM,
+      ZigLangTypes.OPAQUE,
+      ZigLangTypes.UNION,
+      ZigLangTypes.EXTERN,
+      ZigLangTypes.PACKED
+    ).map {
+      LookupElementBuilder
+        .create(it.toString().toLowerCase())
+        .withPresentableText(it.toString().toLowerCase())
+        .withAutoCompletionPolicy(AutoCompletionPolicy.NEVER_AUTOCOMPLETE)
+    }
+
+  private val containerAutoDecl =
+    listOf(
+      ZigLangTypes.STRUCT,
+      ZigLangTypes.ENUM,
+      ZigLangTypes.OPAQUE,
+      ZigLangTypes.UNION,
+    ).map {
+      LookupElementBuilder
+        .create(it.toString().toLowerCase())
+        .withPresentableText(it.toString().toLowerCase())
+        .withAutoCompletionPolicy(AutoCompletionPolicy.NEVER_AUTOCOMPLETE)
+    }
+
+
   private val primitiveTypesElements = ZigLangHelper.primitiveTypes.map {
     LookupElementBuilder
       .create("$it ")
@@ -66,12 +93,26 @@ class ZigLangCompletionContributor : CompletionContributor() {
 
     extend(
       CompletionType.BASIC,
+      psiElement(ZigLangTypes.ID).withAncestor(4, psiElement(ZigLangTypes.EQUAL_EXPR)),
+      ZigCompletionProvider(containerDecl)
+    )
+
+    extend(
+      CompletionType.BASIC,
+      psiElement(ZigLangTypes.ID).withAncestor(5, psiElement(ZigLangTypes.EQUAL_EXPR)),
+      ZigCompletionProvider(containerAutoDecl)
+    )
+
+    extend(
+      CompletionType.BASIC,
       psiElement(ZigLangTypes.BUILTINIDENTIFIER),
       ZigCompletionProvider(builtInFunctions)
     )
 
-    extend(CompletionType.BASIC,
-           psiElement(ZigLangTypes.ID).withAncestor(6, psiElement(ZigLangTypes.FN_PROTO)),
-           ZigCompletionProvider(primitiveTypesElements))
+    extend(
+      CompletionType.BASIC,
+      psiElement(ZigLangTypes.ID).withAncestor(6, psiElement(ZigLangTypes.FN_PROTO)),
+      ZigCompletionProvider(primitiveTypesElements)
+    )
   }
 }

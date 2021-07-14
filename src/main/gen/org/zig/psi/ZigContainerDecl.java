@@ -7,7 +7,25 @@ import com.intellij.psi.PsiElement;
 
 public interface ZigContainerDecl extends PsiElement {
 
+  @Nullable
+  ZigContainerDeclType getContainerDeclType();
+
   @NotNull
-  ZigContainerDeclAuto getContainerDeclAuto();
+  List<ZigContainerField> getContainerFieldList();
+
+  @NotNull
+  List<ZigExpr> getExprList();
+
+  @NotNull
+  List<ZigFnDecl> getFnDeclList();
+
+  @NotNull
+  List<ZigTestDecl> getTestDeclList();
+
+  @NotNull
+  List<ZigTopLevelComptime> getTopLevelComptimeList();
+
+  @NotNull
+  List<ZigTopVarDecl> getTopVarDeclList();
 
 }
