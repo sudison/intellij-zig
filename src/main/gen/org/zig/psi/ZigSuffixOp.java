@@ -10,4 +10,7 @@ public interface ZigSuffixOp extends PsiElement {
   @NotNull
   List<ZigExpr> getExprList();
 
+  @Nullable
+  ZigSymbol getSymbol();
+
 }

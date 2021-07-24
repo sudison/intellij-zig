@@ -33,4 +33,10 @@ public class ZigSuffixOpImpl extends ASTWrapperPsiElement implements ZigSuffixOp
     return PsiTreeUtil.getChildrenOfTypeAsList(this, ZigExpr.class);
   }
 
+  @Override
+  @Nullable
+  public ZigSymbol getSymbol() {
+    return findChildByClass(ZigSymbol.class);
+  }
+
 }

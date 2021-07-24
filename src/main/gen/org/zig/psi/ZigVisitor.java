@@ -101,7 +101,7 @@ public class ZigVisitor extends PsiElementVisitor {
   }
 
   public void visitContainerField(@NotNull ZigContainerField o) {
-    visitPsiElement(o);
+    visitPsiNameIdentifierOwner(o);
   }
 
   public void visitEqualExpr(@NotNull ZigEqualExpr o) {

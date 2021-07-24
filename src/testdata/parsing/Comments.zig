@@ -10,5 +10,18 @@ fn main() void {
         var d = {return 1;};
       }
     }
+    s.x.y
 }
-const s = extern struct { x: a
+pub const s = struct {
+        pub const Node = struct {
+            prev: ?*Node,
+            next: ?*Node,
+            data: T,
+        };
+
+        first: ?*Node,
+        last:  ?*Node,
+        len:   usize,
+    };
+
+const ss = s {.first = null, .last = null};

@@ -8,10 +8,10 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static org.zig.psi.ZigLangTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
+import org.zig.reference.ContainerFieldMixin;
 import org.zig.psi.*;
 
-public class ZigContainerFieldImpl extends ASTWrapperPsiElement implements ZigContainerField {
+public class ZigContainerFieldImpl extends ContainerFieldMixin implements ZigContainerField {
 
   public ZigContainerFieldImpl(@NotNull ASTNode node) {
     super(node);

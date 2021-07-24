@@ -9,6 +9,7 @@ import com.intellij.psi.*
 import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.util.ProcessingContext
 import org.zig.psi.*
+import org.zig.types.Type
 
 class ZigReferenceContributor : PsiReferenceContributor() {
   override fun registerReferenceProviders(registrar: PsiReferenceRegistrar) {
@@ -23,65 +24,6 @@ class ZigReferenceProvider : PsiReferenceProvider() {
   }
 }
 
-class ZigTypeReference(element: PsiElement, private val id: PsiElement) :
-  PsiPolyVariantReferenceBase<PsiElement>(element) {
-  override fun multiResolve(incompleteCode: Boolean): Array<ResolveResult> {
-    val topContainerTypes =
-      PsiTreeUtil.collectElementsOfType(
-        element.containingFile, ZigTopVarDecl::class.java
-      ).filter { it.isContainerType() && it.nameIdentifier?.text == id.text }
-        .map { PsiElementResolveResult(it, true) }
-
-    val refs = mutableListOf<ResolveResult>()
-
-    localVarRef(element) {
-      if (it.isContainerType() && it.nameIdentifier?.text == id.text) {
-        refs.add(PsiElementResolveResult(it, true))
-      }
-    }
-    return (topContainerTypes + refs).toTypedArray()
-  }
-
-  override fun calculateDefaultRangeInElement(): TextRange {
-    return TextRange.from(id.startOffsetInParent, id.textLength)
-  }
-
-  override fun getVariants(): Array<Any> {
-    val topContainerTypes =
-      PsiTreeUtil.collectElementsOfType(
-        element.containingFile, ZigTopVarDecl::class.java
-      ).filter { it.isContainerType() }
-
-    val localVars = mutableListOf<ZigLocalVarDecl>()
-    localVarRef(element) {
-      if (it.isContainerType()) {
-        localVars.add(it)
-      }
-    }
-    return (localVars.map { createLookup(it) } + topContainerTypes.map { createLookup(it) } + ZigLangHelper.primitiveTypesLookup).toTypedArray()
-  }
-}
-
-private fun localVarRef(element: PsiElement, consumer: (ZigLocalVarDecl) -> Unit): Unit {
-  var statement = PsiTreeUtil.findFirstParent(element) { it is ZigStatement }
-  while (statement != null) {
-    var e: PsiElement? = statement.prevSibling
-    while (e != null) {
-      if (ZigLangTypes.STATEMENT == e.node.elementType) {
-        val localVarDecl = e.firstChild
-        if (localVarDecl is ZigLocalVarDecl) {
-          consumer(localVarDecl)
-        }
-      }
-      e = e.prevSibling
-    }
-
-    val block = PsiTreeUtil.findFirstParent(statement) { it is ZigBlock }
-    statement = PsiTreeUtil.findFirstParent(block) { it is ZigStatement }
-  }
-
-}
-
 private fun createLookup(e: PsiNameIdentifierOwner): LookupElement {
   return LookupElementBuilder
     .create(e.nameIdentifier?.text!!)
@@ -91,7 +33,6 @@ private fun createLookup(e: PsiNameIdentifierOwner): LookupElement {
 
 class ZigReference(element: PsiElement, private val id: PsiElement) :
   PsiPolyVariantReferenceBase<PsiElement>(element) {
-
 
   private fun topLevelRefs(): List<ResolveResult> {
     val refFuns = PsiTreeUtil.collectElementsOfType(
@@ -111,10 +52,11 @@ class ZigReference(element: PsiElement, private val id: PsiElement) :
 
   private fun localVarResolve(): List<ResolveResult> {
     val refs = mutableListOf<ResolveResult>()
-    localVarRef(element) {
+    psiTreeWalkupInsideBlock(element) {
       if (it.nameIdentifier?.text == id.text) {
         refs.add(PsiElementResolveResult(it, true))
       }
+      false
     }
     return refs
   }
@@ -137,7 +79,10 @@ class ZigReference(element: PsiElement, private val id: PsiElement) :
       element.containingFile, ZigTopVarDecl::class.java
     )
     val localVars = mutableListOf<ZigLocalVarDecl>()
-    localVarRef(element) { localVars.add(it) }
+    psiTreeWalkupInsideBlock(element) {
+      localVars.add(it)
+      false
+    }
 
 
     return (refFuns.map {

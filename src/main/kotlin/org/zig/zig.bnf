@@ -118,7 +118,7 @@ private ContainerMembers ::= ContainerDeclarations? (ContainerField COMMA)* (Con
 private ContainerDeclarations ::=
     TestDecl ContainerDeclarations?
     | TopLevelComptime ContainerDeclarations?
-    | DocComment? PUB? TopLevelDecl ContainerDeclarations?
+    | DocComment? TopLevelDecl ContainerDeclarations?
 
 TopLevelComptime ::= DocComment? COMPTIME BlockExpr
 
@@ -128,15 +128,15 @@ private DocComment ::= COMMENT+
 private TopLevelDecl ::=
     FnDecl
     | TopVarDecl
-    | USING_NAME_SPACE Expr SEMICOLON
+    | PUB? USING_NAME_SPACE Expr SEMICOLON
 
-TopVarDecl ::= (EXPORT | EXTERN STRINGLITERALSINGLE?)? THREAD_LOCAL? VarDecl {
+TopVarDecl ::= PUB? (EXPORT | EXTERN STRINGLITERALSINGLE?)? THREAD_LOCAL? VarDecl {
     implements=['com.intellij.psi.PsiNameIdentifierOwner'
                 'org.zig.psi.VarDeclaration']
     mixin='org.zig.reference.TopVarDeclMixin'
 }
 
-FnDecl ::= (EXPORT | EXTERN STRINGLITERALSINGLE? | (INLINE | NOINLINE))?  FnProto (SEMICOLON | Block) {
+FnDecl ::= PUB? (EXPORT | EXTERN STRINGLITERALSINGLE? | (INLINE | NOINLINE))?  FnProto (SEMICOLON | Block) {
     pin = 'FnProto'
     implements=['com.intellij.psi.PsiNameIdentifierOwner']
     mixin='org.zig.reference.ZigFnMixin'
@@ -173,7 +173,7 @@ private SuffixExpr ::=
     ASYNC PrimaryTypeExpr SuffixOp* FnCallArguments
     | PrimaryTypeExpr (SuffixOp | FnCallArguments)*
 SuffixOp ::= LBRACKET Expr (DOT2 (Expr? (COLON Expr)?)?)? RBRACKET
-                  | DOT ID
+                  | DOT Symbol
                   | DOTASTERISK
                   | DOTQUESTIONMARK
 PrimaryTypeExpr ::=
@@ -249,7 +249,10 @@ EqualExpr ::= EQUAL Expr {
  pin = 1
 }
 
-ContainerField ::= DocComment? COMPTIME? ID (COLON (ANY_TYPE|TypeExpr) ByteAlign?)? (EQUAL Expr)?
+ContainerField ::= DocComment? COMPTIME? ID (COLON (ANY_TYPE|TypeExpr) ByteAlign?)? (EQUAL Expr)? {
+    implements=['com.intellij.psi.PsiNameIdentifierOwner']
+    mixin='org.zig.reference.ContainerFieldMixin'
+}
 
 Expr ::= BoolOrExpr
 private BoolOrExpr ::= BoolAndExpr (OR BoolAndExpr)*
