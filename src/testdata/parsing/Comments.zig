@@ -24,4 +24,8 @@ pub const s = struct {
         len:   usize,
     };
 
+fn v() {
+    const a = packed s
+}
+
 const ss = s {.first = null, .last = null};

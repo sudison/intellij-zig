@@ -62,3 +62,7 @@ val PsiElement.type: Type?
     }
   }
 
+
+val PsiElement.leftSiblings: Sequence<PsiElement>
+  get() = generateSequence(this.prevSibling) { it.prevSibling }
+

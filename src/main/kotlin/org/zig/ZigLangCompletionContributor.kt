@@ -4,12 +4,30 @@ import com.intellij.codeInsight.completion.*
 import com.intellij.codeInsight.lookup.AutoCompletionPolicy
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
+import com.intellij.patterns.ElementPattern
+import com.intellij.patterns.ObjectPattern
+import com.intellij.patterns.PatternCondition
 import com.intellij.patterns.PlatformPatterns.psiElement
+import com.intellij.patterns.PsiElementPattern
+import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiErrorElement
 import com.intellij.util.ProcessingContext
-import org.zig.psi.ZigFile
-import org.zig.psi.ZigLangTypes
+import org.zig.psi.*
+import org.zig.types.leftSiblings
 
+fun <T, Self : ObjectPattern<T, Self>> ObjectPattern<T, Self>.with(name: String, cond: (T) -> Boolean): Self =
+  with(object : PatternCondition<T>(name) {
+    override fun accepts(t: T, context: ProcessingContext?): Boolean = cond(t)
+  })
+
+fun <T : PsiElement, Self : PsiElementPattern<T, Self>> PsiElementPattern<T, Self>.withPrevSiblingSkipping(
+  skip: ElementPattern<out T>,
+  pattern: ElementPattern<out T>
+): Self = with("withPrevSiblingSkipping") { e ->
+  val sibling = e.leftSiblings.dropWhile { skip.accepts(it) }
+    .firstOrNull() ?: return@with false
+  pattern.accepts(sibling)
+}
 
 class ZigCompletionProvider(private val les: List<LookupElement>) : CompletionProvider<CompletionParameters>() {
   override fun addCompletions(
@@ -86,14 +104,14 @@ class ZigLangCompletionContributor : CompletionContributor() {
     // "const Point = s"
     extend(
       CompletionType.BASIC,
-      psiElement(ZigLangTypes.ID).withAncestor(4, psiElement(ZigLangTypes.EQUAL_EXPR)),
+      psiElement(ZigLangTypes.ID).withAncestor(2, psiElement(ZigLangTypes.PRIMARY_TYPE_EXPR)),
       ZigCompletionProvider(containerDecl)
     )
 
     // "const Point = packed s"
     extend(
       CompletionType.BASIC,
-      psiElement(ZigLangTypes.ID).withAncestor(5, psiElement(ZigLangTypes.EQUAL_EXPR)),
+      psiElement(ZigLangTypes.ID).withParent(psiElement(ZigLangTypes.CONTAINER_FIELD).withPrevSiblingSkipping(psiElement().whitespace(), psiElement(PsiErrorElement::class.java))),
       ZigCompletionProvider(containerAutoDecl)
     )
 

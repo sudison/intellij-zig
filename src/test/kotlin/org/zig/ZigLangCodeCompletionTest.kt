@@ -89,5 +89,14 @@ class ZigLangCodeCompletionTest: LightPlatformCodeInsightFixture4TestCase() {
     assertTrue(l[0].lookupString == "i32")
   }
 
+  @Test
+  fun testStructRef() {
+    myFixture.configureByText(ZigFileType, "")
+
+    myFixture.type("const Point = struct {x:i32}; const p = Point {.x = 1}; fn a() {const v = p.")
+    val l = myFixture.completeBasic()
+    assertTrue(l[0].lookupString == "x")
+  }
+
 
 }

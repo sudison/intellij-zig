@@ -9,6 +9,7 @@ import com.intellij.psi.*
 import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.util.ProcessingContext
 import org.zig.psi.*
+import org.zig.reference.createLookup
 import org.zig.types.Type
 
 class ZigReferenceContributor : PsiReferenceContributor() {
@@ -22,13 +23,6 @@ class ZigReferenceProvider : PsiReferenceProvider() {
     val s = element.prevSibling
     return PsiReference.EMPTY_ARRAY
   }
-}
-
-private fun createLookup(e: PsiNameIdentifierOwner): LookupElement {
-  return LookupElementBuilder
-    .create(e.nameIdentifier?.text!!)
-    .withPresentableText(e.nameIdentifier?.text!!)
-    .withAutoCompletionPolicy(AutoCompletionPolicy.NEVER_AUTOCOMPLETE)
 }
 
 class ZigReference(element: PsiElement, private val id: PsiElement) :
@@ -86,12 +80,12 @@ class ZigReference(element: PsiElement, private val id: PsiElement) :
 
 
     return (refFuns.map {
-      createLookup(it)
+      createLookup(it.nameIdentifier?.text!!)
     } + topVarDecl.map {
-      createLookup(it)
+      createLookup(it.nameIdentifier?.text!!)
     }
       + localVars.map {
-      createLookup(it)
+      createLookup(it.nameIdentifier?.text!!)
     })
       .toTypedArray()
   }

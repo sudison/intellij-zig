@@ -1,5 +1,6 @@
 package org.zig.reference
 
+import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiElementResolveResult
@@ -24,5 +25,14 @@ class ZigContainerTypeReference(element: PsiElement, private val id: PsiElement,
 
   override fun calculateDefaultRangeInElement(): TextRange {
     return TextRange.from(id.startOffsetInParent, id.textLength)
+  }
+
+  override fun getVariants(): Array<Any> {
+   return when (containerType) {
+      is StructType -> {
+        containerType.fields.keys.map { createLookup(it) }.toTypedArray()
+      }
+     else -> listOf<LookupElement>().toTypedArray()
+   }
   }
 }
