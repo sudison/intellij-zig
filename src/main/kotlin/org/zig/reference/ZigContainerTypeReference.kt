@@ -18,6 +18,14 @@ class ZigContainerTypeReference(element: PsiElement, private val id: PsiElement,
       is StructType -> {
         containerType.fields[id.text]?.reference()
       }
+      is FieldType -> {
+        when (val ct = containerType.type) {
+          is StructType -> {
+            ct.fields[id.text]?.reference()
+          }
+          else -> null
+        }
+      }
       else -> null
     }
     r?: return listOf<ResolveResult>().toTypedArray()

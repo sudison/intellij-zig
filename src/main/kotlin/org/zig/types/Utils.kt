@@ -16,8 +16,19 @@ fun getTypeFromChain(start: ZigPrimaryTypeExpr, end: PsiElement): Type? {
             t = t.fields[fieldName]
             s = s.nextSibling
           }
+          is FieldType -> {
+            when(val ft = t.type) {
+              is StructType -> {
+                t = ft.fields[fieldName]
+                s = s.nextSibling
+              }
+              else -> return null
+            }
+          }
+          else -> return null
         }
       }
+      else -> return null
     }
   }
 
