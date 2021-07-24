@@ -10,7 +10,7 @@ private fun getStructType(e: ZigContainerDecl): StructType {
     PsiTreeUtil
       .findChildrenOfType(e, ZigContainerField::class.java)
       .associate {
-        it.firstChild?.text!! to FieldType(it,PsiTreeUtil.findChildOfType(e, ZigPrimaryTypeExpr::class.java)?.type)
+        it.firstChild?.text!! to FieldType(it,PsiTreeUtil.findChildOfType(it, ZigPrimaryTypeExpr::class.java)?.type)
       }
   return StructType(e, fieldNameToTypeMap)
 }

@@ -6,6 +6,7 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiElementResolveResult
 import com.intellij.psi.PsiPolyVariantReferenceBase
 import com.intellij.psi.ResolveResult
+import org.zig.types.FieldType
 import org.zig.types.StructType
 import org.zig.types.Type
 
@@ -32,6 +33,14 @@ class ZigContainerTypeReference(element: PsiElement, private val id: PsiElement,
       is StructType -> {
         containerType.fields.keys.map { createLookup(it) }.toTypedArray()
       }
+     is FieldType -> {
+       when(val t = containerType.type) {
+         is StructType -> {
+           t.fields.keys.map { createLookup(it) }.toTypedArray()
+         }
+         else -> listOf<LookupElement>().toTypedArray()
+       }
+     }
      else -> listOf<LookupElement>().toTypedArray()
    }
   }

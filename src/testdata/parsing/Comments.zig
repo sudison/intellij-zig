@@ -1,31 +1,4 @@
-fn foo() void {}
-fn main() void {
-   var a =
-    var a = foo();
-    var b = a.b.c();
-    if (true) {
-      var b = 1;
-      {
-        var c = 1;
-        var d = {return 1;};
-      }
-    }
-    s.x.y
-}
-pub const s = struct {
-        pub const Node = struct {
-            prev: ?*Node,
-            next: ?*Node,
-            data: T,
-        };
-
-        first: ?*Node,
-        last:  ?*Node,
-        len:   usize,
-    };
-
-fn v() {
-    const a = packed s
-}
-
-const ss = s {.first = null, .last = null};
+const Foo = struct {foo:i32};
+const Point = struct {x:i32, foo: Foo};
+const p = Point {.x = 1};
+fn a() {const v = p.f
