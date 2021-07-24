@@ -10,7 +10,7 @@ import com.intellij.execution.runners.executeState
 import com.intellij.execution.ui.RunContentDescriptor
 import org.jetbrains.concurrency.resolvedPromise
 
-open class ZigRunner : ProgramRunner<RunnerSettings>{
+open class ZigRunner : ProgramRunner<RunnerSettings> {
 
   override fun getRunnerId(): String {
     return RUNNER_ID

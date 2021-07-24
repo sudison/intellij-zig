@@ -28,7 +28,7 @@ class ZigContainerTypeReference(element: PsiElement, private val id: PsiElement,
       }
       else -> null
     }
-    r?: return listOf<ResolveResult>().toTypedArray()
+    r ?: return listOf<ResolveResult>().toTypedArray()
     return listOf<ResolveResult>(PsiElementResolveResult(r, true)).toTypedArray()
   }
 
@@ -37,19 +37,19 @@ class ZigContainerTypeReference(element: PsiElement, private val id: PsiElement,
   }
 
   override fun getVariants(): Array<Any> {
-   return when (containerType) {
+    return when (containerType) {
       is StructType -> {
         containerType.fields.keys.map { createLookup(it) }.toTypedArray()
       }
-     is FieldType -> {
-       when(val t = containerType.type) {
-         is StructType -> {
-           t.fields.keys.map { createLookup(it) }.toTypedArray()
-         }
-         else -> listOf<LookupElement>().toTypedArray()
-       }
-     }
-     else -> listOf<LookupElement>().toTypedArray()
-   }
+      is FieldType -> {
+        when (val t = containerType.type) {
+          is StructType -> {
+            t.fields.keys.map { createLookup(it) }.toTypedArray()
+          }
+          else -> listOf<LookupElement>().toTypedArray()
+        }
+      }
+      else -> listOf<LookupElement>().toTypedArray()
+    }
   }
 }

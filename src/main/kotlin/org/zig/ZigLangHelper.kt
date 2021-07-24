@@ -108,7 +108,7 @@ object ZigLangHelper {
     "typeName",
     "TypeOf",
     "unionInit",
-    )
+  )
 
   val primitiveTypes = listOf(
     "i8",

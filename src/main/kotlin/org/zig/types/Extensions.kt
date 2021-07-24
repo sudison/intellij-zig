@@ -10,14 +10,14 @@ private fun getStructType(e: ZigContainerDecl): StructType {
     PsiTreeUtil
       .findChildrenOfType(e, ZigContainerField::class.java)
       .associate {
-        it.firstChild?.text!! to FieldType(it,PsiTreeUtil.findChildOfType(it, ZigPrimaryTypeExpr::class.java)?.type)
+        it.firstChild?.text!! to FieldType(it, PsiTreeUtil.findChildOfType(it, ZigPrimaryTypeExpr::class.java)?.type)
       }
   return StructType(e, fieldNameToTypeMap)
 }
 
 val ZigContainerDecl.type: Type?
   get() {
-    return when(firstChild?.firstChild?.text) {
+    return when (firstChild?.firstChild?.text) {
       ZigLangTypes.STRUCT.toString().toLowerCase() -> getStructType(this)
       else -> null
     }

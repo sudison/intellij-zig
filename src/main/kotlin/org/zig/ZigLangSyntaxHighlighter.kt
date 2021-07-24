@@ -11,7 +11,7 @@ import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.tree.IElementType
 import org.zig.psi.ZigLangTypes
 
-object ZigLangSyntaxHighlighter: SyntaxHighlighterBase() {
+object ZigLangSyntaxHighlighter : SyntaxHighlighterBase() {
   private val KEYWORDS = listOf(
     ZigLangTypes.PUB,
     ZigLangTypes.CONST,
@@ -66,9 +66,15 @@ object ZigLangSyntaxHighlighter: SyntaxHighlighterBase() {
     ZigLangTypes.VOLATILE,
     ZigLangTypes.WHILE
   )
-  private val KEYWORD = arrayOf(TextAttributesKey.createTextAttributesKey("ZIGLANG_KEYWORD", DefaultLanguageHighlighterColors.KEYWORD))
+  private val KEYWORD =
+    arrayOf(TextAttributesKey.createTextAttributesKey("ZIGLANG_KEYWORD", DefaultLanguageHighlighterColors.KEYWORD))
   private val builtInFunctions =
-    arrayOf(TextAttributesKey.createTextAttributesKey("ZIGLANG_BUILTIN_FUNCTIONS", DefaultLanguageHighlighterColors.STATIC_METHOD))
+    arrayOf(
+      TextAttributesKey.createTextAttributesKey(
+        "ZIGLANG_BUILTIN_FUNCTIONS",
+        DefaultLanguageHighlighterColors.STATIC_METHOD
+      )
+    )
 
   override fun getHighlightingLexer(): Lexer = ZigLexerAdapter()
 
@@ -78,9 +84,9 @@ object ZigLangSyntaxHighlighter: SyntaxHighlighterBase() {
       ZigLangTypes.BUILTINIDENTIFIER -> builtInFunctions
       else -> emptyArray()
     }
-  }
+}
 
-class ZigLangSyntaxHighlighterFactory: SyntaxHighlighterFactory() {
+class ZigLangSyntaxHighlighterFactory : SyntaxHighlighterFactory() {
   override fun getSyntaxHighlighter(project: Project?, virtualFile: VirtualFile?): SyntaxHighlighter {
     return ZigLangSyntaxHighlighter
   }

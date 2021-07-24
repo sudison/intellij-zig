@@ -12,7 +12,8 @@ fun treeWalkUp(
   processor: PsiScopeProcessor,
   entrance: PsiElement,
   maxScope: PsiElement?,
-  state: ResolveState = ResolveState.initial()): Boolean {
+  state: ResolveState = ResolveState.initial()
+): Boolean {
   if (!entrance.isValid) return false
   var prevParent = entrance
   var scope: PsiElement? = entrance

@@ -22,7 +22,7 @@ abstract class SymbolMixin(node: ASTNode) : ASTWrapperPsiElement(node) {
     }
 
     return if (containerType != null) {
-      ZigContainerTypeReference(this,node.firstChildNode?.psi!!, containerType)
+      ZigContainerTypeReference(this, node.firstChildNode?.psi!!, containerType)
     } else ZigReference(this, node.firstChildNode?.psi!!)
   }
 }

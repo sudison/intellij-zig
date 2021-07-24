@@ -8,7 +8,7 @@ fun getTypeFromChain(start: ZigPrimaryTypeExpr, end: PsiElement): Type? {
   var t = start.type
   var s = start.nextSibling
   while (s != end) {
-    when(s) {
+    when (s) {
       is ZigSuffixOp -> {
         val fieldName = s.symbol?.firstChild?.text ?: return null
         when (t) {
@@ -17,7 +17,7 @@ fun getTypeFromChain(start: ZigPrimaryTypeExpr, end: PsiElement): Type? {
             s = s.nextSibling
           }
           is FieldType -> {
-            when(val ft = t.type) {
+            when (val ft = t.type) {
               is StructType -> {
                 t = ft.fields[fieldName]
                 s = s.nextSibling

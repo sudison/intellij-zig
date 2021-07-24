@@ -23,7 +23,6 @@ import com.intellij.ui.EditorTextField
 import com.intellij.ui.components.Label
 import com.intellij.ui.layout.CCFlags
 import com.intellij.ui.layout.panel
-import com.intellij.util.containers.toArray
 import org.zig.ZigIcons
 import javax.swing.JComponent
 import javax.swing.event.DocumentEvent

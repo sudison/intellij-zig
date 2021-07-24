@@ -12,7 +12,8 @@ import com.intellij.patterns.PsiElementPattern
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiErrorElement
 import com.intellij.util.ProcessingContext
-import org.zig.psi.*
+import org.zig.psi.ZigFile
+import org.zig.psi.ZigLangTypes
 import org.zig.types.leftSiblings
 
 fun <T, Self : ObjectPattern<T, Self>> ObjectPattern<T, Self>.with(name: String, cond: (T) -> Boolean): Self =
@@ -111,7 +112,14 @@ class ZigLangCompletionContributor : CompletionContributor() {
     // "const Point = packed s"
     extend(
       CompletionType.BASIC,
-      psiElement(ZigLangTypes.ID).withParent(psiElement(ZigLangTypes.CONTAINER_FIELD).withPrevSiblingSkipping(psiElement().whitespace(), psiElement(PsiErrorElement::class.java))),
+      psiElement(ZigLangTypes.ID).withParent(
+        psiElement(ZigLangTypes.CONTAINER_FIELD).withPrevSiblingSkipping(
+          psiElement().whitespace(),
+          psiElement(
+            PsiErrorElement::class.java
+          )
+        )
+      ),
       ZigCompletionProvider(containerAutoDecl)
     )
 

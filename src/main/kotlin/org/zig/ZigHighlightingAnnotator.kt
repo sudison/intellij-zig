@@ -11,7 +11,7 @@ import org.zig.psi.ZigLangTypes
 
 class ZigHighlightingAnnotator : Annotator {
   override fun annotate(element: PsiElement, holder: AnnotationHolder) {
-    when(element.elementType) {
+    when (element.elementType) {
       ZigLangTypes.ID -> {
         val parent = element.parent ?: return
         when (parent.elementType) {

@@ -1,8 +1,5 @@
 package org.zig
 
-import com.intellij.codeInsight.lookup.AutoCompletionPolicy
-import com.intellij.codeInsight.lookup.LookupElement
-import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.openapi.util.TextRange
 import com.intellij.patterns.PlatformPatterns.psiElement
 import com.intellij.psi.*
@@ -10,7 +7,6 @@ import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.util.ProcessingContext
 import org.zig.psi.*
 import org.zig.reference.createLookup
-import org.zig.types.Type
 
 class ZigReferenceContributor : PsiReferenceContributor() {
   override fun registerReferenceProviders(registrar: PsiReferenceRegistrar) {
