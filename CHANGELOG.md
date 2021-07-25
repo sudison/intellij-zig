@@ -2,6 +2,10 @@
 
 # IntelliJ ZigLang Plugin Changelog
 
+## [0.3.0]
+### Added
+- Struct auto completion
+
 ## [0.2.1]
 ### Added
 - Local variable auto completion
