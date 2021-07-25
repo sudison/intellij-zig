@@ -28,9 +28,15 @@ public class ZigFieldInitImpl extends ASTWrapperPsiElement implements ZigFieldIn
   }
 
   @Override
-  @NotNull
+  @Nullable
   public ZigExpr getExpr() {
-    return findNotNullChildByClass(ZigExpr.class);
+    return findChildByClass(ZigExpr.class);
+  }
+
+  @Override
+  @Nullable
+  public ZigSymbol getSymbol() {
+    return findChildByClass(ZigSymbol.class);
   }
 
 }

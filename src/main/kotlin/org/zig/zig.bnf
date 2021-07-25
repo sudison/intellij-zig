@@ -303,11 +303,17 @@ WhileExpr ::= WhilePrefix Expr (ELSE Payload? Expr)?
 
 private CurlySuffixExpr ::= TypeExpr InitList?
 InitList ::=
-    LBRACE FieldInit (COMMA FieldInit)* COMMA? RBRACE
+    FieldInitList
     | LBRACE Expr (COMMA Expr)* COMMA? RBRACE
     | LBRACE RBRACE
 
-FieldInit ::= DOT ID EQUAL Expr
+private FieldInitList ::= LBRACE FieldInit (COMMA FieldInit)* COMMA? RBRACE {
+pin = 2
+}
+
+FieldInit ::= DOT Symbol EQUAL Expr {
+ pin = 1
+}
 
 IfExpr ::= IfPrefix Expr (ELSE Payload? Expr)?
 IfPrefix ::= IF LPAREN Expr RPAREN PtrPayload?

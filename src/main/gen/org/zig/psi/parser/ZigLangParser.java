@@ -1305,16 +1305,65 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // DOT ID EQUAL Expr
+  // DOT Symbol EQUAL Expr
   public static boolean FieldInit(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "FieldInit")) return false;
     if (!nextTokenIs(b, DOT)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, FIELD_INIT, null);
+    r = consumeToken(b, DOT);
+    p = r; // pin = 1
+    r = r && report_error_(b, Symbol(b, l + 1));
+    r = p && report_error_(b, consumeToken(b, EQUAL)) && r;
+    r = p && Expr(b, l + 1) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
+  }
+
+  /* ********************************************************** */
+  // LBRACE FieldInit (COMMA FieldInit)* COMMA? RBRACE
+  static boolean FieldInitList(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "FieldInitList")) return false;
+    if (!nextTokenIs(b, LBRACE)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_);
+    r = consumeToken(b, LBRACE);
+    r = r && FieldInit(b, l + 1);
+    p = r; // pin = 2
+    r = r && report_error_(b, FieldInitList_2(b, l + 1));
+    r = p && report_error_(b, FieldInitList_3(b, l + 1)) && r;
+    r = p && consumeToken(b, RBRACE) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
+  }
+
+  // (COMMA FieldInit)*
+  private static boolean FieldInitList_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "FieldInitList_2")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!FieldInitList_2_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "FieldInitList_2", c)) break;
+    }
+    return true;
+  }
+
+  // COMMA FieldInit
+  private static boolean FieldInitList_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "FieldInitList_2_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, DOT, ID, EQUAL);
-    r = r && Expr(b, l + 1);
-    exit_section_(b, m, FIELD_INIT, r);
+    r = consumeToken(b, COMMA);
+    r = r && FieldInit(b, l + 1);
+    exit_section_(b, m, null, r);
     return r;
+  }
+
+  // COMMA?
+  private static boolean FieldInitList_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "FieldInitList_3")) return false;
+    consumeToken(b, COMMA);
+    return true;
   }
 
   /* ********************************************************** */
@@ -1890,7 +1939,7 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // LBRACE FieldInit (COMMA FieldInit)* COMMA? RBRACE
+  // FieldInitList
   //     | LBRACE Expr (COMMA Expr)* COMMA? RBRACE
   //     | LBRACE RBRACE
   public static boolean InitList(PsiBuilder b, int l) {
@@ -1898,54 +1947,11 @@ public class ZigLangParser implements PsiParser, LightPsiParser {
     if (!nextTokenIs(b, LBRACE)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = InitList_0(b, l + 1);
+    r = FieldInitList(b, l + 1);
     if (!r) r = InitList_1(b, l + 1);
     if (!r) r = parseTokens(b, 0, LBRACE, RBRACE);
     exit_section_(b, m, INIT_LIST, r);
     return r;
-  }
-
-  // LBRACE FieldInit (COMMA FieldInit)* COMMA? RBRACE
-  private static boolean InitList_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "InitList_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, LBRACE);
-    r = r && FieldInit(b, l + 1);
-    r = r && InitList_0_2(b, l + 1);
-    r = r && InitList_0_3(b, l + 1);
-    r = r && consumeToken(b, RBRACE);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // (COMMA FieldInit)*
-  private static boolean InitList_0_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "InitList_0_2")) return false;
-    while (true) {
-      int c = current_position_(b);
-      if (!InitList_0_2_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "InitList_0_2", c)) break;
-    }
-    return true;
-  }
-
-  // COMMA FieldInit
-  private static boolean InitList_0_2_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "InitList_0_2_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, COMMA);
-    r = r && FieldInit(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // COMMA?
-  private static boolean InitList_0_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "InitList_0_3")) return false;
-    consumeToken(b, COMMA);
-    return true;
   }
 
   // LBRACE Expr (COMMA Expr)* COMMA? RBRACE

@@ -7,7 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface ZigFieldInit extends PsiElement {
 
-  @NotNull
+  @Nullable
   ZigExpr getExpr();
+
+  @Nullable
+  ZigSymbol getSymbol();
 
 }
