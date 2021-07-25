@@ -68,7 +68,7 @@ class ZigReference(element: PsiElement, private val id: PsiElement) :
     val topVarDecl = PsiTreeUtil.collectElementsOfType(
       element.containingFile, ZigTopVarDecl::class.java
     )
-    val localVars = mutableListOf<ZigLocalVarDecl>()
+    val localVars = mutableListOf<PsiNameIdentifierOwner>()
     psiTreeWalkupInsideBlock(element) {
       localVars.add(it)
       false
