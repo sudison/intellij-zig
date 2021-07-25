@@ -38,10 +38,19 @@ class ZigLangCodeCompletionTest: LightPlatformCodeInsightFixture4TestCase() {
   @Test
   fun testFnReturnType() {
     myFixture.configureByText(ZigFileType, "")
-    myFixture.type("fn main() i")
+    myFixture.type("fn main() i3")
 
     val l = myFixture.completeBasic()
-    assertTrue(l.size == 15)
+    assertTrue(l[0].lookupString == "i32")
+  }
+
+  @Test
+  fun testFnParaType() {
+    myFixture.configureByText(ZigFileType, "")
+    myFixture.type("fn main(x: i3")
+
+    val l = myFixture.completeBasic()
+    assertTrue(l[0].lookupString == "i32")
   }
 
   @Test

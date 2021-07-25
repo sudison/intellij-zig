@@ -128,11 +128,5 @@ class ZigLangCompletionContributor : CompletionContributor() {
       psiElement(ZigLangTypes.BUILTINIDENTIFIER),
       ZigCompletionProvider(builtInFunctions)
     )
-
-    extend(
-      CompletionType.BASIC,
-      psiElement(ZigLangTypes.ID).withAncestor(6, psiElement(ZigLangTypes.FN_PROTO)),
-      ZigCompletionProvider(ZigLangHelper.primitiveTypesLookup)
-    )
   }
 }

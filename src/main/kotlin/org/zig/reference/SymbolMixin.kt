@@ -24,6 +24,10 @@ abstract class SymbolMixin(node: ASTNode) : ASTWrapperPsiElement(node) {
       containerType = (pTypeExpr as ZigPrimaryTypeExpr).type
     } else if (parent is ZigPrimaryTypeExpr && parent.prevSiblingTypeIgnoring(ZigLangTypes.COLON, TokenType.WHITE_SPACE) != null) {
       return ZigTypeReference(this, node.firstChildNode?.psi!!)
+    } else if (parent is ZigPrimaryTypeExpr && parent.parent is ZigFnProto) {
+      return ZigTypeReference(this, node.firstChildNode?.psi!!)
+    } else if (parent is ZigPrimaryTypeExpr && parent.parent is ZigParamType) {
+      return ZigTypeReference(this, node.firstChildNode?.psi!!)
     }
 
     return if (containerType != null) {
