@@ -1,1 +1,1 @@
-const Bar = struct {bar: i32};  fn a() {const b = Bar {.b
+const Point = struct {x:i3

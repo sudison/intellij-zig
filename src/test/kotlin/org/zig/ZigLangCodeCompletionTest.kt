@@ -11,7 +11,7 @@ class ZigLangCodeCompletionTest: LightPlatformCodeInsightFixture4TestCase() {
     myFixture.type("p")
 
     val l = myFixture.completeBasic()
-    assertTrue(l.size == 1)
+    assertTrue(l.size == 3)
     assertEquals(l[0].lookupString, "${ZigLangTypes.PUB} ")
   }
 
@@ -41,7 +41,7 @@ class ZigLangCodeCompletionTest: LightPlatformCodeInsightFixture4TestCase() {
     myFixture.type("fn main() i")
 
     val l = myFixture.completeBasic()
-    assertTrue(l.size == 13)
+    assertTrue(l.size == 15)
   }
 
   @Test
@@ -84,9 +84,9 @@ class ZigLangCodeCompletionTest: LightPlatformCodeInsightFixture4TestCase() {
   fun testRefMemberFieldPrimitiveType() {
     myFixture.configureByText(ZigFileType, "")
 
-    myFixture.type("const Point = struct {x:i3")
+    myFixture.type("const Bar = struct {x: i32}; const Point = struct {x:B")
     val l = myFixture.completeBasic()
-    assertTrue(l[0].lookupString == "i32")
+    assertTrue(l[0].lookupString == "Bar")
   }
 
   @Test
