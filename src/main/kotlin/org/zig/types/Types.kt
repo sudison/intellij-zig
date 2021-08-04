@@ -2,7 +2,8 @@ package org.zig.types
 
 import com.intellij.psi.PsiElement
 
-open class Type(private val owner: PsiElement?) {
+
+open class Type(val owner: PsiElement?) {
   fun reference(): PsiElement? {
     return owner
   }
@@ -10,9 +11,10 @@ open class Type(private val owner: PsiElement?) {
 
 class FieldType(ref: PsiElement, val type: Type?) : Type(ref)
 
-class StructType(owner: PsiElement, val fields: Map<String, FieldType?>) : Type(owner) {
-}
+class StructType(owner: PsiElement, val fields: Map<String, FieldType?>) : Type(owner)
 
-class BuildinType(name: String) : Type(null) {}
+class FnType(owner: PsiElement, var returnType: Type?) : Type(owner)
 
-class EnumType(owner: PsiElement?) : Type(owner) {}
+class BuildinType(name: String) : Type(null)
+
+class EnumType(owner: PsiElement?) : Type(owner)

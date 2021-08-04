@@ -5,7 +5,7 @@ import org.zig.psi.ZigPrimaryTypeExpr
 import org.zig.psi.ZigSuffixOp
 
 fun getTypeFromChain(start: ZigPrimaryTypeExpr, end: PsiElement): Type? {
-  var t = start.type
+  var t = start.inference()
   var s = start.nextSibling
   while (s != end) {
     when (s) {

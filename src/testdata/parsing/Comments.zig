@@ -1,2 +1,5 @@
-const Point = struct {x:i32};
-pub fn m(x: Point
+const Point = struct {
+x:i32,
+pub fn init(x: i32) Point {}
+const Bar = struct {x: i32};
+};

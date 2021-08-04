@@ -1,6 +1,7 @@
 package org.zig
 
 import com.intellij.testFramework.fixtures.LightPlatformCodeInsightFixture4TestCase
+import junit.framework.TestCase
 import org.junit.Test
 import org.zig.psi.ZigLangTypes
 
@@ -96,6 +97,18 @@ class ZigLangCodeCompletionTest: LightPlatformCodeInsightFixture4TestCase() {
     myFixture.type("const Bar = struct {x: i32}; const Point = struct {x:B")
     val l = myFixture.completeBasic()
     assertTrue(l[0].lookupString == "Bar")
+  }
+
+  @Test
+  fun testNestedStruct() {
+    myFixture.configureByText(ZigFileType, "")
+
+    myFixture.type("const Bar = struct {x: i32, const Nested = struct {y: i32}; fn foo(x: i32) Bar;}; const a = Bar.")
+    val l = myFixture.completeBasic()
+    TestCase.assertTrue(l.size == 3)
+    assertTrue(l.find{it.lookupString == "x"} != null)
+    assertTrue(l.find{it.lookupString == "Nested"} != null)
+    assertTrue(l.find{it.lookupString == "foo"} != null)
   }
 
   @Test
