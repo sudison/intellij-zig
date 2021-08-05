@@ -34,6 +34,23 @@ private fun getStructType(ctx: Context, e: ZigContainerDecl): StructType {
   return StructType(e, fieldTypeMap)
 }
 
+private fun getEnumType(ctx: Context, e: ZigContainerDecl): StructType {
+  val fieldTypeMap = mutableMapOf<String, FieldType?>()
+  e.children.forEach {
+    when (it) {
+      is ZigContainerField ->
+        fieldTypeMap[it.firstChild?.text!!] =
+          FieldType(it, BuildinType("u2"))
+      is ZigFnDecl ->
+        fieldTypeMap[it.nameIdentifier?.text!!] = FieldType(it, it.type(ctx))
+      is ZigTopVarDecl ->
+        fieldTypeMap[it.nameIdentifier?.text!!] = FieldType(it, it.type(ctx))
+    }
+  }
+
+  return StructType(e, fieldTypeMap)
+}
+
 fun ZigFnDecl.type(ctx: Context): Type? {
   return ctx.cacheType(this) {
 
@@ -54,6 +71,7 @@ fun ZigContainerDecl.type(ctx: Context): Type? {
   return ctx.cacheType(this) {
     when (firstChild?.firstChild?.text) {
       ZigLangTypes.STRUCT.toString().toLowerCase() -> getStructType(ctx, this)
+      ZigLangTypes.ENUM.toString().toLowerCase() -> getEnumType(ctx, this)
       else -> null
     }
   }

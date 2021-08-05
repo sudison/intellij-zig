@@ -112,6 +112,19 @@ class ZigLangCodeCompletionTest: LightPlatformCodeInsightFixture4TestCase() {
   }
 
   @Test
+  fun testEnum() {
+    myFixture.configureByText(ZigFileType, "")
+
+    myFixture.type("const E = enum {one, two, pub fn foo() bool {}}; const e = E.")
+    val l = myFixture.completeBasic()
+    TestCase.assertTrue(l.size == 3)
+    assertTrue(l.find{it.lookupString == "one"} != null)
+    assertTrue(l.find{it.lookupString == "two"} != null)
+    assertTrue(l.find{it.lookupString == "foo"} != null)
+
+  }
+
+  @Test
   fun testRefMemberFieldPrimitiveType() {
     myFixture.configureByText(ZigFileType, "")
 

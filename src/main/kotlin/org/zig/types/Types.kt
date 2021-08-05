@@ -16,5 +16,3 @@ class StructType(owner: PsiElement, val fields: Map<String, FieldType?>) : Type(
 class FnType(owner: PsiElement, var returnType: Type?) : Type(owner)
 
 class BuildinType(name: String) : Type(null)
-
-class EnumType(owner: PsiElement?) : Type(owner)
