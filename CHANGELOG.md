@@ -2,6 +2,11 @@
 
 # IntelliJ ZigLang Plugin Changelog
 
+## [0.3.1]
+### Added
+- function and type inside struct
+- enum
+
 ## [0.3.0]
 ### Added
 - Struct auto completion
