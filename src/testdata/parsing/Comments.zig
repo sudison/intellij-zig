@@ -1,3 +1,4 @@
+const i = @import("a");
 const Point = struct {
 x:i32,
 pub fn init(x: i32) Point {}

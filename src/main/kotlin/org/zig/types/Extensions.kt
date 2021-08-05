@@ -1,6 +1,8 @@
 package org.zig.types
 
 import com.intellij.psi.PsiElement
+import com.intellij.psi.search.FilenameIndex
+import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.util.PsiTreeUtil
 import org.zig.ZigLangHelper.primitiveTypes
 import org.zig.psi.*
@@ -17,7 +19,7 @@ class Context(private val visitedTypes: MutableMap<PsiElement, Type?>, val unkno
   }
 }
 
-private fun getStructType(ctx: Context, e: ZigContainerDecl): StructType {
+private fun getStructType(ctx: Context, e: PsiElement): StructType {
   val fieldTypeMap = mutableMapOf<String, FieldType?>()
   e.children.forEach {
     when (it) {
@@ -89,10 +91,19 @@ fun ZigSymbol.type(ctx: Context): Type? {
   }
 }
 
+private fun getTypeFromImport(ctx: Context, e: PsiElement): StructType? {
+  val si = PsiTreeUtil.findChildOfType(e, ZigStringliteral::class.java)
+  val path = si?.firstChild?.text?.removeSurrounding("\"") ?: return null
+  val psiFile = FilenameIndex.getFilesByName(e.project, "$path.zig", GlobalSearchScope.projectScope(e.project)).first() ?: return null
+  return getStructType(ctx, psiFile)
+}
+
 fun ZigPrimaryTypeExpr.type(ctx: Context): Type? {
-  return when (val c = firstChild) {
-    is ZigContainerDecl -> c.type(ctx)
-    is ZigSymbol -> c.type(ctx)
+  val c = firstChild
+  return when  {
+    c is ZigContainerDecl -> c.type(ctx)
+    c is ZigSymbol -> c.type(ctx)
+    c.text?.toString() == "@import" -> getTypeFromImport(ctx, this)
     else -> null
   }
 }
